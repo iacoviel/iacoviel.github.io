@@ -1,0 +1,757 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta name="Microsoft Theme 2.00" content="sumipntg 001">
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="dsgemodels_files/filelist.xml">
+<link rel=Edit-Time-Data href="dsgemodels_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Simulating Dynamic General Equilibrium models</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PlaceType"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PlaceName"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PersonName"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place" downloadurl="http://www.5iantlavalamp.com/"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Boston College</o:Author>
+  <o:LastAuthor>Matteo Iacoviello</o:LastAuthor>
+  <o:Revision>32</o:Revision>
+  <o:TotalTime>573</o:TotalTime>
+  <o:Created>2003-03-19T03:01:00Z</o:Created>
+  <o:LastSaved>2005-01-24T17:05:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1197</o:Words>
+  <o:Characters>6825</o:Characters>
+  <o:Company>Boston College</o:Company>
+  <o:Lines>56</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>8006</o:CharactersWithSpaces>
+  <o:Version>10.4219</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:DefaultTableStyle Number="155">Table Theme</w:DefaultTableStyle>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:1627421319 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:536871559 0 0 0 415 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#000066;}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:Verdana;
+	mso-bidi-font-family:Arial;
+	color:#003366;
+	mso-font-kerning:16.0pt;
+	font-weight:normal;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:Verdana;
+	mso-bidi-font-family:Arial;
+	color:#003366;
+	font-weight:normal;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:14.0pt;
+	font-family:Verdana;
+	mso-bidi-font-family:Arial;
+	color:#003366;
+	font-weight:normal;}
+h4
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:Verdana;
+	color:#003366;
+	font-weight:normal;}
+h5
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:10.0pt;
+	font-family:Verdana;
+	color:#003366;
+	font-weight:normal;}
+h6
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:8.0pt;
+	font-family:Verdana;
+	color:#003366;
+	font-weight:normal;}
+a:link, span.MsoHyperlink
+	{color:#3333CC;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:#666699;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{mso-style-link:"Normal \(Web\) Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	color:#000066;}
+p
+	{mso-style-link:"Normal \(Web\) Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+span.NormalWebChar
+	{mso-style-name:"Normal \(Web\) Char";
+	mso-style-link:"Normal \(Web\)";
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:Verdana;
+	mso-ascii-font-family:Verdana;
+	mso-hansi-font-family:Verdana;
+	color:black;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;}
+p.presentation, li.presentation, div.presentation
+	{mso-style-name:presentation;
+	mso-style-parent:"Normal \(Web\)";
+	mso-style-link:"Normal \(Web\) Char";
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:455409930;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-224130540 67698705 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-text:"%1\)";
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+table.MsoTableTheme
+	{mso-style-name:"Table Theme";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid silver 1.0pt;
+	mso-border-alt:solid silver .5pt;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:.5pt solid silver;
+	mso-border-insidev:.5pt solid silver;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="16386">
+  <o:colormenu v:ext="edit" fillcolor="#cff"/>
+ </o:shapedefaults></xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor="#FFFFCC" background="dsgemodels_files/image001.jpg" lang=EN-US
+link="#3333CC" vlink="#666699" style='tab-interval:.5in'>
+<!--[if gte mso 9]><xml>
+ <v:background id="_x0000_s1025" o:bwmode="white" fillcolor="#ffc"
+  o:targetscreensize="800,600">
+  <v:fill src="dsgemodels_files/image001.jpg" type="frame"/>
+ </v:background></xml><![endif]-->
+
+<div class=Section1>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:17.0pt;font-family:Tahoma'>Simulating dynamic general
+equilibrium models<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:15.0pt;font-family:Tahoma'>Example
+files<o:p></o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:15.0pt'><o:p>&nbsp;</o:p></span></b></p>
+
+<p class=MsoNormal><span class=GramE><b style='mso-bidi-font-weight:normal'><span
+style='font-size:15.0pt'>by</span></b></span><b style='mso-bidi-font-weight:
+normal'><span style='font-size:15.0pt'> <a href="http://www2.bc.edu/matteo-iacoviello/">Matteo
+Iacoviello</a><o:p></o:p></span></b></p>
+
+<p class=presentation align=center style='text-align:center'>LAST UPDATED: <span
+style='mso-field-code:" DATE \\\@ \0022dddd\, dd MMMM\, yyyy\0022 "'><span
+style='mso-no-proof:yes'>Monday, 24 January, 2005</span></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></b></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:22.0pt'><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+ coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+ filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:268.5pt;
+ height:201pt'>
+ <v:imagedata src="dsgemodels_files/image003.jpg" o:title="acf"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=358 height=268
+src="dsgemodels_files/image004.jpg" v:shapes="_x0000_i1025"><![endif]><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>In order for you to learn how
+to practice with dynamic stochastic general equilibrium models, I suggest you
+learn to use the toolkit by Harald Uhlig, described on his <a
+href="http://www.wiwi.hu-berlin.de/wpol/html/toolkit.htm">webpage</a>. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>ost of these codes are written for the Graduate
+courses EC751: </span><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>acroeconomic Theory and </span><st1:PersonName><span
+ style='font-size:10.0pt'>EC861</span></st1:PersonName><span style='font-size:
+10.0pt'>: </span><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>onetary Theory and Policy that I teach at </span><st1:place><st1:PlaceName><span
+  style='font-size:10.0pt'>Boston</span></st1:PlaceName><span style='font-size:
+ 10.0pt'> </span><st1:PlaceType><span style='font-size:10.0pt'>College</span></st1:PlaceType></st1:place><span
+style='font-size:10.0pt'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>In order to understand how
+the toolkit works and, above all, how rational expectations models work, you
+have to read Uhlig (1997) <a
+href="http://www.wiwi.hu-berlin.de/wpol/html/toolkit/toolkit.pdf">“A Toolkit
+for Analyzing Nonlinear Dynamic Stochastic Models <span class=GramE>Easily</span>''</a>
+. Uhlig’s approach is based upon the method of the undetermined coefficients.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>I suggest you to take the
+following steps:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>ake sure you have a copy of </span><st1:PersonName><span
+ style='font-size:10.0pt'>M</span></st1:PersonName><span style='font-size:10.0pt'>ATLAB<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Create a
+directory in your computer, say C:\UHLIG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>3)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Download the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/uhlig.zip">Harald Uhlig’s
+toolkit files</a> (Uhlig’s files are also available on his webpage)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>4)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Unzip them in
+C:\UHLIG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>5)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Open </span><st1:PersonName><span
+ style='font-size:10.0pt'>M</span></st1:PersonName><span style='font-size:10.0pt'>atlab<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>6)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>From </span><st1:PersonName><span
+ style='font-size:10.0pt'>M</span></st1:PersonName><span style='font-size:10.0pt'>atlab,
+click File – Set Path – Add Folder – then add your c:\uhlig folder<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>7)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Create another
+directory in your computer, say C:\</span><st1:PersonName><span
+ style='font-size:10.0pt'>M</span></st1:PersonName><span style='font-size:10.0pt'>ATTEO<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>8)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Repeat step 6,
+adding C:\MATTEO<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-fareast-font-family:Verdana;mso-bidi-font-family:Verdana'><span
+style='mso-list:Ignore'>9)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt'>Copy in that
+directory the files containing the programs necessary to run the simulations<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>Below are the programs that
+need to go into C:\</span><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>ATTEO<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>To plot the impulse responses
+of all the models below:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/plot_bc.m">Plot_bc.m</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>(you have to edit this file
+if you like to change color of the impulse responses)</span><span
+class=MsoHyperlink><span style='font-family:"Times New Roman"'><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>0) Real business cycle model
+with no capital depreciation (and exogenous labor)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rbcsimple.m">rbcsimple.m</a><span
+style='mso-spacerun:yes'>  </span>(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rbcsimple_go.m">rbcsimple_go.m</a>
+file, which you will have to download too)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>1) Sidrauski money in utility
+function model, based on functional forms in Walsh, first edition<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/sidrauski.m"><span
+class=SpellE>sidrauski.m</span></a><span style='mso-spacerun:yes'> 
+</span>(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/sidrauski_go.m">Sidrauski_go.m</a>
+file, which you will have to download too)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>New version added October
+2003, based on functional forms given in Walsh, “Monetary Theory and Policy”,
+MIT Press, second edition<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/sidrauski2.m">sidrauski2.m</a><span
+style='mso-spacerun:yes'>  </span>(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/sidrauski2_go.m">Sidrauski2_go.m</a>
+file, which you will have to download too)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>For details, see also my <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/ec861_cha3.pdf">graduate
+monetary theory lecture notes (Chapter 3)</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>2) Cash in advance model<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/cia.m">cia.m</a><span
+style='mso-spacerun:yes'>  </span>(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/cia_go.m">cia_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>For details, see also my <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/ec861_cha3.pdf">graduate
+Monetary Theory lecture notes (Chapter 3)</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>3) Optimal interest rate
+rules model by Giannoni and Woodford (2002)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/giannoni.m">giannoni.m</a>
+(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/giannoni_go.m">giannoni_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>For details, see also my <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/ec861_cha6.pdf">graduate
+Monetary Theory lecture notes (Chapter 6)</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>4) Leeper-Woodford model of
+interaction between monetary and fiscal policy<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/leeper.m">leeper.m</a> (which
+calls the <a href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/leeper_go.m">leeper_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>For details, see also my <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/ec861_cha7.pdf">graduate
+Monetary Theory lecture notes (Chapter 7)</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>5) Credit cycle model based
+on my EC751 lecture notes (simplified version of Kiyotaki and Moore, JPE, 1997)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/kiyotaki.m">kiyotaki.m</a>
+(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/kiyotaki_go.m">kiyotaki_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>For details, see also my <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/ec751_cha3.pdf">EC751
+Graduate Macroeconomics lecture notes</a> (Ch 3)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>6) 3-equations, reduced form
+of the DNK (Dynamic New-keynesian) model based as described in McCallum AER
+paper (2001)<sub><o:p></o:p></sub></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/mc.m">mc.m</a> (which calls
+the <a href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/mc_go.m">mc_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>Slightly simpler version with
+3 shocks only and no y(t-1) in IS curve (<a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/mc3.m">mc3.m</a> and <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/mc3_go.m">mc3_go.m</a>)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>7) Dynamic-new-Keynesian
+model with capital and habit formation and with productivity, monetary and
+cost-push shocks<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/dnwk.m"><span class=GramE>dnwk.m</span></a>
+which calls <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>- <span class=GramE>either</span>
+<a href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/dnwk_go.m">dnwk_go.m</a>:
+simplest version of the model, like in my <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/ec751_cha4.pdf">EC751:
+graduate Macroeconomics lecture notes (Ch 4)</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>- or <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/dnwk_p_go.m">dnwk_p_go.m</a>:
+version of the model with ad-hoc lags, with inflation and output chosen one
+period in advance, as in <span class=SpellE>Boivin</span>-Giannoni, “Has </span><st1:PersonName><span
+ style='font-size:10.0pt'>M</span></st1:PersonName><span style='font-size:10.0pt'>onetary
+Policy Become </span><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>ore Effective?”, 2003)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:487.5pt'><span style='font-size:10.0pt'><span
+style='mso-tab-count:1'>                                                                                                                                  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>8) Dynamic new-Keynesian
+model without capital, inflation chosen ONE period in advance and output chosen
+TWO periods in advance (like in Rotemberg-Woodford 1997 NBER Macro Annual
+paper)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/dnlag.m">dnlag.m</a> (which
+calls the <a href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/dnlag_go.m">dnlag_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>9) Mankiw-Reis sticky
+information model (QJE, 2002)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/mankiwreis.m">mankiwreis.m</a>
+(which calls the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/mankiwreis_go.m">mankiwreis_go.m</a>
+file)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>10) RBC (Real business cycle)
+model with capital adjustment costs and to calculate the asset pricing
+statistics as in “</span><span style='font-size:10.0pt;mso-bidi-font-family:
+Arial;color:black'>Martin <span style='mso-bidi-font-weight:bold'>Lettau</span>:
+Inspecting <span class=GramE>The</span> </span><span style='font-size:10.0pt'>Mechanism:
+Closed-Form Solutions For Asset Prices In Real Business Cycle Models”, Economic
+Journal, 2003<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rbcfull.m">rbcfull.m</a>
+(which calls <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rbcfull_go.m">rbcfull_go.m</a>
+file and the <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rbcfull_sim.m">rbcfull_sim.m</a>
+file) <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><st1:PersonName><span style='font-size:10.0pt'>M</span></st1:PersonName><span
+style='font-size:10.0pt'>y own personal version of how these models can be
+solved (based on the eigenvalue-eigenvector decomposition) is summarized in <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rational_expectations_models.pdf">this
+pdf file</a>, not to be quoted for whatsoever reason. This three pages handout
+refers to a <a
+href="http://www2.bc.edu/matteo-iacoviello/dsgemodels_files/rbcprototype.m">Matlab file</a>
+that runs the example model that I solve by hand with the above method.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>This programs come as they
+are, and I accept no responsibility if your paper is rejected, your
+representative agent kills <span class=GramE>you,</span> your country enters a
+recession because of these files.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'>However, if you happen to use
+these files, find any bugs or want to give me comments and suggestions you can
+email me at <a href="mailto:iacoviel@bc.edu">iacoviel@bc.edu</a>, thanks!<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt'><a
+href="http://www2.bc.edu/matteo-iacoviello/">Back to my home page</a><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
