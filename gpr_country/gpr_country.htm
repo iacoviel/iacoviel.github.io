@@ -817,14 +817,12 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
     <script type="text/javascript">
       google.charts.load('current', {'packages':['annotationchart']});
       google.charts.setOnLoadCallback(draw_gpr_Chart);
+      google.charts.setOnLoadCallback(draw_gpr_Chart_GBR);
       google.charts.setOnLoadCallback(draw_gprh_Chart);
 
                               function draw_gpr_Chart() {
-                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=0');
-                                             
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=0');                                           
                                 query.send(handleQueryReponse_gpr);
-                                                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=241908551');
-                                query.send(handleQueryReponse_gpr);  
                               }
                                     function handleQueryReponse_gpr(response) {
                                              if (response.isError()) {
@@ -839,28 +837,26 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                                                             displayAnnotationsFilter: true,
                                                             displayZoomButtons: false,
                                                             displayLegendDots: false,
-                                                            'title': 'Country-Specific Indices',
                                              };
                                              chart.draw(data, options);
                               }
                                function draw_gpr_Chart_GBR() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=241908551');
-                                             query.send(handleQueryReponse_gpr_gbr);                               
+                                             query.send(handleQueryReponse_gpr_GBR);                               
                               }
-                              function handleQueryReponse_gpr_gbr(response) {
+                              function handleQueryReponse_gpr_GBR(response) {
                                              if (response.isError()) {
                                                             alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                                                             return;
                                              }
 
                                              var data = response.getDataTable();
-                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_gbr_chart_div'));
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_GBR_chart_div'));
                                              var options = {
                                                             displayAnnotations: true,
                                                             displayAnnotationsFilter: true,
                                                             displayZoomButtons: false,
                                                             displayLegendDots: false,
-                                                            'title': 'Country-Specific Indices',
                                              };
                                              chart.draw(data, options);
                               }
@@ -898,7 +894,7 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
         <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
       <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Great Britain GPR Index</strong></span>
     </div>
-    <div id="gpr_chart_div" style="width: 1140px; height: 440px;"></div>
+    <div id="gpr_GBR_chart_div" style="width: 1140px; height: 440px;"></div>
     <br>
     <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
       <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Historical GPR Index</strong></span>
