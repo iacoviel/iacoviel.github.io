@@ -817,12 +817,13 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
     <script type="text/javascript">
       google.charts.load('current', {'packages':['annotationchart']});
       google.charts.setOnLoadCallback(draw_gpr_Chart);
-      google.charts.setOnLoadCallback(draw_gpr_Chart_GBR);
+      google.charts.setOnLoadCallback(draw_gpr_Chart);
       google.charts.setOnLoadCallback(draw_gprh_Chart);
 
                               function draw_gpr_Chart() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=0');
                                              query.send(handleQueryReponse_gpr);
+                              }
                                function draw_gpr_Chart_GBR() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=241908551');
                                              query.send(handleQueryReponse_gpr);                               
