@@ -843,9 +843,9 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                               }
                                function draw_gpr_Chart_GBR() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=241908551');
-                                             query.send(handleQueryReponse_gpr);                               
+                                             query.send(handleQueryReponse_gpr_gbr);                               
                               }
-                              function handleQueryReponse_gpr(response) {
+                              function handleQueryReponse_gpr_gbr(response) {
                                              if (response.isError()) {
                                                             alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                                                             return;
