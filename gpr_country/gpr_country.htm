@@ -724,17 +724,12 @@ var options = {//'title': 'Country-Specific Indices',
 
 <span style="font-family: Times New Roman;">
 <font size="+1">Dario Caldara and Matteo Iacoviello construct a
-monthly index of Geopolitical Risk (GPR Index) counting the
-occurrence of words related to geopolitical tensions in leading
-international newspapers. The GPR index spikes around the Gulf War,
-after 9/11, during the 2003 Iraq invasion, during the 2014
-Russia-Ukraine crisis, and after the Paris terrorist attacks.<br><br>
+monthly index of country specific Geopolitical Risk (GPR Index) counting the
+occurrence of words related to geopolitical tensions for a given country in leading
+international newspapers. .<br><br>
 
-The Benchmark Index (GPR) uses 11 newspapers and starts in 1985.<br>
-The Historical Index (GPRH) uses 3 newspapers and starts in 1899.<br>
-A summary presentation in our slides
-<a href="gpr_files/GPR_SLIDES.pdf" target="_blank">
-can be found here</a> (November 2019).<br>
+The country specific Historical Index (GPRH) uses 3 newspapers and starts in 1899. It is constructed by ..<br>
+
 We welcome kudos, comments, and suggestions!<br><br>
 
 Cite as: Caldara, Dario and Matteo Iacoviello,
@@ -749,11 +744,9 @@ working paper, Board of Governors of the Federal Reserve Board, December 2019</f
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>Description</b></h3>
 
 
-<span style="font-family: Times New Roman;"><font size="+1">The Caldara and Iacoviello GPR index reflects
-automated text-search results of the electronic archives of 11 national
-and international newspapers: The Boston Globe, Chicago Tribune, The
-Daily Telegraph, Financial Times, The Globe and Mail, The Guardian, Los
-Angeles Times, The New York Times, The Times, The Wall Street Journal,
+<span style="font-family: Times New Roman;"><font size="+1">The Caldara and Iacoviello Country specific GPR indices reflects
+automated text-search results of the electronic archives of 3 national
+ newspapers: The Chicago Tribune, The New York Times, .....
 and The Washington Post. Caldara and Iacoviello calculate the index by
 counting the number of articles related to geopolitical risk in each
 newspaper for each month (as a share of the total number of news
@@ -842,7 +835,7 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                               }
                                function draw_gpr_Chart_GBR() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=241908551');
-                                             query.send(handleQueryReponse_gpr_GBR);                               
+                                             query.send(handleQueryReponse_gpr);                               
                               }
                               function handleQueryReponse_gpr_GBR(response) {
                                              if (response.isError()) {
