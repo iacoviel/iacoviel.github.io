@@ -269,6 +269,7 @@ Source: “Measuring Geopolitical Risk” by Dario Caldara and Matteo Iacoviello
       google.charts.load('current', {'packages':['annotationchart']});
       google.charts.setOnLoadCallback(draw_gpr_Chart);
       google.charts.setOnLoadCallback(draw_gpr_Chart_GBR);
+      google.charts.setOnLoadCallback(draw_gpr_Chart_USA);
       google.charts.setOnLoadCallback(draw_gprh_Chart);
 
                               function draw_gpr_Chart() {
@@ -303,6 +304,27 @@ Source: “Measuring Geopolitical Risk” by Dario Caldara and Matteo Iacoviello
 
                                              var data = response.getDataTable();
                                              var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_GBR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+      
+                                     function draw_gpr_Chart_USA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1AbxPFmOqxgAv5q5nwJowjEJb5k0uW8OUIh66Z945HTI/edit#gid=0');
+                                             query.send(handleQueryReponse_gpr_USA);                               
+                              }
+                              function handleQueryReponse_gpr_USA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_USA_chart_div'));
                                              var options = {
                                                             displayAnnotations: true,
                                                             displayAnnotationsFilter: true,
@@ -346,6 +368,11 @@ Source: “Measuring Geopolitical Risk” by Dario Caldara and Matteo Iacoviello
       <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Great Britain GPR Index</strong></span>
     </div>
     <div id="gpr_GBR_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+            <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>United States GPR Index</strong></span>
+    </div>
+    <div id="gpr_USA_chart_div" style="width: 1140px; height: 440px;"></div>
     <br>
     <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
       <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Historical GPR Index</strong></span>
