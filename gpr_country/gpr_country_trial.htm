@@ -809,8 +809,6 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
 
   </div>
 
-
-
   <!-- Charts Section -->
   <div class="w3-container w3-padding-32" id="charts">
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>Charts</b></h3>
@@ -819,14 +817,53 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
     <script type="text/javascript">
       google.charts.load('current', {'packages':['annotationchart']});
       google.charts.setOnLoadCallback(draw_gpr_Chart);
-                 google.charts.setOnLoadCallback(draw_gprh_Chart);
+      google.charts.setOnLoadCallback(draw_gpr_Chart_GBR);
+      google.charts.setOnLoadCallback(draw_gpr_Chart_USA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_ARG);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_BEL);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_BRA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_CAN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_CHE);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_CHL);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_CHN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_COL);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_DEU);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_DNK);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_ESP);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_FIN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_FRA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_GBR);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_HKG);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_IDN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_IND);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_ISR);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_ITA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_JPN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_KOR);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_MEX);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_MYS);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_NLD);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_NOR);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_PER);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_PHL);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_PRT);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_RUS);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_SAU);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_SWE);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_THA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_TUR);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_TWN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_UKR);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_USA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_VEN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_ZAF);
+      google.charts.setOnLoadCallback(draw_gprh_Chart);
 
                               function draw_gpr_Chart() {
-                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1aW-HJSfkswerMb4RzgV8zOep9Y65SOvoMIR-jFB0woE/edit#gid=0');
-                                             query.send(handleQueryReponse_gpr);
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=241908551');                                           
+                                query.send(handleQueryReponse_gpr);
                               }
-
-                              function handleQueryReponse_gpr(response) {
+                                    function handleQueryReponse_gpr(response) {
                                              if (response.isError()) {
                                                             alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                                                             return;
@@ -839,11 +876,870 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                                                             displayAnnotationsFilter: true,
                                                             displayZoomButtons: false,
                                                             displayLegendDots: false,
-                                                            'title': 'Country-Specific Indices',
                                              };
                                              chart.draw(data, options);
                               }
+                               function draw_gpr_Chart_GBR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=1608005764');
+                                             query.send(handleQueryReponse_gpr_GBR);                               
+                              }
+                              function handleQueryReponse_gpr_GBR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
 
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_GBR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+      
+                                     function draw_gpr_Chart_USA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1AbxPFmOqxgAv5q5nwJowjEJb5k0uW8OUIh66Z945HTI/edit#gid=0');
+                                             query.send(handleQueryReponse_gpr_USA);                               
+                              }
+                              function handleQueryReponse_gpr_USA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_USA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_ARG() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1ycykng__A3U_M1duBR0jniSpo0NZU6UwXB0f1VSjAoU/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_ARG);                               
+                              }
+                              function handleQueryReponse_gpr_ARG(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_ARG_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_AUS() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1BQlRb-GrHs3l4BBbJALACO7av9vxA3EApTHbPFTAVW8/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_AUS);                               
+                              }
+                              function handleQueryReponse_gpr_AUS(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_AUS_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_BEL() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1BN6xDo_5duXsuzYvjsCaPPSwRlzyggCriirUiV_DO80/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_BEL);                               
+                              }
+                              function handleQueryReponse_gpr_BEL(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_BEL_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_BRA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1XXwkGBsfjb4q5oYYTjnZiC7cgXGYuID-t17YN_5YjOM/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_BRA);                               
+                              }
+                              function handleQueryReponse_gpr_BRA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_BRA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_CAN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1zWgAqKJEe-EV-6yQp1xwUrCU03vaXv7Z_2a8H87wi0Y/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_CAN);                               
+                              }
+                              function handleQueryReponse_gpr_CAN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_CAN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_CHE() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1qg1UuuewSUGUO0X2JVZfi7jI8vwElMB58CgRw9Pdel8/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_CHE);                               
+                              }
+                              function handleQueryReponse_gpr_CHE(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_CHE_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_CHL() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1hjn_XObSJZJYU8tLBNfWVgzD0LzN3Nc6R3iN8x8cHoE/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_CHL);                               
+                              }
+                              function handleQueryReponse_gpr_CHL;(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_CHL_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_CHN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1cSYpuAyGqEnQBjvTGN9LpCQzEFzqKE0T6x5VvZb7xmE/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_CHN);                               
+                              }
+                              function handleQueryReponse_gpr_CHN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_CHN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_COL() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1NblININzbBcvqtRVXzEZOconupHhEijOIEleoEe5DWA/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_COL);                               
+                              }
+                              function handleQueryReponse_gpr_COL(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_COL_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_DEU() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1CS7lI7BUHeyzhPpAKG1rU1SGARvfNl96ZRCZGNBr0-g/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_DEU);                               
+                              }
+                              function handleQueryReponse_gpr_DEU(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_DEU_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_DNK() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1o9BoxJ-cf6B9ibSibZKPBcK26KK1ynjWbF6qqp3qOUs/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_DNK);                               
+                              }
+                              function handleQueryReponse_gpr_DNK(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_DNK_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_ESP() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1inYGLk5utUNEJKE6hGGSmXU6xYXs2-LShMv6gBF43X0/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_ESP);                               
+                              }
+                              function handleQueryReponse_gpr_ESP(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_ESP_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_FIN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1uYqowTdKwqSF6ik8hVeVSZQo03c3kZqYL78zuD5dFyc/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_FIN);                               
+                              }
+                              function handleQueryReponse_gpr_FIN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_FIN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_FRA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1l7steu1C-6P6zH-HIDMpOy5G9zRgXYqp5fbOOkE6W5Q/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_FRA);                               
+                              }
+                              function handleQueryReponse_gpr_FRA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_FRA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_GBR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1f5skGzqeOtDEcJhLI_on1_O5UP66-_MStLgnXrfsBU0/edit#gid=1608005764');
+                                             query.send(handleQueryReponse_gpr_GBR);                               
+                              }
+                              function handleQueryReponse_gpr_GBR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_GBR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_HKG() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1KHmtyopvI4E21g4PcHh2FQxGovROSH9MRrN27cLr5pE/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_HKG);                               
+                              }
+                              function handleQueryReponse_gpr_HKG(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_HKG_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_IDN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1ftlCksbeBou5oGV7PlA2NSZb27BiSMFH76gL8a87YL4/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_IDN);                               
+                              }
+                              function handleQueryReponse_gpr_IDN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_IDN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_IND() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1jgF6DjqtENojKHIlojXnc5pNtLAwjocXnSYjrh0_REs/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_IND);                               
+                              }
+                              function handleQueryReponse_gpr_IND(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_IND_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_ISR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1BHADaPU76z6ycd7Ul-rA7f4ljLNEpDvvWDGFELMcyVw/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_ISR);                               
+                              }
+                              function handleQueryReponse_gpr_ISR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_ISR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_ITA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1ny9U-M3F2C8dwh39tmusNG2ETTb_WuPvesFSPlVn0rg/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_ITA);                               
+                              }
+                              function handleQueryReponse_gpr_ITA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_ITA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_JPN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1y9-jhXU7VCYxmiawfx3n0FZP5UwPj4D1g65wNSw3GLU/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_JPN);                               
+                              }
+                              function handleQueryReponse_gpr_JPN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_JPN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_KOR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1Vub36TEevy5nLKL2e2YUY162iq4GNFqZycLTQ08BmZ0/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_KOR);                               
+                              }
+                              function handleQueryReponse_gpr_KOR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_KOR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_MEX() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1Zg-vNoVp-OEaD9S_pbFu0RAI7-qXm2DlS8PYKZM8bEE/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_MEX);                               
+                              }
+                              function handleQueryReponse_gpr_MEX(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_MEX_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_MYS() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1uIm6ehArdE8BAUoI7rcbFkLkL4LSlwJm65wl1dFNLAc/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_MYS);                               
+                              }
+                              function handleQueryReponse_gpr_MYS(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_MYS_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_NLD() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1h-fJQ1bmKEaDdSq9jVGZaASVk-CpLA8HHJM0UomjakU/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_NLD);                               
+                              }
+                              function handleQueryReponse_gpr_NLD(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_NLD_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_NOR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1D0Y61w6rRQqyq4sssfq0tyLHVdA1B-JZ60PXigK4gpc/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_NOR);                               
+                              }
+                              function handleQueryReponse_gpr_NOR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_NOR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_PER() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1GfUZb1V2dy5ttka2HLr9N8uRMNSaK_1nOzd5RJmxYjc/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_PER);                               
+                              }
+                              function handleQueryReponse_gpr_PER(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_PER_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_PHL() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1FpthfmK1IPhKEWqyLeIPDeH9yqc14klBUIeLzzHipJ4/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_PHL);                               
+                              }
+                              function handleQueryReponse_gpr_PHL(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_PHL_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_PRT() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1zUKXCCzPwHXWhMLiiiMfDAgknQkXCkUjGQ93wcAkIyM/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_PRT);                               
+                              }
+                              function handleQueryReponse_gpr_PRT(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_PRT_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_RUS() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1Y2H02K4sFN2l-Qgzi770bISnkBxPFHzP5jRTnz-1AzU/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_RUS);                               
+                              }
+                              function handleQueryReponse_gpr_RUS(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_RUS_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_SAU() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1vviPICIeYrPs4tB2ltQVjNEpk8rM0UgqQfKZBUs10ik/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_SAU);                               
+                              }
+                              function handleQueryReponse_gpr_SAU(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_SAU_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_SWE() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1Y9WI1aSrFSLDEy3EkKfP5lTtrYufAX2GyH1yC5Autd0/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_SWE);                               
+                              }
+                              function handleQueryReponse_gpr_SWE(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_SWE_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_THA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1BpM8cpnY83Opio7krTDYGwkGKdOT5hjcYuM3BOmDu0s/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_THA);                               
+                              }
+                              function handleQueryReponse_gpr_THA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_THA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_TUR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1kjRrDIW-hjTPMDvG5mL3xB4B8nKHzBNt11P1vCEWm0M/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_TUR);                               
+                              }
+                              function handleQueryReponse_gpr_TUR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_TUR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_TWN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1wTiJuRgFAg-gD9qEE7751HHApVoxG_xTFfGObFqiFDg/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_TWN);                               
+                              }
+                              function handleQueryReponse_gpr_TWN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_TWN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_UKR() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1yuctzmr6rQozlxbUQi6ii0ZInSJhkmXmoOFplBo64Uw/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_UKR);                               
+                              }
+                              function handleQueryReponse_gpr_UKR(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_UKR_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_USA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1AbxPFmOqxgAv5q5nwJowjEJb5k0uW8OUIh66Z945HTI/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_USA);                               
+                              }
+                              function handleQueryReponse_gpr_USA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_USA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_VEN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1xdzHoRFbMiA9tP1RamLWIpCUYV66E-1e5caGlyhRQhY/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_VEN);                               
+                              }
+                              function handleQueryReponse_gpr_VEN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_VEN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_ZAF() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1h2k1x_zxlRUC7R8StjlELSqd5FY9M99zSIMTVXXm84I/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_ZAF);                               
+                              }
+                              function handleQueryReponse_gpr_ZAF(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_ZAF_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+						  
                               function draw_gprh_Chart() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1LvKwf06w-gyIwvfx_f7dal89PaAReVvjcyp32S7zSFw/edit#gid=0');
                                              query.send(handleQueryReponse_gprh);
@@ -870,10 +1766,255 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
     </script>
 
     <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
-      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Benchmark GPR Index</strong></span>
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>China GPR Index</strong></span>
     </div>
-    <div id="gpr_chart_div" style="width: 1140px; height: 440px;"></div>
+    <div id="gpr_CHN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
     <br>
+        <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Great Britain GPR Index</strong></span>
+    </div>
+    <div id="gpr_GBR_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+            <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>United States GPR Index</strong></span>
+    </div>
+    <div id="gpr_USA_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Argentina GPR Index</strong></span>
+    </div>
+    <div id="gpr_ARG_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Australia GPR Index</strong></span>
+    </div>
+    <div id="gpr_AUS_chart_div_chart_divchart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Belgium GPR Index</strong></span>
+    </div>
+    <div id="gpr_BEL_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Brazil GPR Index</strong></span>
+    </div>
+    <div id="gpr_BRA_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Canada GPR Index</strong></span>
+    </div>
+    <div id="gpr_CAN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Switzerland GPR Index</strong></span>
+    </div>
+    <div id="gpr_CHE_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Chile GPR Index</strong></span>
+    </div>
+    <div id="gpr_CHL_chart_div_chart_divchart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>China GPR Index</strong></span>
+    </div>
+    <div id="gpr_CHN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Colombia GPR Index</strong></span>
+    </div>
+    <div id="gpr_COL_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Germany GPR Index</strong></span>
+    </div>
+    <div id="gpr_DEU_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Denmark GPR Index</strong></span>
+    </div>
+    <div id="gpr_DNK_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Spain GPR Index</strong></span>
+    </div>
+    <div id="gpr_ESP_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Finland GPR Index</strong></span>
+    </div>
+    <div id="gpr_FIN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>France GPR Index</strong></span>
+    </div>
+    <div id="gpr_FRA_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Great Britain GPR Index</strong></span>
+    </div>
+    <div id="gpr_GBR_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Hong Kong GPR Index</strong></span>
+    </div>
+    <div id="gpr_HKG_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Indonesia GPR Index</strong></span>
+    </div>
+    <div id="gpr_IDN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>India GPR Index</strong></span>
+    </div>
+    <div id="gpr_IND_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Israel GPR Index</strong></span>
+    </div>
+    <div id="gpr_ISR_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Italy GPR Index</strong></span>
+    </div>
+    <div id="gpr_ITA_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Japan GPR Index</strong></span>
+    </div>
+    <div id="gpr_JPN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Korea GPR Index</strong></span>
+    </div>
+    <div id="gpr_KOR_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Mexico GPR Index</strong></span>
+    </div>
+    <div id="gpr_MEX_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Malaysia GPR Index</strong></span>
+    </div>
+    <div id="gpr_MYS_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Netherlands GPR Index</strong></span>
+    </div>
+    <div id="gpr_NLD_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Norway GPR Index</strong></span>
+    </div>
+    <div id="gpr_NOR_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Peru GPR Index</strong></span>
+    </div>
+    <div id="gpr_PER_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Philippines GPR Index</strong></span>
+    </div>
+    <div id="gpr_PHL_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Portugal GPR Index</strong></span>
+    </div>
+    <div id="gpr_PRT_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Russia GPR Index</strong></span>
+    </div>
+    <div id="gpr_RUS_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Saudi Arabia GPR Index</strong></span>
+    </div>
+    <div id="gpr_SAU_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Sweden GPR Index</strong></span>
+    </div>
+    <div id="gpr_SWE_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Thailand GPR Index</strong></span>
+    </div>
+    <div id="gpr_THA_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Turkey GPR Index</strong></span>
+    </div>
+    <div id="gpr_TUR_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Taiwan GPR Index</strong></span>
+    </div>
+    <div id="gpr_TWN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Ukraine GPR Index</strong></span>
+    </div>
+    <div id="gpr_UKR_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>United States GPR Index</strong></span>
+    </div>
+    <div id="gpr_USA_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Venezuela GPR Index</strong></span>
+    </div>
+    <div id="gpr_VEN_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>South Africa GPR Index</strong></span>
+    </div>
+    <div id="gpr_ZAF_chart_divchart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
     <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
       <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Historical GPR Index</strong></span>
     </div>
