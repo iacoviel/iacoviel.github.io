@@ -891,10 +891,7 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                                              };
                                              chart.draw(data, options);
                               }
-	                                           function draw_gpr_Chart_ZAF() {
-							   var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1h2k1x_zxlRUC7R8StjlELSqd5FY9M99zSIMTVXXm84I/edit#gid=0');
-                                             query.send(handleQueryReponse_gpr_ZAF);                               
-                              }
+
 	    
 	    	    						  function draw_gpr_Chart_BRA() {
                                              var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1XXwkGBsfjb4q5oYYTjnZiC7cgXGYuID-t17YN_5YjOM/edit#gid=0');
@@ -938,7 +935,10 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                                              chart.draw(data, options);
                               }
 							  
-		
+			                                           function draw_gpr_Chart_ZAF() {
+							   var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1h2k1x_zxlRUC7R8StjlELSqd5FY9M99zSIMTVXXm84I/edit#gid=0');
+                                             query.send(handleQueryReponse_gpr_ZAF);                               
+                              }
 	
                               function handleQueryReponse_gpr_ZAF(response) {
                                              if (response.isError()) {
