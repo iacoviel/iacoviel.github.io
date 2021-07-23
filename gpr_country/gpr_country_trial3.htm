@@ -866,6 +866,91 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                                              };
                                              chart.draw(data, options);
                               }
+      
+      							  function draw_gpr_Chart_BEL() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1BN6xDo_5duXsuzYvjsCaPPSwRlzyggCriirUiV_DO80/edit#gid=0');
+                                             query.send(handleQueryReponse_gpr_BEL);                               
+                              }
+                              function handleQueryReponse_gpr_BEL(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_BEL_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_BRA() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1XXwkGBsfjb4q5oYYTjnZiC7cgXGYuID-t17YN_5YjOM/edit#gid=0');
+                                             query.send(handleQueryReponse_gpr_BRA);                               
+                              }
+                              function handleQueryReponse_gpr_BRA(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_BRA_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_CAN() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1zWgAqKJEe-EV-6yQp1xwUrCU03vaXv7Z_2a8H87wi0Y/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_CAN);                               
+                              }
+                              function handleQueryReponse_gpr_CAN(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_CAN_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
+							  function draw_gpr_Chart_CHE() {
+                                             var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1qg1UuuewSUGUO0X2JVZfi7jI8vwElMB58CgRw9Pdel8/edit?usp=sharing');
+                                             query.send(handleQueryReponse_gpr_CHE);                               
+                              }
+                              function handleQueryReponse_gpr_CHE(response) {
+                                             if (response.isError()) {
+                                                            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                                                            return;
+                                             }
+
+                                             var data = response.getDataTable();
+                                             var chart = new google.visualization.AnnotationChart(document.getElementById('gpr_CHE_chart_div'));
+                                             var options = {
+                                                            displayAnnotations: true,
+                                                            displayAnnotationsFilter: true,
+                                                            displayZoomButtons: false,
+                                                            displayLegendDots: false,
+                                             };
+                                             chart.draw(data, options);
+                              }
+							  
 
       
                               function draw_gprh_Chart() {
