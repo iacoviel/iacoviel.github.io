@@ -889,6 +889,10 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
                                              };
                                              chart.draw(data, options);
                               }
+	                                           function draw_gpr_Chart_ZAF() {
+							   var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1BN6xDo_5duXsuzYvjsCaPPSwRlzyggCriirUiV_DO80/edit#gid=0');
+                                             query.send(handleQueryReponse_gpr_ZAF);                               
+                              }
 	
                               function handleQueryReponse_gpr_ZAF(response) {
                                              if (response.isError()) {
