@@ -820,6 +820,11 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
       google.charts.load('current', {'packages':['annotationchart']});
       google.charts.setOnLoadCallback(draw_gpr_Chart);
       google.charts.setOnLoadCallback(draw_gpr_Chart_AUS);
+	    	  google.charts.setOnLoadCallback(draw_gpr_Chart_BEL);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_BRA);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_CAN);
+	  google.charts.setOnLoadCallback(draw_gpr_Chart_CHE);
+
                  google.charts.setOnLoadCallback(draw_gprh_Chart);
 
                               function draw_gpr_Chart() {
@@ -988,6 +993,29 @@ Daily data for the GPR index are available <a href="gpr_files/gpr_daily_latest.x
     </div>
     <div id="gpr_chart_div_AUS" style="width: 1140px; height: 440px;"></div>
     <br>
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Belgium GPR Index</strong></span>
+    </div>
+    <div id="gpr_BEL_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Brazil GPR Index</strong></span>
+    </div>
+    <div id="gpr_BRA_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Canada GPR Index</strong></span>
+    </div>
+    <div id="gpr_CAN_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>
+	
+	  <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
+      <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Switzerland GPR Index</strong></span>
+    </div>
+    <div id="gpr_CHE_chart_div" style="width: 1140px; height: 440px;"></div>
+    <br>  
     <div class="test-id__field-label-container" data-aura-rendered-by="16:208;a">
       <span class="test-id__field-label slds-form-element__label" data-aura-rendered-by="17:208;a"><strong>Historical GPR Index</strong></span>
     </div>
