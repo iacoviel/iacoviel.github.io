@@ -1,1 +1,0 @@
-The file run_replication_country_gpr.do use as input the data described in the file gprh_annual.dta and generates as output the tables in Section 5 of the paper "Measuring Geopolitical Risk"
