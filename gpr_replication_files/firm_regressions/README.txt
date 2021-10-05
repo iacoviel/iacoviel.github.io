@@ -1,1 +1,1 @@
-Test
+The file run_replication_firm.do reproduces the firm-level analysis presented in Section 6.
