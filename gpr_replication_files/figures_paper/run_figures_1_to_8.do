@@ -1,4 +1,3 @@
-//set scheme lean2
 set scheme s1color, permanently
 
 cd U:\tf\GPR\GPRAER_series
@@ -8,12 +7,12 @@ global do_figure2 = 1  // Daily GPR
 global do_figure3 = 1  // Historical GPR
 global do_figure4 = 1  // Historical ACTS THRETS
 global do_figure5 = 1  // Narrative 
-global do_figure6 = 1
-global do_figure7 = 1
-global do_figure8 = 1
+global do_figure6 = 1  // Country-specific GPR
+global do_figure7 = 1  // Comparison with Mil.Spending News and Deaths
+global do_figure8 = 1  // Comparison with EPU and VIX
 
 // data_for_charts_in_paper
-// gpr_daily_recent
+// data_gpr_daily_recent
 // data_gpr_quarterly
 // data_gpr_annual
 
@@ -108,14 +107,12 @@ graph export results\gpr_1985.eps, name(GPR85LOG) replace logo(off) mag(100)
 
 //--------------------------
 // Figure 2: 
-// TO FIX: Original with all labels is done with Matlab
+// Original with all labels is done with Matlab
 //--------------------------
 
 if $do_figure2 == 1 {
 
-
-use gpr_daily_recent, clear
-
+use data_gpr_daily_recent, clear
 
 tsset date
 sum GPR if tin(1jan1985,31dec2019)
@@ -131,14 +128,21 @@ quietly tssmooth ma GPR_MA30 = GPR, window(29 1 0)
 global d1="1jan1985"
 global d2="31dec2020"
 
+// This is a patch to show years in Stata
+gen year1=year(date)
+gen month1=month(date)
+gen day1=day(date)
+gen date1 = year1 + (day1)/30/12 + (month1-1)/12
+
 
 twoway ///
-(scatter GPR date if tin($d1,$d2), msize(0.2) xtitle("") title(Daily GPR) ///
-ylabel(, angle(horizontal) format(%5.0f)) ///
-xlabel(, labsize(3) angle(horizontal) format(%tdd.m.y))) ///
-(tsline GPR_M if day==15, lcolor(blue) lwidth(.5) legend(off)) ///
+(scatter date1 GPR if tin($d1,$d2), msize(0.2) ytitle("") xtitle("") title(Daily GPR) ///
+xlabel(, angle(horizontal) format(%5.0f)) ///
+ylabel(, labsize(3) angle(horizontal) )) ///
+(line date1 GPR_M if day==15, lcolor(blue) ylabel(1985(5)2020) ysc(r(1985 2021)) lwidth(.5) legend(off) xsc(alt) ysc(reverse)) ///
 , ///
-graphregion(fcolor(white)) nodraw name(A1, replace)
+graphregion(fcolor(white)) name(A1, replace)
+
 
 
 
