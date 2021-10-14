@@ -1,6 +1,5 @@
 set scheme s1color, permanently
 
-cd U:\tf\GPR\GPRAER_series
 
 global do_figure1 = 1  // Recent GPR
 global do_figure2 = 1  // Daily GPR

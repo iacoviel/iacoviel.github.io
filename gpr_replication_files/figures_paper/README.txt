@@ -1,7 +1,10 @@
 
 The file run_figures_1_to_8 reproduces figures 1 to 8 that present the main data described in the paper.
 
-A more accurate description of the series can be found in the file data_gpr_export also available on the replication webpage.
+The file run_table_2 reproduces Table 2 in the paper.
+
+Most of the series mnemonics are either self-explanatory or are explained in the file data_gpr_export.dta, also found on this page.
+
 
 INPUT FILES
 1. data_for_charts_in_paper.dta
@@ -10,4 +13,5 @@ INPUT FILES
 4. data_gpr_daily_recent.dta
 
 OUTPUT
-Charts contained in the paper
+Figures 1-8 and Table 2 in the paper
+
