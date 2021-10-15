@@ -2,6 +2,11 @@
 
 use firm_level.dta, clear
 
+global do_run_firm_level_analysis = 1
+global do_plot_firm_level_gpr = 0 // Change do_plot_firm_level_gpr to 1 to plot figure A.11
+
+
+
 egen sgpr = std(log(GPR))
 
 drop if ffportfolio=="fin" | ffportfolio=="banks" | ffportfolio=="other"
@@ -45,6 +50,49 @@ encode(ffportfolio), gen(ffcode)
 
 
 
+if $do_plot_firm_level_gpr == 1 {
+
+preserve
+
+gen gg = gprit
+
+egen gg_count = total(!missing(gg)), by(firm)
+drop if gg_count == 0
+
+egen gpri = mean(gg), by(firm)
+gen gprifd = gg - gpri 
+egen gprfd = mean(gprifd), by(quarter) 
+egen sgprfd = std(gprfd)
+
+keep if tin(2005q1,2019q4)
+
+gen year = yofd(dofq(quarter))
+
+collapse sgpr* GPR*, by(quarter)
+
+egen sgpragg = std(GPR)
+label var sgprfd "Earnings Call: Aggregate GPR (standardized)"
+label var sgpragg "GPR Index (standardized)"
+
+pwcorr sgpragg sgprfd 
+
+twoway ///
+(tsline sgprfd, recast(connected) color(red) lwidth(thick)  ) ///
+(tsline sgpragg,  ///
+ylabel(, angle(horizontal)) ///
+ysc(r(-2 3.3)) ///
+tlabel(2005q1(8)2019q4)  lwidth(medthick) color(blue))  ///
+if tin(2005q1,2019q4), ///
+graphr(color(white)) ///
+legend(order(1 "Earnings Calls: Aggregate GPR, standardized" 2 "GPR Index, standardized") ///
+rows(2) symysize(0.01) ring(0) position(10) size(*0.7)) ///
+ttitle(" ") name(GG, replace)
+
+gr export gpr_firms_aggregate.eps, replace
+
+restore
+
+}
 
 
 
@@ -58,8 +106,7 @@ encode(ffportfolio), gen(ffcode)
 
 
 
-
-
+if $do_run_firm_level_analysis == 1 {
 
 //---------------------------------
 // Local Projection
@@ -112,7 +159,7 @@ replace lik = 100*liktr
 
 
 
-egen mbeta`x' = mean(beta), by(ffcode)
+egen mbeta = mean(beta), by(ffcode)
 egen smbeta = std(mbeta)
 gen dumexpo = 0 if smbeta~=.
 quietly sum mbeta, detail
@@ -364,7 +411,7 @@ se nolegend nocons noautosumm sdec(2) tex star starlevels(5 1 0.1) starloc(1)
 
 
 
-
+}
 
 
 
