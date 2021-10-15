@@ -1,0 +1,1 @@
+The file run_granger_test.do runs the Granger causality tests reported in Table A.8
