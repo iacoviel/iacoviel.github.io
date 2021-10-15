@@ -7,11 +7,11 @@ Most of the series mnemonics are either self-explanatory or are explained in the
 
 
 INPUT FILES
-1. data_for_charts_in_paper.dta
+1. data_gpr_monthly.dta
 2. data_gpr_quarterly.dta
 3. data_gpr_annual.dta
 4. data_gpr_daily_recent.dta
 
 OUTPUT
-Figures 1-8 and Tables 1-2 in the paper
+Figures 1-8 and Tables 1-2 in the paper and some appendix charts
 
