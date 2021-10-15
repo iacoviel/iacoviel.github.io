@@ -1,5 +1,6 @@
 set scheme s1color, permanently
 
+cd U:\tf\GPR\GPR_series
 
 global do_figure1 = 1  // Recent GPR
 global do_figure2 = 1  // Daily GPR
@@ -10,7 +11,7 @@ global do_figure6 = 1  // Country-specific GPR
 global do_figure7 = 1  // Comparison with Mil.Spending News and Deaths
 global do_figure8 = 1  // Comparison with EPU and VIX
 
-// data_for_charts_in_paper
+// data_gpr_monthly
 // data_gpr_daily_recent
 // data_gpr_quarterly
 // data_gpr_annual
@@ -21,7 +22,7 @@ global do_figure8 = 1  // Comparison with EPU and VIX
 
 if $do_figure1 == 1 {
 
-use data_for_charts_in_paper, replace
+use data_gpr_monthly, replace
 global t2="2020m12"
 
 keep if tin(1985m1,2020m12)
@@ -164,7 +165,7 @@ graph export results\gpr_daily.eps, name(gpr_daily) replace logo(off) mag(100)
 
 if $do_figure3 == 1 {
 
-use data_for_charts_in_paper, replace
+use data_gpr_monthly, replace
 
 gen eventshort = " "
 quietly replace eventshort = "WWI Begins" if tin(1914m8,1914m8)
@@ -278,7 +279,7 @@ graph export results\gprh_1900.eps, name(GPRH1900) replace logo(off) mag(100)
 
 if $do_figure4 == 1 {
 
-use data_for_charts_in_paper, replace
+use data_gpr_monthly, replace
 
 format GPRH* %5.0f
 
@@ -414,7 +415,7 @@ graph export results\gpr_ta_3.eps, name(z4z5z6x) replace logo(off) mag(100)
 //-----------------------------------
 
 if $do_figure5 == 1 {
-use data_for_charts_in_paper, replace
+use data_gpr_monthly, replace
 
 cap drop eventshort
 gen eventshort = " "
@@ -475,7 +476,8 @@ graph export results\gpr_narrative.eps, name(NARR) replace logo(off) mag(100)
 
 if $do_figure6 == 1 {
 
-use data_for_charts_in_paper, clear
+use data_gpr_monthly, clear
+sort month
 
 global vvar = "USA GBR JPN RUS CHN MEX DEU KOR" 
 
@@ -669,7 +671,7 @@ graph export results\wardeaths_bottom.eps, name(fig7b) replace logo(off) mag(100
 
 if $do_figure8 == 1 {
 
-use data_for_charts_in_paper, replace
+use data_gpr_monthly, replace
 
 keep if yearm>1984.9999
 keep if yearm<2020.9999
