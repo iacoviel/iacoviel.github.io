@@ -1,6 +1,6 @@
 set scheme s1color, permanently
 
-cd U:\tf\GPR\GPR_series
+// Set globals to 1 to plot figures
 
 global do_appfigure_a3 = 0  // Comparison with Military Spending: Detail
 global do_appfigure_a4 = 0  // Natural Disasters and Sport Events
