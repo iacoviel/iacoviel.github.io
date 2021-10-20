@@ -702,7 +702,7 @@ use data_gpr_annual, clear
 tsset year
 keep if year<=2020
 
-label var WARDEATHS "War Deaths (per million), left scale"
+label var WARDEATHS "War Deaths (per 100,000), left scale"
 label var GPRH "GPR (annual), right scale"
 
 twoway ///
