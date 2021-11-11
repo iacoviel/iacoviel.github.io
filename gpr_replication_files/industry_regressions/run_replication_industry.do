@@ -1,6 +1,5 @@
 // Daily Fama-French Portfolio returns & GPR
 
-cd C:\Research\GPR_firmlevel\famafrench_data
 
 clear all
 set more off
@@ -15,7 +14,122 @@ set more off
 local start_date 01jan1985
 local end_date 31dec2019
 
-use fama_french_equal_gpr, clear
+
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------
+// Import Daily GPR data
+//------------------------------------------
+preserve
+import excel gprnew_20210615.xlsx, firstrow sheet("GPR_DAILY_RECENT") clear 
+keep DAY GPRD GPRD_THREAT GPRD_ACT
+rename DAY Day
+rename GPRD gpr
+rename GPRD_THREAT gpr_threat
+rename GPRD_ACT gpr_act
+tostring Day, replace
+gen date = dofd(date(Day, "YMD"))
+format date %td
+drop Day
+sort date
+drop if date==.
+label var gpr "GPRD (Daily GPR)"
+label var gpr_threat "GPRD_THREAT (Daily GPR Threats)"
+label var gpr_act "GPRD_ACT (Daily GPR Acts)"
+save temp_i_gpr_daily, replace
+restore
+
+
+
+
+
+
+//------------------------------------------
+// Import Fama-French 3 factors + Risk Free
+// Data pulled from http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip
+//------------------------------------------
+preserve
+import delimited F-F_Research_Data_Factors_daily.csv, varnames(1) clear
+rename v1 date1
+
+
+* Generate new date variables
+tostring date1, replace 
+gen date = date(date1, "YMD")
+drop date1
+format date %td
+order date, first
+drop if year(date)<1985 
+drop if date==. 
+save temp_i_ff_factors_daily, replace
+restore
+
+
+
+
+
+//------------------------------------------
+// Import Fama-French Equal weighted returns
+// Data pulled from http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/49_Industry_Portfolios_daily_CSV.zip
+// File name: 49 Industry Portfolios [Daily]
+//------------------------------------------
+
+import delimited using 49_Industry_Portfolios_Daily_equal_weighted.CSV, encoding(UTF-8) clear 
+
+
+drop in L
+rename v1 date
+tostring date, replace
+gen date1 = date(date, "YMD")
+format date1 %td
+drop date
+rename date1 date
+order date, first
+drop if year(date)<1985
+
+
+foreach var of varlist agric-other {
+	rename `var' ret`var'
+}
+
+tsset date, daily
+tsfill
+
+reshape long ret, i(date) j(ff49) string
+
+
+
+
+
+
+//--------------------------------------
+// Merge back with all other variables
+//--------------------------------------
+
+merge m:1 date using temp_i_ff_factors_daily, nogen
+
+merge m:1 date using temp_i_gpr_daily, nogen
+drop if gpr ==.
+sort ff49 (date)
+
+
+
+
+
+
+//-----------------------------------
+// Add labels, clean data
+//-----------------------------------
+
 
 encode ff49, gen(ff)
 drop if ff49==""
@@ -30,30 +144,21 @@ bysort ff: gen fgpr = F.gpr
 bysort ff: gen dfgpr = D.fgpr
 label var dfgpr "Change in GPR from previous calendar day"
 label var fgpr "GPR from previous calendar day"
-label var sprtrn "SP 500 return"
 
 egen sdfgpr = std(dfgpr)
 egen sfgpr = std(fgpr)
-
-
 
 egen group = group(ff49)
 
 
 
-
-// Industry returns: daily, %
-// RF is the daily return on a t-bill
-label var rf "Daily return on a t-bill"
-gen ret0 = ret - rf
-label var ret0 "Industry return minus RF"
-
-label var ret "Industry return"
+label var rf "Daily return on a T-Bill"
+gen ret_minus_rf = ret - rf
+label var ret_minus_rf "Industry Return minus RF"
+label var ret "Industry Return"
 
 sort date (group)
 summ group
-
-
 
 
 
@@ -62,7 +167,18 @@ di "Largest changes in GPR in the sample"
 list date sdfgpr if (sdfgpr > 5 & sdfgpr~=. & ff49=="gold")
 
 
-reg ret0 c.sdfgpr#i.ff i.ff, allbaselevels
+
+
+
+
+
+
+
+//------------------------------------------
+// RUN INDUSTRY EXPOSURE REGRESSION
+//------------------------------------------
+
+reg ret_minus_rf c.sdfgpr#i.ff i.ff, allbaselevels
 
 
 
@@ -75,7 +191,6 @@ gen beta = .
 forvalues g = 1/49 {
     replace beta = B[1, `g'] if ff == `g'
 }
-
 
 
 rename ff49 ffportfolio 
@@ -142,7 +257,6 @@ capture replace ffportfoliolong = "Other" if ffportfolio=="other"
 
 egen std_beta = std(-beta)
 
-
 global minbeta = r(min)
 global maxbeta = r(max)
 global minbeta = $minbeta-1
@@ -157,11 +271,10 @@ b1title(Average Exposure) ytitle("") ysc(r($minbeta $maxbeta)) ///
 graphregion(fcolor(white)) ///
 ylab(,nogrid) ///
 ysc(r(-4 3)) ///
-nofill name(EXPO_TO_GPR, replace)
+nofill name(EXPOSURE_TO_GPR, replace)
 
-//graph export industry_exposure.eps, replace
 
-//save industry_betas_simple, replace
+save industry_betas_simple, replace
 
 
 
