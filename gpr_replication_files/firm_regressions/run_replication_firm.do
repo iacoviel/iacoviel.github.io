@@ -2,10 +2,32 @@
 
 use firm_level.dta, clear
 
-global do_run_firm_level_analysis = 1
-global do_plot_firm_level_gpr = 0 // Change do_plot_firm_level_gpr to 1 to plot figure A.11
+global do_run_firm_level_analysis = 1 // Set do_run_firm_level_analysis to 1 to run firm-level regressions
+global do_plot_firm_level_gpr = 0 // Set do_plot_firm_level_gpr to 1 to plot figure A.11
 
 
+
+xtset firm fquarter
+sort firm fquarter
+
+gen dcapxy = capxy if fqtr==1
+by firm: replace dcapxy = D.capxy if fqtr>1
+
+
+gen tobinq = ((prccq*cshoq) + atq - ceqq)/atq 
+replace tobinq = . if atq<0
+
+gen cfrate=.
+bysort firm: replace cfrate = cheq/L.ppentq
+
+label var cfrate "cheq/L.ppentq"
+label var tobinq "((prccq*cshoq) + atq - ceqq)/atq (. if atq<0)"
+label var dcapxy "capxy if fqtr==1, D.capxy if fqtr>1"
+
+
+
+xtset firm quarter
+sort firm quarter
 
 egen sgpr = std(log(GPR))
 
@@ -21,9 +43,7 @@ gen flag_bigdk = 0
 replace flag_bigdk = 1 if d1kk>0.5  & d2kk<-0.5 & d1kk!=. & d2kk!=. & kk!=.
 replace flag_bigdk = 1 if d1kk<-0.5 & d2kk>0.5  & d1kk!=. & d2kk!=. & kk!=.
 
-sort firm fquarter
 gen ik=.
-sort firm quarter
 bysort firm: gen lppentq = L.ppentq
 bysort firm: replace ik = 100*dcapxy/lppentq 
 gen lppentqr = lppentq/JGDP*100
@@ -52,25 +72,30 @@ encode(ffportfolio), gen(ffcode)
 
 if $do_plot_firm_level_gpr == 1 {
 
+cls
+
 preserve
 
 gen gg = gprit
 
 egen gg_count = total(!missing(gg)), by(firm)
-drop if gg_count == 0
+drop if gg_count < 2 // Drop if a firm has less than 2 observations on GPR
 
 egen gpri = mean(gg), by(firm)
-gen gprifd = gg - gpri 
-egen gprfd = mean(gprifd), by(quarter) 
-egen sgprfd = std(gprfd)
+gen gprifd = gg - gpri // For the chart, firm-level GPR removes firm-level mean
+egen gprfd = mean(gprifd), by(quarter) // Aggregate firm-level GPR is mean by quarter
+
+
 
 keep if tin(2005q1,2019q4)
 
-gen year = yofd(dofq(quarter))
+collapse sgpr* GPR* gprfd, by(quarter)
 
-collapse sgpr* GPR*, by(quarter)
+egen sgprfd = std(gprfd)
 
 egen sgpragg = std(GPR)
+
+
 label var sgprfd "Earnings Call: Aggregate GPR (standardized)"
 label var sgpragg "GPR Index (standardized)"
 
