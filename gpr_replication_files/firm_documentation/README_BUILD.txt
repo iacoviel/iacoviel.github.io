@@ -44,7 +44,7 @@ INSTRUCTIONS TO BUILD the Compustat Quarterly Firm-Level Data
 Compustat data can be downloaded from https://wrds-www.wharton.upenn.edu/pages/
 with a registered account.
 
-The data location is Compustat Daily Updates - Fundamentals Quarterly
+The data location is Compustat - Capital IQ ->  North America -> Fundamentals Quarterly
 
 Step 1: Select date 1985-01 / 2020-12
 
