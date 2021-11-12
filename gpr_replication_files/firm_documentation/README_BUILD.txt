@@ -1,7 +1,10 @@
 README file for building the data for firm-level analysis
 
-*******************************************************
+*********************************************************
 
+This file describes the steps to build the Stata file "firm_level.dta" that is used for the firm-level analysis in the paper "Measuring Geopolitical Risk." 
+
+The Stata file  is built by running the file run_merge_compustat.do. This file uses all the files 1 to 9 listed below. The first file is built using Compustat.
 
 --------------------------
 run_merge_compustat.do 
@@ -10,6 +13,7 @@ Description: this file merges compustat data with firm-level GPR data from this 
 --------------------------
 
 INPUTS
+------
 1. compustat_wrds.csv (Compustat Quarterly Firm-Level Data: This file CANNOT BE SHARED and must be created using an account at Wharton/WRDS since it contains proprietary data. Instructions on how to create the file are below.)*
 2. gpri31_baseline.dta (Firm-Level raw GPR data from CI)
 3. haver_macrodata_monthly.xlsx (Haver macro data, includes aggregate GPR)
@@ -23,6 +27,7 @@ Auxiliary files to cross-walk from Compustat SIC to FF
 
 
 OUTPUT
+------
 Files used in the firm-level analysis
 1. firm_level.dta (For replication of GPR results. This file CANNOT BE SHARED since it is created using Compustat data above)
 2. firm_level_gpr_only.dta (for distribution of GPR data)
@@ -32,9 +37,9 @@ Files used in the firm-level analysis
 
 
 
-
-
-* This file must be created using an account at Wharton/WRDS since it contains proprietary data. Instructions are below.
+INSTRUCTIONS TO BUILD the Compustat Quarterly Firm-Level Data
+-----------------------------------------------------------
+* The Compustat firm-level file must be created using an account at Wharton/WRDS since it contains proprietary data. 
 
 Compustat data can be downloaded from https://wrds-www.wharton.upenn.edu/pages/
 with a registered account.
@@ -45,7 +50,7 @@ Step 1: Select date 1985-01 / 2020-12
 
 Step 2: Declare TIC are company codes, select "Search the entire database"
 
-Step 3: Select and download the following 19 variables:
+Step 3: Select and download the following variables:
 atq
 capxy
 ceqq
@@ -66,12 +71,11 @@ revtq
 sic
 tic
 
-Step 4: Select csv as output format, uncompressed, YYMMDDn8
-Press Submit Form button
+Step 4: Select as output format: (1) csv; (2) uncompressed; (3) YYMMDDn8. Then 
+press the "Submit Form" button. 
 
-Result:
-Dataset should contain all variables in step 3 above.
-Note that other variables will be by default added to the dataset
+As a result, you should get a dataset that contains all variables listed in step 3 above.
+Note that other variables will be by default added to the dataset:
 consol
 costat
 curcdq
@@ -83,5 +87,4 @@ gvkey
 indfmt
 popsrc.
 
-For the record, query number 4887058, run on  
-Submitted:2021-11-11 16:13
+Note: For the record, query number 4887058, Submitted on:2021-11-11 16:13
