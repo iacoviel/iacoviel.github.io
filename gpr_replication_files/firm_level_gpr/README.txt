@@ -1,0 +1,1 @@
+The file firm_level_gpr_only.zip is a zipped Stata file containing raw firm-level GPR data.
