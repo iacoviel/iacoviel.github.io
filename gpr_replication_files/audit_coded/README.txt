@@ -1,4 +1,4 @@
-The Excel files in this directory contain the manual coding of the articles used for the audit of the GPR index described in the paper, Table A.3:  Validation of GPR Index.
+The Excel files in the zipped file in this section contain the manual coding of the articles used for the audit of the GPR index described in the paper, Table A.3:  Validation of GPR Index.
 
 For instance, in the excel file
 "Audit #1 GPRH 3 newspaper random sample of 635 --- historical",
