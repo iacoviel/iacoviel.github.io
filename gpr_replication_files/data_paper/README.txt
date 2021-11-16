@@ -1,0 +1,1 @@
+This section contains the monthly data (data_gpr_export, in Excel and Stata format) used in various sections of the papers. Most of these data can also be found in other sections when used for plotting or for regression analysis.
