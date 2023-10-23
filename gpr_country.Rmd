@@ -1,0 +1,343 @@
+---
+title: "Country-Specific Geopolitical Risk Index"
+output: html_document 
+ 
+---
+
+
+<style type="text/css">
+.title{
+    display: none;
+  }
+  body{
+  font-family: Times;
+  display: block;
+  line-height: 1.5 !important;
+  background-color: WhiteSmoke;
+}
+p {line-height: 1.5;}
+</style>
+
+
+![](gpr_banner2.JPG){width=1750}
+
+#### <span style="color:red;">Update June 1, 2023: We have added Vietnam to the set of countries for which we publish country-specific GPR data.</span>
+
+## <span style= "font-family: Helvetica"> <b> Overview </b> </span>
+
+#### The  country-specific GPR indexes reflect automated text-search results of the electronic archives of newspaper articles. For 44 advanced and emerging countries, Caldara and Iacoviello calculate the country-specific index by counting the monthly share of all newspaper articles from 1900 to present (or 1985 to present for the Recent Index) that both (1) meet the criterion for inclusion in the GPR index and (2) mention the name of the country or its major cities.  Each index is expressed as a monthly share of newspaper articles. The resulting indices capture the U.S. perspective on risks posed by, or involving, the country in question. Visit our main <u>[GPR index page](/gpr.htm)</u> for additional details. 
+
+
+#### <br> Cite as: Caldara, Dario and Matteo Iacoviello (2022), "<u>[Measuring Geopolitical Risk](/gpr_files/GPR_PAPER.pdf)</u>," American Economic Review, April, 112(4), pp.1194-1225. (This paper uses country-specific indexes for 26 countries.)
+
+#### Caldara, Dario, Sarah Conlisk, Matteo Iacoviello, and Maddie Penn, "<u>[Do Geopolitical Risks Raise or Lower Inflation?](research_files/GPR_INFLATION_PAPER.pdf)</u>," February 2023 (This paper extends the construction of the country-specific indexes to 43 countries.)
+
+##### (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/gpr.htm on Month DD, YYYY").
+
+
+#### <br> Plots and narrative information for each individual country are available clicking the links below.
+#### <u>[North America](/gpr_country_files/gprc_nam.htm)</u>: Canada, Mexico, USA <br> <u>[South America](/gpr_country_files/gprc_sam.htm)</u>: Argentina, Brazil, Chile, Colombia, Peru, Venezuela <br> <u>[Europe (North and East)](/gpr_country_files/gprc_neeu.htm)</u>: Denmark, Finland, Hungary, Norway, Poland, Russia, Sweden, Ukraine, United Kingdom <br> <u>[Europe (South and West)](/gpr_country_files/gprc_sweu.htm)</u>: Belgium, France, Germany, Italy, The Netherlands, Portugal, Spain, Switzerland <br> <u>[Middle East and Africa](gpr_country_files/gprc_me.htm)</u>: Egypt, Israel, Saudi Arabia, South Africa, Tunisia, Turkey <br> <u>[Asia and Oceania](/gpr_country_files/gprc_as.htm)</u>: Australia, China, Hong Kong, Japan, South Korea, The Philippines, Taiwan, Indonesia, India, Malaysia, Thailand, Vietnam <br>  
+
+## <br> <span style= "font-family: Helvetica"> <b> Data </b> </span>
+#### Download our monthly data here: <u> [Excel format](/gpr_files/data_gpr_export.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_export.dta)</u> <br><i> The monthly data are updated at the beginning of each month. (Last update: October 2, 2023).<br>The monthly data include the country-specific GPR indexes.<br>Each series mnemonics is described in the last columns of the Excel file and in the Stata file. </i>
+#### Daily data for the Recent GPR index are available here: <u> [Excel format](/gpr_files/data_gpr_daily_recent.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_daily_recent.dta)</u> <br><i> The daily data are updated every Monday. (Last update: October 23, 2023) </i>
+#### Access older vintages of the data <u>[here](https://github.com/iacoviel/iacoviel.github.io/tree/master/gpr_archive_files)</u>.
+###### Monthly vintages are named as follows, where YYYYMM are the year and month of the update version:<br>Excel format: data_gpr_export_YYYYMM.xls <br>Stata format: data_gpr_export_YYYYMM.dta<br>Daily vintages are named as follows, where YYYYMMDD are the year, month, and day of the update version:<br>Excel format: data_gpr_daily_recent_YYYYMMDD.xls <br>Stata format: data_gpr_daily_recent_YYYYMMDD.dta<br>Note: The latest data are preliminary and subject to revisions since some newspapers are added to the search database with delay.
+
+
+
+```{r setup, include=FALSE, warning=FALSE, message = FALSE}
+#knitr::opts_chunk$set(dev="png")
+#library(knitr)
+#knit_hooks$set(optipng = hook_optipng)
+#options(repos=structure(c(CRAN="http://cran.frb.gov/"))) 
+library(plotly)
+library(shiny)
+library(quantmod)
+library(lubridate)
+library(tidyverse)
+library(readxl)
+library(plotlyGeoAssets)
+library(RColorBrewer)
+
+#Data----------------------------------------------------------------
+homeDir <- "U:/tf/GPR/GPR_python"
+
+#Up to what month is data updated?
+date <- "October 2023"
+
+country <- read_csv(paste0(homeDir, "/website/country_codes.csv"))
+
+
+types <- c("date", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", 
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "skip", "skip")
+
+
+base <- read_excel(paste0(homeDir, "/website/data_gpr_export.xls"), col_types = types)
+
+GPRCLH <- base %>%
+  select(month,starts_with("GPRHC")) %>%
+  mutate(Date = as.yearmon(month)) %>%
+  filter(Date <= date) %>%
+  pivot_longer(cols = GPRHC_ARG:GPRHC_ZAF, names_prefix = "GPRHC_", names_to = "iso_alpha", values_to = "GPRC") %>%
+  left_join(country, by = c("iso_alpha"))
+
+#GPRCLH <- base %>%
+#  select(year, month, event,starts_with("GPRHC")) %>%
+#  mutate(month = case_when(grepl("m2", month) ~ 2,
+#                           grepl("m3", month) ~ 3,
+#                           grepl("m4", month) ~ 4,
+#                           grepl("m5", month) ~ 5,
+#                           grepl("m6", month) ~ 6,
+#                           grepl("m7", month) ~ 7,
+#                           grepl("m8", month) ~ 8,
+#                           grepl("m9", month) ~ 9,
+#                           grepl("m10", month) ~ 10,
+#                           grepl("m11", month) ~ 11,
+#                           grepl("m12", month) ~ 12,
+#                           grepl("m1", month) ~ 1)) %>%
+#  mutate(Date = as.yearmon(paste(year, month), "%Y %m")) %>%
+#  mutate(Event = event) %>%
+#   filter(Date <= date) %>%
+#  pivot_longer(cols = GPRHC_ARG:GPRHC_ZAF, names_prefix = "GPRHC_", names_to = "iso_alpha", values_to = #"GPRC") %>%
+#  left_join(country, by = c("iso_alpha"))
+
+
+GPRCL <- base %>%
+  select(month, starts_with("GPRC")) %>%
+  mutate(Date = as.yearmon(month)) %>%
+  filter(Date <= date) %>%
+  pivot_longer(cols = GPRC_ARG:GPRC_ZAF, names_prefix = "GPRC_", names_to = "iso_alpha", values_to = "GPRC") %>%
+  left_join(country, by = c("iso_alpha"))
+
+#GPRCL <- base %>%
+#  select(year, month, starts_with("GPRC")) %>%
+#  mutate(month = case_when(grepl("m2", month) ~ 2,
+#                           grepl("m3", month) ~ 3,
+#                           grepl("m4", month) ~ 4,
+#                           grepl("m5", month) ~ 5,
+#                           grepl("m6", month) ~ 6,
+#                           grepl("m7", month) ~ 7,
+#                           grepl("m8", month) ~ 8,
+#                           grepl("m9", month) ~ 9,
+#                           grepl("m10", month) ~ 10,
+#                           grepl("m11", month) ~ 11,
+#                           grepl("m12", month) ~ 12,
+#                           grepl("m1", month) ~ 1)) %>%
+#  mutate(Date = as.yearmon(paste(year, month), "%Y %m")) %>%
+#   filter(Date <= date) %>%
+#  pivot_longer(cols = GPRC_ARG:GPRC_ZAF, names_prefix = "GPRC_", names_to = "iso_alpha", values_to = "GPRC") %>%
+#  left_join(country, by = c("iso_alpha"))
+ 
+#------------------------------------------------------------------------------#
+# Prepare Country-Level Data                                                   #
+# The following code computes country-level GPR relative to its historical     #
+# average. First, it computes the average GPR of each country over the last    #
+# twelve months, not including the current month. So on March 14, 2023, the    #
+# average would be taken over [Mar 2022, Feb 2023], inclusive. Second, it      #
+# computes the average past GPR, which is the average over the span [1985, Y], #
+# where Y is the last year such that no month in Y is included in the first    #
+# average. In the example, Y would be equal to 2021.                           #
+# If anything is unclear, please email david.d.yu@frb.gov.                     #
+#------------------------------------------------------------------------------#
+
+gpr_avg <- base %>% 
+  select(month, starts_with("GPRC")) %>% 
+  mutate(Date = as.yearmon(month)) %>% 
+  filter(Date <= date) %>% 
+  filter(Date >= "Jan 1985") %>% 
+  pivot_longer(cols = GPRC_ARG:GPRC_ZAF,
+               names_prefix = "GPRC_",
+               names_to = "iso_alpha",
+               values_to = "GPRC") %>%
+  left_join(country, by = c("iso_alpha")) %>% 
+  group_by(Country) %>% 
+  # identify the last twelve rows
+  mutate(i_last12 = ifelse(row_number() + 12 > n(),
+                           1, 0)) %>%
+  # get earliest year of these last twelve rows
+  mutate(y_last12 = ifelse(i_last12 == 1,
+                           format(Date, "%Y"),
+                           NA)) %>%
+  fill(y_last12, .direction = "up") %>% 
+  mutate(i_base = ifelse(Date < as.yearmon(paste("Jan", y_last12)), 1, 0)) %>% 
+  mutate(i_groups = ifelse(i_base == 1,
+                           1, # group 1 is the base group
+                           ifelse(i_last12 == 1,
+                                  2, # group two is the recent group
+                                  0))) %>% # group zero is the in-between group
+  group_by(iso_alpha, Country, i_groups) %>% 
+  summarize(avg_gpr_by_group = mean(GPRC),
+            last_year = format(tail(Date, 1), "%Y"),
+            early_yearmon = head(Date, 1),
+            .groups = "keep") %>%
+  group_by(iso_alpha, Country) %>% 
+  summarize(gpr_relative = 100 * avg_gpr_by_group[i_groups == 2] / avg_gpr_by_group[i_groups == 1],
+            year_index = last_year[i_groups == 1],
+            avg_beginning = early_yearmon[i_groups == 2],
+            .groups = "keep") %>%
+  ungroup()
+# iso_alpha: 3-character country identification code
+# Country: name of country
+# gpr_relative: the desired statistic described above
+# year_index: the last year included in the computation of the denominator
+# avg_beginning: the first yearmon included in the computation of the numerator
+
+#------------------------------------------------------------------------------#
+# End of Country-Level Code                                                    #
+#------------------------------------------------------------------------------#
+
+
+
+```
+
+
+## <span style= "font-family: Helvetica; id = country"> <b>  Charts of Country-Specific GPR Indexes  </b> </span>
+```{r, echo = FALSE, out.width='100%', warning=FALSE, message = FALSE}
+
+#Check these lines
+#GPRCL <- GPRCL %>% mutate(textDate = as.character(Date),hover = paste0(Date, "\n", GPRCL))
+#GPRCLH <- GPRCLH %>% mutate(textDate = as.character(Date),hover = paste0(Date, "\n", GPRCLH))
+
+
+fig2_1 <- plot_ly(data = GPRCL %>%
+                    mutate(hover = paste0(Date, "\n", round(GPRC, digits = 2))), 
+                  x = ~as.Date(Date), 
+                  y = ~GPRC, 
+                  type = "scatter", 
+                  mode = "lines", 
+                  name = ~Country,
+                  color = ~Country,
+                  #text = ~textDate,
+                  text = ~hover,
+                  #hover_name = ~textDate,
+                  hoverinfo = 'text') %>% 
+  style(visible = "legendonly",
+                  traces = -c(7, 29,42)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date",range = list("1985-01-01", max(as.Date(GPRCL$Date)+125))),
+         yaxis = list(title = "Percent of Articles",
+                      hoverformat = '.2f',
+                      zeroline = FALSE
+                       #fixedrange = FALSE
+                       ),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE) 
+
+fig2_2 <- plot_ly(data = GPRCLH %>%
+                    mutate(hover = paste0(Date, "\n", round(GPRC, digits = 2))), 
+                  x = ~as.Date(Date), 
+                  y = ~GPRC, 
+                  type = "scatter", mode = "lines", 
+                  name = ~Country,
+                  color = ~Country,
+                  #text = ~textDate,
+                  text = ~hover,
+                  #hover_name = ~textDate, 
+                  hoverinfo = 'text') %>% 
+  style(visible = "legendonly",
+                  traces = -c(7, 29,42)) %>%
+  layout(xaxis = list(title = "",autotypenumbers = 'strict', type = "date", range = list(as.Date("1900-01-01"), max(as.Date(GPRCLH$Date))+125)),
+         yaxis = list(title = "Percent of Articles",
+                      hoverformat = '.2f',
+                      zeroline = FALSE
+                      #fixedrange = FALSE
+                      ),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+#------------------------------------------------------------------------------#
+# Graphing Country-Level Data                                                  #
+#------------------------------------------------------------------------------#
+
+gpr_avg <- gpr_avg %>% 
+  mutate(gpr_bin = case_when(gpr_relative > 450 ~ 9,
+                             gpr_relative > 400 & gpr_relative <= 450 ~ 8,
+                             gpr_relative > 350 & gpr_relative <= 400 ~ 7,
+                             gpr_relative > 300 & gpr_relative <= 350 ~ 6,
+                             gpr_relative > 250 & gpr_relative <= 300 ~ 5,
+                             gpr_relative > 200 & gpr_relative <= 250 ~ 4,
+                             gpr_relative > 150 & gpr_relative <= 200 ~ 3,
+                             gpr_relative > 100 & gpr_relative <= 150 ~ 2,
+                             gpr_relative <= 100 ~ 1)) %>%
+  mutate(gpr_relative_rounded = round(gpr_relative, digits = 2)) %>%
+  mutate(text = paste0(Country, ": ", gpr_relative_rounded, "%"))
+
+relative_gpr_index_year = mean(as.numeric(gpr_avg$year_index))
+colorbar_title = paste0("Index:\n1985-", relative_gpr_index_year, " = 100")
+relative_gpr_year_month = as.character(gpr_avg$avg_beginning)[1]
+layout_title = paste0("<b>\nGeopolitical Risk by Country (",
+                      relative_gpr_year_month,
+                      " - Present)</b>")
+colorscales <-brewer.pal(n = 9, name = 'Reds')
+palette <- c(rep(colorscales[1],5000),
+             rep(colorscales[2],5000),
+             rep(colorscales[3],5000),
+             rep(colorscales[4],5000),
+             rep(colorscales[5],5000),
+             rep(colorscales[6],5000),
+             rep(colorscales[7],5000),
+             rep(colorscales[8],5000),
+             rep(colorscales[9],5000))
+g <- list(projection = list(type = 'equirectangular'),
+          showlakes = FALSE,
+          lakecolor = toRGB('white'),
+          showframe = FALSE,
+          showcoastlines = TRUE,
+          showcountries = FALSE,
+          lataxis = list(range = c(-60, 90)),
+          center = list(lon = 10),
+          layout = list(scope = "usa", center = list(lon = 100)))
+
+gpr_map <- plot_geo(gpr_avg, offline = TRUE) %>%
+  add_trace(z = ~gpr_bin,
+            text = ~text,
+            hoverinfo = "text",
+            locations = ~iso_alpha,
+            color = ~gpr_bin,
+            colors = palette,
+            showscale = TRUE) %>%
+  colorbar(title = list(text = colorbar_title,
+                        font = list(family = 'Calibri',
+                                    size = 14)),
+           tickfont = list(family = 'Calibri', size = 12),
+           tickmode = "array",
+           tickvals = c(1, 1 + .44444*1, 1 + .44444*2, 1 + .44444*3, 
+                        1 + .44444*4, 1 + .44444*5, 1 + .44444*6, 1 + .44444*7, 
+                        1 + .44444*8, 1 + .44444*9, 1 + .44444*10, 
+                        1 + .44444*11, 1 + .44444*12, 1 + .44444*13, 
+                        1 + .44444*14, 1 + .44444*15, 1 + .44444*16, 
+                        1 + .44444*17, 9),
+           ticktext = c(" ", " ", "100", " ", "150", " ", "200", " ", "250", 
+                        " ", "300", " ", "350", " ", "400", " ", "450", " ", " "),
+           tick0 = 0,
+           x = 0.1, y = 0.45) %>%
+  layout(title = list(text = layout_title,
+                      font = list(family = 'Calibri', size = 16)),
+         geo = g,
+         margin = list(t = 50)) %>%
+  config(displayModeBar = FALSE)
+
+#------------------------------------------------------------------------------#
+# End of Country-Level Code                                                    #
+#------------------------------------------------------------------------------#
+
+tabsetPanel(tabPanel("Recent Index", fig2_1),
+            tabPanel("Historical Index", fig2_2),
+            tabPanel("Country-Level Averages", gpr_map))
+
+```
+Note:  Move the slider below the chart to zoom in on a specific date range. Click and drag a square around any area to zoom in further. Double click the chart to zoom back out. Select or deselect individual countries to compare their GPR indexes. Double click to isolate one series and again to select all series. 
+
+<br><i>License: All the material in this webpage, including interactive visualizations and code, are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.<br>This webpage is maintained by Lilliana Wells, Will Yang, David Yu, and Matteo Iacoviello.</i>

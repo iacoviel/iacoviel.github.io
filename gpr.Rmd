@@ -1,0 +1,313 @@
+---
+title: "Geopolitical Risk (GPR) Index"
+output: html_document
+---
+
+<style type="text/css">
+  .title{
+    display: none;
+  }
+  body{
+  font-family: Times;
+  font-size: "+1";
+  display: block;
+  line-height: 1.5 !important;
+  background-color: WhiteSmoke;
+ #blackbox {
+    padding: 1em;
+    background: grey;
+    color: white;
+    border-radius: 10px;
+    font-family: Helvetica;
+} 
+}
+p {line-height: 1.5;}
+</style>
+
+
+![](gprnew_banner2.jpg){width=1750}
+
+#### <span style="color:red;">Update June 1, 2023: We have added Vietnam to the set of countries for which we publish country-specific GPR data.</span>
+
+## <span style= "font-family: Helvetica"> <b> Overview and Paper</b> </span>
+
+#### Dario Caldara and Matteo Iacoviello construct a measure of adverse geopolitical events and associated risks based on a tally of newspaper articles covering geopolitical tensions, and examine its evolution and economic effects since 1900. The geopolitical risk (GPR) index spikes around the two world wars, at the beginning of the Korean War, during the Cuban Missile Crisis, and after 9/11. Higher geopolitical risk foreshadows lower investment, stock prices, and employment. Higher geopolitical risk is also associated with higher probability of economic disasters and with larger downside risks to the global economy.
+
+#### <br> The Recent GPR Index uses 10 newspapers and starts in 1985.<br> The Historical Index uses 3 newspapers and starts in 1900. <br> <b> <u>[Country-specific indexes](/gpr_country.htm)</u></b> are also constructed for 44 different countries.
+#### <br> A presentation summarizing our work can be found <u> [here](/gpr_files/GPR_SLIDES.pdf)</u>.<br> We welcome kudos, comments, and suggestions! Contact matteo.iacoviello@frb.gov.
+
+#### <br> Cite as: Caldara, Dario and Matteo Iacoviello (2022), "<u>[Measuring Geopolitical Risk](/gpr_files/GPR_PAPER.pdf)</u>," American Economic Review, April, 112(4), pp.1194-1225.
+
+
+##### (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/gpr.htm on Month DD, YYYY").
+
+#### <br> The search terms of the index were last changed in 2021 and incorporate a slightly <u>[different methodology](/gpr_files/gpr_methodology.htm)</u> relative to the old (2018) index <u>[(GPR_OLD)](/gpr2019.htm)</u>.
+
+#### <br> The replication material of the published paper is available on the AEA repository at the following <u>[link](https://www.openicpsr.org/openicpsr/project/154781/version/V1/view)</u>.<br>Quick access to the replication material can also be found at the following <u>[link](/gpr_replication.htm)</u>.
+
+
+## <br> <span style= "font-family: Helvetica"> <b> Description </b> </span>
+#### The Caldara and Iacoviello GPR index reflects automated text-search results of the electronic archives of 10 newspapers: Chicago Tribune, the Daily Telegraph, Financial Times, The Globe and Mail, The Guardian, the Los Angeles Times, The New York Times, USA Today, The Wall Street Journal, and The Washington Post. Caldara and Iacoviello calculate the index by counting the number of articles related to adverse geopolitical events in each newspaper for each month (as a share of the total number of news articles). <br><br> The search is organized in eight categories: War Threats (Category 1), Peace Threats (Category 2), Military Buildups (Category 3), Nuclear Threats (Category 4), Terror Threats (Category 5), Beginning of War (Category 6), Escalation of War (Category 7), Terror Acts (Category 8). Based on the search groups above, Caldara and Iacoviello also constructs two subindexes. The Geopolitical Threats (GPRT) includes words belonging to categories 1 to 5 above. The Geopolitical Acts (GPRA) index includes words belonging to categories 6 to 8.
+
+
+## <br> <span style= "font-family: Helvetica"> <b> Data </b> </span>
+#### Download our monthly data here: <u> [Excel format](/gpr_files/data_gpr_export.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_export.dta)</u> <br><i> The monthly data are updated at the beginning of each month. (Last update: October 2, 2023).<br>The monthly data include the country-specific GPR indexes.<br>Each series mnemonics is described in the last columns of the Excel file and in the Stata file. </i>
+#### Daily data for the Recent GPR index are available here: <u> [Excel format](/gpr_files/data_gpr_daily_recent.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_daily_recent.dta)</u> <br><i> The daily data are updated every Monday. (Last update: October 23, 2023) </i>
+#### Access older vintages of the data <u>[here](https://github.com/iacoviel/iacoviel.github.io/tree/master/gpr_archive_files)</u>.
+###### Monthly vintages are named as follows, where YYYYMM are the year and month of the update version:<br>Excel format: data_gpr_export_YYYYMM.xls <br>Stata format: data_gpr_export_YYYYMM.dta<br>Daily vintages are named as follows, where YYYYMMDD are the year, month, and day of the update version:<br>Excel format: data_gpr_daily_recent_YYYYMMDD.xls <br>Stata format: data_gpr_daily_recent_YYYYMMDD.dta<br>Note: The latest data are preliminary and subject to revisions since some newspapers are added to the search database with delay.
+
+
+```{r setup, include=FALSE, warning=FALSE, message = FALSE}
+#knitr::opts_chunk$set(echo = TRUE)
+#options(repos=structure(c(CRAN="http://cran.frb.gov/"))) 
+library(dplyr)
+library(plotly)
+library(shiny)
+library(quantmod)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(zoo)
+
+#Data----------------------------------------------------------------
+#setwd("/if/home/m1mop01/Dario/gprnew")
+#setwd("U:/tf/GPR/GPR_country_webpage")
+homeDir <- "U:/tf/GPR/GPR_python"
+
+#Up to what month is data updated?
+date <- "October 2023"
+
+
+types <- c("date", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", 
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric",
+           "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "skip", "skip")
+gpr <- read_excel(file.path(homeDir, "website/data_gpr_export.xls"), col_types = types) %>%
+  mutate(Date = as.yearmon(month)) %>%
+  filter(Date <= date) #%>%
+  #complete(month = seq(min(ymd(month)), max(ymd(month))+65, by = "month")) %>%
+  #mutate(Date = as.yearmon(month))
+  
+
+gprdaily <- read_excel(file.path(homeDir, "website/data_gpr_daily_recent.xls")) %>%
+  select(-var_name, -var_label) %>%
+  mutate(Date = as.Date(DAY, "%Y%m%d")) %>%
+  mutate(GPRDl = log(GPRD +1), GPRD_MA7l = log(GPRD_MA7+1), GPRD_MA30l = log(GPRD_MA30+1)) %>%
+  mutate(GPRD_MA7 = ifelse(Date < "1985-01-07", NA, GPRD_MA7), GPRD_MA30 = ifelse(Date < "1985-02-01", NA, GPRD_MA30), GPRD_MA7l = ifelse(Date < "1985-01-07", NA, GPRD_MA7l), GPRD_MA30l = ifelse(Date < "1985-02-01", NA, GPRD_MA30l))# %>%
+  #complete(Date = seq(min(ymd(Date)), max(ymd(Date))+5, by = "day"))
+
+```
+
+## <br> <span style= "font-family: Helvetica"> <b> Charts of the GPR Index </b> </span>
+#### Charts of the country-specific indexes can be found <u>[here](/gpr_country.htm#country)</u>. <br>
+```{r, echo = FALSE, out.width='100%', warning=FALSE, message = FALSE}
+
+
+#recent <- recent %>% 
+#  mutate(textDate = as.character(Date),hover = paste0(Date, "\n", recent)) %>%
+#  mutate(share = (GPR_V89_RAW/sum(GPR_V89_RAW)))
+#htmlwidgets::onRender()
+gpr <- gpr %>%
+  mutate(textDate = as.character(Date),hover = paste0(Date, "\n", gpr))
+gprdaily <- gprdaily %>%
+  mutate(textdate = as.character(Date),hover = paste0(Date, "\n", gprdaily))
+
+fig1_1 <- plot_ly(data = gpr, 
+                  x = as.Date(gpr$Date), 
+                  y = ~GPR, 
+                  type = "scatter", 
+                  mode = "lines",
+                  name = "GPR", 
+                  text = ~textDate,
+                  hover_name = ~textDate, 
+                  hovertemplate = "%{y}") %>% 
+  #add_lines() %>%
+  #style(visible = "legendonly") %>%
+  #                traces = -c(7, 26,38)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1985-01-01", max(as.Date(gpr$Date))+125)),
+         yaxis = list(title = "Index (1985-2019 = 100)",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      #fixedrange = FALSE
+                      range = list(-5,550),
+                      dtick = 50),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+#hist <- hist %>% mutate(textDate = as.character(Date),hover = paste0(Date, "\n", hist))
+
+fig1_2 <- plot_ly(data = gpr, 
+                  x = as.Date(gpr$Date), 
+                  y = ~GPRH, 
+                  type = "scatter", mode = "lines", 
+                  name = "GPR", 
+                  text = ~textDate,
+                  hover_name = ~textDate, 
+                  hovertemplate = "%{y}") %>% 
+  #add_lines() %>%
+  #style(visible = "legendonly") %>%
+  #                traces = -c(7, 26,38)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1900-01-01", max(as.Date(gpr$Date))+125)),
+         yaxis = list(title = "Index (1900-2019 = 100)",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      fixedrange = FALSE
+                      ),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+fig2_1 <- plot_ly(data = gpr, 
+                  x = as.Date(gpr$Date), 
+                  y = ~GPR, 
+                  type = "scatter", mode = "lines", 
+                  name = "GPR", 
+                  text = ~textDate,
+                  hover_name = ~textDate, 
+                  hovertemplate = "%{y}") %>% 
+  add_trace(x=~as.Date(Date), y=~GPRT, mode = "lines", name = "GPR Threats") %>%
+  add_trace(x=~as.Date(Date), y=~GPRA, mode = "lines", name = "GPR Acts") %>%
+  #add_lines() %>%
+  #style(visible = "legendonly") %>%
+  #                traces = -c(7, 26,38)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1985-01-01", max(as.Date(gpr$Date))+125)),
+         yaxis = list(title = "Index (1985-2019 = 100)",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      fixedrange = FALSE
+                      ),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+fig2_2 <- plot_ly(data = gpr, 
+                  x = as.Date(gpr$Date), 
+                  y = ~GPRH, 
+                  type = "scatter", mode = "lines", 
+                  name = "GPR", 
+                  text = ~textDate,
+                  hover_name = ~textDate, 
+                  hovertemplate = "%{y}") %>% 
+  add_trace(x=~as.Date(Date), y=~GPRHT, mode = "lines", name = "GPR Threats") %>%
+  add_trace(x=~as.Date(Date), y=~GPRHA, mode = "lines", name = "GPR Acts") %>%
+  #add_lines() %>%
+  #style(visible = "legendonly") %>%
+  #                traces = -c(7, 26,38)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1900-01-01", max(as.Date(gpr$Date))+125)),
+         yaxis = list(title = "Index (1900-2019 = 100)",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      fixedrange = FALSE
+                      ),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+
+fig3_1 <- plot_ly(data = gpr, 
+                  x = as.Date(gpr$Date), 
+                  y = ~SHAREH_CAT_1, 
+                  type = "scatter", mode = "lines", 
+                  name = "War Threats (Category 1)", 
+                  text = ~textDate,
+                  hover_name = ~textDate, 
+                  hovertemplate = "%{y}") %>% 
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_2, mode = "lines", name = "Peace Threats (Category 2)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_3, mode = "lines", name = "Military Buildups (Category 3)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_4, mode = "lines", name = "Nuclear Threats (Category 4)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_5, mode = "lines", name = "Terror Threats (Category 5)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_6, mode = "lines", name = "Beginning of War (Category 6)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_7, mode = "lines", name = "Escalation of War (Category 7)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_8, mode = "lines", name = "Terror Acts (Category 8)") %>%
+  #style(visible = "legendonly",
+  #              traces = -c(1)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1900-01-01", max(as.Date(gpr$Date))+125)),
+         yaxis = list(title = "Percent of Articles",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      fixedrange = FALSE
+                      ),
+         autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+fig4_1 <- plot_ly(data = gprdaily, 
+                  x = ~Date, 
+                  y = ~GPRD, 
+                  type = "scatter", mode = "lines", 
+                  name = "GPR Daily", 
+                  text = ~textdate,
+                  hover_name = ~textdate, 
+                  hovertemplate = "%{y}") %>% 
+  add_trace(x=~Date, y=~GPRD_MA7, mode = "lines", name = "7-day Moving Average") %>%
+  add_trace(x=~Date,
+            y=~GPRD_MA30,
+            mode = "lines",
+            line = list(color = rgb(200, 10, 20, maxColorValue = 255)),
+            name = "30-day Moving Average") %>%
+  #add_lines() %>%
+  style(visible = "legendonly",
+                  traces = -c(1)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1985-01-01", max(as.Date(gprdaily$Date))+45)),
+         yaxis = list(title = "Index (1985-2019 = 100)",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      fixedrange = FALSE
+                      ),
+        # autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+fig4_2 <- plot_ly(data = gprdaily, 
+                  x = ~Date, 
+                  y = ~GPRDl, 
+                  type = "scatter", mode = "lines", 
+                  name = "GPR Daily", 
+                  text = ~textdate,
+                  hover_name = ~textdate, 
+                  hovertemplate = "%{y}") %>% 
+  add_trace(x=~Date, y=~GPRD_MA7l, mode = "lines", name = "7-day Moving Average") %>%
+  add_trace(x=~Date, y=~GPRD_MA30l, mode = "lines", 
+            line = list(color = rgb(200, 10, 20, maxColorValue = 255)),
+            name = "30-day Moving Average") %>%
+  #add_lines() %>%
+  style(visible = "legendonly",
+                  traces = -c(1)) %>%
+  layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1985-01-01", max(as.Date(gprdaily$Date))+45)),
+         yaxis = list(title = "Log of Index (1985-2019 = 100)",
+                      hoverformat = '.2f',
+                      zeroline = FALSE,
+                      fixedrange = FALSE
+                      ),
+         #autotypenumbers = 'strict',
+         hovermode = 'x unified') %>%
+  rangeslider() %>%
+  config(displayModeBar = FALSE)
+
+
+tabsetPanel(tabPanel("Daily", fig4_1),
+            tabPanel("Log Daily", fig4_2),
+            tabPanel("Recent", fig1_1), 
+            tabPanel("Historical",fig1_2),
+            tabPanel("Recent Threats & Acts", fig2_1),
+            tabPanel("Historical Threats & Acts", fig2_2),
+            tabPanel("Subcategories of Hist. Index", fig3_1)
+            )
+
+```
+Note:  Move the slider below the chart to zoom in on a specific date range. Click and drag a square around any area to zoom in further. Double click the chart to zoom back out. Select or deselect individual series to compare GPR indexes. Double click to isolate one series and again to select all series. Log scales of indexes refer to log(1+GPR) of the corresponding GPR index.
+
+<br><i>License: All the material in this webpage, including interactive visualizations and code, are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.<br>This webpage is maintained by Lilliana Wells, Will Yang, David Yu, and Matteo Iacoviello.</i>
