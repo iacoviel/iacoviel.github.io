@@ -30,7 +30,7 @@
                 header: true,
                 complete: function(results) {
                     const shortageData = results.data;
-                    const labels = shortageData.map(row => moment(row.Date).format('MMM YYYY'));
+                    const labels = shortageData.map(row => moment(row.Date, 'YYYY-MM-DD').format('MMM YYYY'));
                     const indexValues = shortageData.map(row => parseFloat(row.Index));
 
                     new Chart(document.getElementById('shortageChart'), {
