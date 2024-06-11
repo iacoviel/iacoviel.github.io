@@ -10,11 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
             // Extract dates and index values from the data
-            const labels = shortageData.slice(1).map(row => {
-                const serialDate = row[0];
-                const date = XLSXDate.parse(serialDate); // Convert serial number to JavaScript Date
-                return moment(date).format('MMM YYYY'); // Format the date using Moment.js
-            });
+            const labels = shortageData.slice(1).map(row => row[0]);
             const indexValues = shortageData.slice(1).map(row => row[1]);
 
             // Create the chart
