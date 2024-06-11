@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shortage Index</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx-date@1.0.0/dist/xlsx-date.min.js"></script>
-    </head>
+</head>
 <body>
     <h1>Shortage Index</h1>
     <p>Welcome to the shortage index webpage!</p>
@@ -17,6 +14,43 @@
         <canvas id="shortageChart"></canvas>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('shortage_index.xlsx')
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                    const labels = shortageData.slice(1).map(row => row[0]);
+                    const indexValues = shortageData.slice(1).map(row => row[1]);
+
+                    new Chart(document.getElementById('shortageChart'), {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Shortage Index',
+                                data: indexValues,
+                                borderColor: 'blue',
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Monthly Shortage Index'
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching or parsing the Excel file:', error);
+                });
+        });
+    </script>
 </body>
 </html>
