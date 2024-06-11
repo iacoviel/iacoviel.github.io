@@ -28,7 +28,10 @@
                     const dateParts = row[0].split('/');
                     const month = parseInt(dateParts[0], 10) - 1;
                     const day = parseInt(dateParts[1], 10);
-                    const year = parseInt(dateParts[2], 10);
+                    let year = parseInt(dateParts[2], 10);
+                    if (year < 100) {
+                        year += 1900;
+                    }
                     const date = new Date(year, month, day);
                     return date.toLocaleString('default', { month: 'short', year: 'numeric' });
                 });
@@ -50,6 +53,22 @@
                         title: {
                             display: true,
                             text: 'Monthly Shortage Index'
+                        },
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Index Value'
+                                }
+                            }
                         }
                     }
                 });
