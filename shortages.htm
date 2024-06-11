@@ -17,7 +17,8 @@
 </head>
 <body>
     <h1>Shortage Index</h1>
-    <p>Welcome to the shortage index webpage!</p>
+    <p>Welcome to the shortage index webpage (June 2024)!</p>
+    <p>Download the Excel file: <a href="shortage_index.xlsx" download>shortage_index.xlsx</a></p>
     <div class="chart-container">
         <canvas id="shortageChart"></canvas>
     </div>
@@ -34,7 +35,10 @@
 
                     const labels = shortageData.slice(1).map(row => {
                         const dateString = row[0];
-                        return moment(dateString, 'M/D/YYYY').format('MMM YYYY');
+                        const [month, day, year] = dateString.split('/');
+                        const formattedYear = parseInt(year) < 69 ? parseInt(year) + 2000 : parseInt(year) + 1900;
+                        const formattedDate = `${month}/${day}/${formattedYear}`;
+                        return moment(formattedDate, 'M/D/YYYY').format('MMM YYYY');
                     });
                     const indexValues = shortageData.slice(1).map(row => row[1]);
 
