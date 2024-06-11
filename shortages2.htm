@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortage Index</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <style>
+        .chart-container {
+            width: 800px;
+            height: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shortage Index</h1>
+    <p>Welcome to the shortage index webpage!</p>
+    <p>Download the CSV file: <a href="shortage_index.csv" download>shortage_index.csv</a></p>
+    <div class="chart-container">
+        <canvas id="shortageChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Papa.parse('shortage_index.csv', {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    const shortageData = results.data;
+                    const labels = shortageData.map(row => moment(row.Date).format('MMM YYYY'));
+                    const indexValues = shortageData.map(row => parseFloat(row.Index));
+
+                    new Chart(document.getElementById('shortageChart'), {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Shortage Index',
+                                data: indexValues,
+                                borderColor: 'blue',
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            title: {
+                                display: true,
+                                text: 'Monthly Shortage Index'
+                            },
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: false
+                                    }
+                                },
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Index Value'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
