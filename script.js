@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
             // Extract dates and index values from the data
-            const labels = shortageData.slice(1).map(row => moment(row[0]).format('MMM-YYYY'));
+            const labels = shortageData.slice(1).map(row => moment(row[0]).format('MMM YYYY'));
             const indexValues = shortageData.slice(1).map(row => row[1]);
 
             // Create the chart
