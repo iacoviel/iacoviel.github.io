@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const labels = shortageData.slice(1).map(row => {
                 const dateString = row[0];
                 const [month, day, year] = dateString.split('/');
-                const formattedYear = parseInt(year) <= 68 ? parseInt(year) + 1900 : parseInt(year);
+                const parsedYear = parseInt(year);
+                const formattedYear = parsedYear <= 68 ? parsedYear + 2000 : (parsedYear <= 99 ? parsedYear + 1900 : parsedYear);
                 const formattedDate = `${month}/${day}/${formattedYear}`;
                 return moment(formattedDate, 'M/D/YYYY').format('MMM YYYY');
             });
@@ -82,8 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error fetching or parsing the Excel file:', error);
         });
-});        
-   
+});
+           
     </script>
 </body>
 </html>
