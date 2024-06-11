@@ -22,10 +22,14 @@
                 const workbook = XLSX.read(data, { type: 'array' });
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
-                const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1, cellDates: true });
+                const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'mm/dd/yyyy' });
 
                 const labels = shortageData.slice(1).map(row => {
-                    const date = new Date(Math.round((row[0] - 25569) * 86400 * 1000));
+                    const dateParts = row[0].split('/');
+                    const month = parseInt(dateParts[0], 10) - 1;
+                    const day = parseInt(dateParts[1], 10);
+                    const year = parseInt(dateParts[2], 10);
+                    const date = new Date(year, month, day);
                     return date.toLocaleString('default', { month: 'short', year: 'numeric' });
                 });
                 const indexValues = shortageData.slice(1).map(row => row[1]);
@@ -55,5 +59,6 @@
             });
     });
 </script>
-</body>
+    
+    </body>
 </html>
