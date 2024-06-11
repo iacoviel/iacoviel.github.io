@@ -7,11 +7,18 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <style>
+        .chart-container {
+            width: 800px;
+            height: 400px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <h1>Shortage Index</h1>
-    <p>Welcome to the shortage index page!</p>
-    <div>
+    <p>Welcome to the shortage index webpage!</p>
+    <div class="chart-container">
         <canvas id="shortageChart"></canvas>
     </div>
 
@@ -44,6 +51,7 @@
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: false,
                             title: {
                                 display: true,
                                 text: 'Monthly Shortage Index'
