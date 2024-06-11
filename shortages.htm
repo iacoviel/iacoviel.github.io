@@ -14,43 +14,46 @@
         <canvas id="shortageChart"></canvas>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('shortage_index.xlsx')
-                .then(response => response.arrayBuffer())
-                .then(data => {
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[sheetName];
-                    const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('shortage_index.xlsx')
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1, cellDates: true });
 
-                    const labels = shortageData.slice(1).map(row => row[0]);
-                    const indexValues = shortageData.slice(1).map(row => row[1]);
-
-                    new Chart(document.getElementById('shortageChart'), {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Shortage Index',
-                                data: indexValues,
-                                borderColor: 'blue',
-                                fill: false
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            title: {
-                                display: true,
-                                text: 'Monthly Shortage Index'
-                            }
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching or parsing the Excel file:', error);
+                const labels = shortageData.slice(1).map(row => {
+                    const date = new Date(Math.round((row[0] - 25569) * 86400 * 1000));
+                    return date.toLocaleString('default', { month: 'short', year: 'numeric' });
                 });
-        });
-    </script>
+                const indexValues = shortageData.slice(1).map(row => row[1]);
+
+                new Chart(document.getElementById('shortageChart'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Shortage Index',
+                            data: indexValues,
+                            borderColor: 'blue',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        title: {
+                            display: true,
+                            text: 'Monthly Shortage Index'
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching or parsing the Excel file:', error);
+            });
+    });
+</script>
 </body>
 </html>
