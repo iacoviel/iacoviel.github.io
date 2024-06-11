@@ -30,8 +30,13 @@
                 header: true,
                 complete: function(results) {
                     const shortageData = results.data;
-                    const labels = shortageData.map(row => moment(row.Date, 'YYYY-MM-DD').format('MMM YYYY'));
                     const indexValues = shortageData.map(row => parseFloat(row.Index));
+
+                    // Generate dates starting from January 1900
+                    const startDate = moment('1900-01-01');
+                    const labels = Array.from({ length: indexValues.length }, (_, index) =>
+                        startDate.clone().add(index, 'months').format('MMM YYYY')
+                    );
 
                     new Chart(document.getElementById('shortageChart'), {
                         type: 'line',
