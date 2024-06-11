@@ -9,81 +9,79 @@
     <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
     <style>
         .chart-container {
-            width: 900px;
-            height: 450px;
+            width: 800px;
+            height: 400px;
             margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <h1>Shortage Index</h1>
-    <p>Welcome to the shortage index webpage (June 2024)!</p>
+    <p>Welcome to the shortage index webpage!</p>
     <p>Download the Excel file: <a href="shortage_index.xlsx" download>shortage_index.xlsx</a></p>
     <div class="chart-container">
         <canvas id="shortageChart"></canvas>
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('shortage_index.xlsx')
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'mm/dd/yyyy' });
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('shortage_index.xlsx')
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            const workbook = XLSX.read(data, { type: 'array' });
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
-            const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'mm/dd/yyyy' });
+                    const labels = shortageData.slice(1).map(row => {
+                        const dateString = row[0];
+                        const [month, day, year] = dateString.split('/');
+                        const formattedYear = parseInt(year) + 1900;
+                        const formattedDate = `${month}/${day}/${formattedYear}`;
+                        return moment(formattedDate, 'M/D/YYYY').format('MMM YYYY');
+                    });
+                    const indexValues = shortageData.slice(1).map(row => row[1]);
 
-            const labels = shortageData.slice(1).map(row => {
-                const dateString = row[0];
-                const [month, day, year] = dateString.split('/');
-                const formattedYear = parseInt(year) + 1900;
-                const formattedDate = `${month}/${day}/${formattedYear}`;
-                return moment(formattedDate, 'M/D/YYYY').format('MMM YYYY');
-            });
-            const indexValues = shortageData.slice(1).map(row => row[1]);
-
-            new Chart(document.getElementById('shortageChart'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Shortage Index',
-                        data: indexValues,
-                        borderColor: 'blue',
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    title: {
-                        display: true,
-                        text: 'Monthly Shortage Index'
-                    },
-                    scales: {
-                        x: {
-                            display: true,
-                            title: {
-                                display: false
-                            }
+                    new Chart(document.getElementById('shortageChart'), {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Shortage Index',
+                                data: indexValues,
+                                borderColor: 'blue',
+                                fill: false
+                            }]
                         },
-                        y: {
-                            display: true,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
                             title: {
                                 display: true,
-                                text: 'Index Value'
+                                text: 'Monthly Shortage Index'
+                            },
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: false
+                                    }
+                                },
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Index Value'
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching or parsing the Excel file:', error);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching or parsing the Excel file:', error);
+                });
         });
-});
-        
     </script>
 </body>
 </html>
