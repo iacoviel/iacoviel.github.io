@@ -25,14 +25,8 @@
                 const shortageData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'mm/dd/yyyy' });
 
                 const labels = shortageData.slice(1).map(row => {
-                    const dateParts = row[0].split('/');
-                    const month = parseInt(dateParts[0], 10) - 1;
-                    const day = parseInt(dateParts[1], 10);
-                    let year = parseInt(dateParts[2], 10);
-                    if (year < 100) {
-                        year += 1900;
-                    }
-                    const date = new Date(year, month, day);
+                    const dateString = row[0];
+                    const date = new Date(dateString);
                     return date.toLocaleString('default', { month: 'short', year: 'numeric' });
                 });
                 const indexValues = shortageData.slice(1).map(row => row[1]);
