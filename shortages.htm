@@ -104,11 +104,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                             display: false
                                         },
                              ticks: {
-                                         callback: function(value, index, values) {
-                                         const year = moment(labels[value]).year();
-                                         return year % 5 === 0 ? year : '';
-                                         }
-                                     }
+                                    callback: function(value, index, values) {
+                                        const date = moment(labels[value]);
+                                        const year = date.year();
+                                        const month = date.month();
+                                        return year % 5 === 0 && month === 0 ? date.format('MMM YYYY') : '';
+                                    } 
+                             }
                                    },
                         y: {
                             display: true,
