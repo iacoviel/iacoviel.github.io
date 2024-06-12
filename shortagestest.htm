@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortage Index</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <style>
+        body {
+            background-color: #f7f7f8;
+        }
+        h1 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 32px;
+        }
+        .chart-container {
+            width: 1200px;
+            height: 600px;
+            margin: 0 auto;
+        }
+        .footnote {
+         text-align: center;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>The Shortage Index Webpage</h1>
+
+    <p>Matteo Iacoviello, Dario Caldara and David Yu construct a monthly news-based measure for the U.S. of shortages of industrial goods, energy, food and labor covering the years from 1900 through present.</p>
+
+    <p>Download the CSV file: <a href="shortage_index.csv" download>shortage_index.csv</a></p>
+    
+    <p>Cite as: Caldara, Dario, Matteo Iacoviello and David Yu (2024), "Measuring Shortages since 1900," working paper.
+    (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/shortages.htm on Month DD, YYYY").</p>
+
+    <div class="chart-container">
+        <canvas id="shortageChart"></canvas>
+    </div>
+    <div class="footnote">
+        The overall shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    Papa.parse('shortage_index.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+            const shortageData = results.data;
+            const columnNames = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+
+            // Generate dates starting from January 1900
+            const startDate = moment('1900-01-01');
+            const labels = Array.from({ length: shortageData.length }, (_, index) =>
+                startDate.clone().add(index, 'months').format('MMM YYYY')
+            );
+
+            // Modified code for the datasets array
+            const datasets = columnNames.map((columnName, index) => ({
+                label: columnName.replace('_', ' '),
+                data: shortageData.map(row => parseFloat(row[columnName])),
+                borderColor: (() => {
+                    switch (columnName) {
+                        case 'index_all_shortage':
+                            return 'black';
+                        case 'energy_shortage':
+                            return 'red';
+                        case 'food_shortage':
+                            return 'green';
+                        case 'industry_shortage':
+                            return 'blue';
+                        case 'labor_shortage':
+                            return 'purple';
+                        default:
+                            return `hsl(${(index * 60) % 360}, 100%, 50%)`;
+                    }
+                })(),
+                fill: false
+            }));
+
+            new Chart(document.getElementById('shortageChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Monthly Shortage Index'
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: false
+                            },
+                            ticks: {
+                                autoSkip: true,
+                                maxRotation: 0,
+                                major: {
+                                    enabled: true
+                                },
+                                // Adjust this value to change the frequency of labels
+                            stepSize: 12 * 5,
+                                callback: function(value, index, values) {
+                                    return index % (12 * 5) === 0 ? this.getLabelForValue(value) : '';                                }
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Index Value'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
