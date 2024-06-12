@@ -101,23 +101,23 @@ new Chart(document.getElementById('shortageChart'), {
         plugins: {
             annotation: {
                 annotations: [{
-                    type: 'label',
-                    xValue: labels[labels.length - 1],
-                    yValue: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    cornerRadius: 5,
-                    label: {
-                        content: 'The shortage index (index_all_shortage) is indexed to 100 in the 1900-2019 period. The other indexes sum up to the shortage index each month.',
-                        enabled: true,
-                        position: 'end',
-                        textAlign: 'left',
-                        fontColor: 'white',
-                        fontStyle: 'normal',
-                        fontSize: 12,
-                        xPadding: 10,
-                        yPadding: 6
+                type: 'label',
+                xValue: labels[Math.floor(labels.length * 0.9)], // Position at 90% of the chart width
+                yValue: 50, // Adjust the y-value to a suitable position
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                borderColor: 'black',
+                borderWidth: 1,
+                cornerRadius: 5,
+                label: {
+                content: 'The shortage index is indexed to 100 in the 1900-2019 period.',
+                enabled: true,
+                position: 'end',
+                textAlign: 'left',
+                fontColor: 'white',
+                fontStyle: 'normal',
+                fontSize: 12,
+                xPadding: 10,
+                yPadding: 6                    
                     }
                 }]
             }
