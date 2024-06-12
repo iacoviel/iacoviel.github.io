@@ -105,12 +105,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             },
                             ticks: {
                                 callback: function(value, index, values) {
-                                    const date = moment(value);
-                                    const year = date.year();
-                                    const month = date.month();
-                                    return (year - 1900) % 10 === 0 && month === 0 ? this.getLabelForValue(value) : '';
+                                    if (index % 120 === 0) {
+                                        const label = this.getLabelForValue(value);
+                                        const year = parseInt(label.substring(label.length - 4));
+                                        return `Jan ${year}`;
+                                    }
+                                    return '';
                                 },
-                                stepSize: 12 * 5
+                                maxTicksLimit: 1500 // Adjust this value as needed
                             },
                             grid: {
                                 display: false
