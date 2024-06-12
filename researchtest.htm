@@ -97,31 +97,33 @@ document.addEventListener('DOMContentLoaded', function() {
                         display: true,
                         text: 'Monthly Shortage Index'
                     },
-scales: {
-    x: {
-        display: true,
-        title: {
-            display: false
-        },
-        ticks: {
-            callback: function(value, index, values) {
-                const labelIndex = values.findIndex(val => val === value);
-                return labelIndex % 120 === 0 ? this.getLabelForValue(value) : '';
-            },
-            stepSize: 60
-        },
-        grid: {
-            display: false
-        }
-    },
-    y: {
-        display: true,
-        title: {
-            display: true,
-            text: 'Index Value'
-        }
-    }
-},
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: false
+                            },
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    const date = moment(value);
+                                    const year = date.year();
+                                    const month = date.month();
+                                    return (year - 1900) % 10 === 0 && month === 0 ? this.getLabelForValue(value) : '';
+                                },
+                                stepSize: 12 * 5
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Index Value'
+                            }
+                        }
+                    },
                     plugins: {
                         legend: {
                             position: 'top',
