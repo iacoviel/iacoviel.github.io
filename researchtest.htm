@@ -97,32 +97,32 @@ document.addEventListener('DOMContentLoaded', function() {
                         display: true,
                         text: 'Monthly Shortage Index'
                     },
-                    scales: {
-                        x: {
-                            display: true,
-                            title: {
-                                display: false
-                            },
-                            ticks: {
-                                callback: function(value, index, values) {
-                                    const year = moment(labels[index]).year();
-                                    return year % 10 === 0 && moment(labels[index]).month() === 0 ? this.getLabelForValue(value) : '';
-                                },
-                                stepSize: 12 * 10, // Set the step size to 10 years (12 months * 10)
-                                maxTicksLimit: 15 // Limit the maximum number of ticks
-                            },
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Index Value'
-                            }
-                        }
-                    },
+scales: {
+    x: {
+        display: true,
+        title: {
+            display: false
+        },
+        ticks: {
+            callback: function(value, index, values) {
+                const year = moment(this.getLabelForValue(value)).year();
+                return year % 10 === 0 && moment(this.getLabelForValue(value)).month() === 0 ? this.getLabelForValue(value) : '';
+            },
+            autoSkip: false,
+            maxTicksLimit: 20
+        },
+        grid: {
+            display: false
+        }
+    },
+    y: {
+        display: true,
+        title: {
+            display: true,
+            text: 'Index Value'
+        }
+    }
+},
                     plugins: {
                         legend: {
                             position: 'top',
