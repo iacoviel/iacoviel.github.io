@@ -46,7 +46,7 @@
         The overall shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
     </div>
 
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     Papa.parse('shortage_index.csv', {
         download: true,
@@ -98,12 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         text: 'Monthly Shortage Index'
                     },
                     scales: {
-                              x: {
-                                        display: true,
-                                        title: {
-                                            display: false
-                                        },
-                             ticks: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: false
+                            },
+                            ticks: {
                                 autoSkip: true,
                                 maxRotation: 0,
                                 major: {
@@ -113,8 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                 stepSize: 60,
                                 callback: function(value, index, values) {
                                     return index % 60 === 0 ? this.getLabelForValue(value) : '';
-                             }
-                                   },
+                                }
+                            }
+                        },
                         y: {
                             display: true,
                             title: {
@@ -133,6 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-    </script>
+</script>
 </body>
 </html>
