@@ -31,60 +31,76 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Papa.parse('shortage_index.csv', {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    const shortageData = results.data;
-                    const columnNames = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+document.addEventListener('DOMContentLoaded', function() {
+    Papa.parse('shortage_index.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+            const shortageData = results.data;
+            const columnNames = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
 
-                    // Generate dates starting from January 1900
-                    const startDate = moment('1900-01-01');
-                    const labels = Array.from({ length: shortageData.length }, (_, index) =>
-                        startDate.clone().add(index, 'months').format('MMM YYYY')
-                    );
+            // Generate dates starting from January 1900
+            const startDate = moment('1900-01-01');
+            const labels = Array.from({ length: shortageData.length }, (_, index) =>
+                startDate.clone().add(index, 'months').format('MMM YYYY')
+            );
 
-                    const datasets = columnNames.map((columnName, index) => ({
-                        label: columnName.replace('_', ' '),
-                        data: shortageData.map(row => parseFloat(row[columnName])),
-                        borderColor: `hsl(${(index * 60) % 360}, 100%, 50%)`,
-                        fill: false
-                    }));
+            // Modified code for the datasets array
+            const datasets = columnNames.map((columnName, index) => ({
+                label: columnName.replace('_', ' '),
+                data: shortageData.map(row => parseFloat(row[columnName])),
+                borderColor: (() => {
+                    switch (columnName) {
+                        case 'index_all_shortage':
+                            return 'black';
+                        case 'energy_shortage':
+                            return 'red';
+                        case 'food_shortage':
+                            return 'green';
+                        case 'industry_shortage':
+                            return 'blue';
+                        case 'labor_shortage':
+                            return 'purple';
+                        default:
+                            return `hsl(${(index * 60) % 360}, 100%, 50%)`;
+                    }
+                })(),
+                fill: false
+            }));
 
-                    new Chart(document.getElementById('shortageChart'), {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: datasets
+            new Chart(document.getElementById('shortageChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Monthly Shortage Index'
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: false
+                            }
                         },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
+                        y: {
+                            display: true,
                             title: {
                                 display: true,
-                                text: 'Monthly Shortage Index'
-                            },
-                            scales: {
-                                x: {
-                                    display: true,
-                                    title: {
-                                        display: false
-                                    }
-                                },
-                                y: {
-                                    display: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Index Value'
-                                    }
-                                }
+                                text: 'Index Value'
                             }
                         }
-                    });
+                    }
                 }
             });
-        });
+        }
+    });
+});
     </script>
     </body>
 </html>
