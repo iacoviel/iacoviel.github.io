@@ -105,10 +105,10 @@ scales: {
         },
         ticks: {
             callback: function(value, index, values) {
-                return index % 120 === 0 ? this.getLabelForValue(value) : '';
+                const labelIndex = values.findIndex(val => val === value);
+                return labelIndex % 120 === 0 ? this.getLabelForValue(value) : '';
             },
-            stepSize: 60,
-            maxTicksLimit: 30
+            stepSize: 60
         },
         grid: {
             display: false
