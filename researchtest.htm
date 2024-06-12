@@ -106,10 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             ticks: {
                                 callback: function(value, index, values) {
                                     const year = moment(labels[index]).year();
-                                    return year % 5 === 0 && moment(labels[index]).month() === 0 ? this.getLabelForValue(value) : '';
+                                    return year % 10 === 0 && moment(labels[index]).month() === 0 ? this.getLabelForValue(value) : '';
                                 },
-                                stepSize: 12 * 5, // Set the step size to 5 years (12 months * 5)
-                                maxTicksLimit: 25 // Limit the maximum number of ticks
+                                stepSize: 12 * 10, // Set the step size to 10 years (12 months * 10)
+                                maxTicksLimit: 15 // Limit the maximum number of ticks
                             },
                             grid: {
                                 display: false
