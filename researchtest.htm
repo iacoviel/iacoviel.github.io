@@ -113,10 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     return '';
                                 },
                                 maxTicksLimit: 1500,
-                                stepSize: 60
+                                stepSize: 60,
+                                maxRotation: 0,
+                                minRotation: 0
                             },
                             grid: {
-                                display: true
+                                display: true,
+                                drawTicks: true,
+                                tickLength: 10
                             }
                         },
                         y: {
