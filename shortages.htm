@@ -103,11 +103,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                         title: {
                                             display: false
                                         },
-                                        ticks: {
-                                            autoSkip: true,
-                                            maxTicksLimit: 60 // Adjust this value to control the number of labels
-                                        }
-                                    },
+                             ticks: {
+                                         callback: function(value, index, values) {
+                                         const year = moment(labels[value]).year();
+                                         return year % 5 === 0 ? year : '';
+                                         }
+                                     }
+                                   },
                         y: {
                             display: true,
                             title: {
