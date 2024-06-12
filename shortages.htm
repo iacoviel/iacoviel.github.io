@@ -104,12 +104,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                             display: false
                                         },
                              ticks: {
-                                    callback: function(value, index, values) {
-                                        const date = moment(labels[value]);
-                                        const year = date.year();
-                                        const month = date.month();
-                                        return year % 5 === 0 && month === 0 ? date.format('MMM YYYY') : '';
-                                    } 
+                                autoSkip: true,
+                                maxRotation: 0,
+                                major: {
+                                    enabled: true
+                                },
+                                // Adjust this value to change the frequency of labels
+                                stepSize: 60,
+                                callback: function(value, index, values) {
+                                    return index % 60 === 0 ? this.getLabelForValue(value) : '';
                              }
                                    },
                         y: {
