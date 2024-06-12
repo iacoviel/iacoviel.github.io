@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 fill: false
             }));
 
+Chart.register(ChartAnnotation);
+            
 new Chart(document.getElementById('shortageChart'), {
     type: 'line',
     data: {
