@@ -110,10 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                     enabled: true
                                 },
                                 // Adjust this value to change the frequency of labels
-                                stepSize: 60,
+                            stepSize: 12 * 5,
                                 callback: function(value, index, values) {
-                                    return index % 60 === 0 ? this.getLabelForValue(value) : '';
-                                }
+                                    return index % (12 * 5) === 0 ? this.getLabelForValue(value) : '';                                }
                             }
                         },
                         y: {
