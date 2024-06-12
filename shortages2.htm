@@ -90,12 +90,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         text: 'Monthly Shortage Index'
                     },
                     scales: {
-                        x: {
-                            display: true,
-                            title: {
-                                display: false
-                            }
-                        },
+                              x: {
+                                        display: true,
+                                        title: {
+                                            display: false
+                                        },
+                                        ticks: {
+                                            autoSkip: true,
+                                            maxTicksLimit: 40 // Adjust this value to control the number of labels
+                                        }
+                                    },
                         y: {
                             display: true,
                             title: {
