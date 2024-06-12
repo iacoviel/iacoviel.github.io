@@ -37,24 +37,26 @@
                 header: true,
                 complete: function(results) {
                     const shortageData = results.data;
-                    const indexValues = shortageData.map(row => parseFloat(row.Index));
+                    const columnNames = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
 
                     // Generate dates starting from January 1900
                     const startDate = moment('1900-01-01');
-                    const labels = Array.from({ length: indexValues.length }, (_, index) =>
+                    const labels = Array.from({ length: shortageData.length }, (_, index) =>
                         startDate.clone().add(index, 'months').format('MMM YYYY')
                     );
+
+                    const datasets = columnNames.map((columnName, index) => ({
+                        label: columnName.replace('_', ' '),
+                        data: shortageData.map(row => parseFloat(row[columnName])),
+                        borderColor: `hsl(${(index * 60) % 360}, 100%, 50%)`,
+                        fill: false
+                    }));
 
                     new Chart(document.getElementById('shortageChart'), {
                         type: 'line',
                         data: {
                             labels: labels,
-                            datasets: [{
-                                label: 'Shortage Index',
-                                data: indexValues,
-                                borderColor: 'blue',
-                                fill: false
-                            }]
+                            datasets: datasets
                         },
                         options: {
                             responsive: true,
@@ -74,7 +76,7 @@
                                     display: true,
                                     title: {
                                         display: true,
-                                        text: 'Index Value (1900-2019=100)'
+                                        text: 'Index Value'
                                     }
                                 }
                             }
@@ -84,5 +86,5 @@
             });
         });
     </script>
-</body>
+    </body>
 </html>
