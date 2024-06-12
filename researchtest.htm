@@ -105,11 +105,10 @@ scales: {
         },
         ticks: {
             callback: function(value, index, values) {
-                const year = moment(this.getLabelForValue(value)).year();
-                return year % 10 === 0 && moment(this.getLabelForValue(value)).month() === 0 ? this.getLabelForValue(value) : '';
+                return index % 120 === 0 ? this.getLabelForValue(value) : '';
             },
-            autoSkip: false,
-            maxTicksLimit: 20
+            stepSize: 60,
+            maxTicksLimit: 30
         },
         grid: {
             display: false
