@@ -13,6 +13,11 @@
             height: 600px;
             margin: 0 auto;
         }
+        .footnote {
+            text-align: left;
+            font-size: 12px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -28,6 +33,9 @@
 
     <div class="chart-container">
         <canvas id="shortageChart"></canvas>
+    </div>
+    <div class="footnote">
+        The composite shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages contribute to the overall index.
     </div>
 
     <script>
@@ -99,18 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     plugins: {
                         legend: {
                             position: 'top',
-                        },
-                        afterDraw: function(chart) {
-                            var ctx = chart.ctx;
-                            ctx.font = "12px Arial";
-                            ctx.fillStyle = "black";
-                            ctx.textAlign = "left";
-                            ctx.textBaseline = "bottom";
-                            var footnote = "The composite shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages contribute to the overall index.";
-                            var chartArea = chart.chartArea;
-                            var footnoteX = chartArea.left;
-                            var footnoteY = chartArea.bottom + 20;
-                            ctx.fillText(footnote, footnoteX, footnoteY);
                         }
                     }
                 }
