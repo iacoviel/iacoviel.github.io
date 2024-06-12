@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shortage Index</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse/papaparse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
     <style>
         .chart-container {
             width: 1200px;
-            height: 700px;
+            height: 600px;
             margin: 0 auto;
         }
     </style>
@@ -24,8 +23,8 @@
 
     <p>Download the CSV file: <a href="shortage_index.csv" download>shortage_index.csv</a></p>
     
-    <p>Cite as: Caldara, Dario, Matteo Iacoviello and David Yu (2024), “Measuring Shortages since 1900,” working paper.
-    (When using the data, we suggest referring to both the website and the date of download; e.g. “Data downloaded from https://www.matteoiacoviello.com/shortages.htm on Month DD, YYYY”).</p>
+    <p>Cite as: Caldara, Dario, Matteo Iacoviello and David Yu (2024), "Measuring Shortages since 1900," working paper.
+    (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/shortages.htm on Month DD, YYYY").</p>
 
     <div class="chart-container">
         <canvas id="shortageChart"></canvas>
@@ -69,65 +68,59 @@ document.addEventListener('DOMContentLoaded', function() {
                 fill: false
             }));
 
-Chart.register(ChartAnnotation);
-            
-new Chart(document.getElementById('shortageChart'), {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: datasets
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-            display: true,
-            text: 'Monthly Shortage Index'
-        },
-        scales: {
-            x: {
-                display: true,
-                title: {
-                    display: false
+            new Chart(document.getElementById('shortageChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Monthly Shortage Index'
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Index Value'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    // Add the afterDraw callback to render the footnote
+                    plugins: [{
+                        afterDraw: function(chart) {
+                            var ctx = chart.ctx;
+                            ctx.font = "12px Arial";
+                            ctx.fillStyle = "black";
+                            ctx.textAlign = "left";
+                            ctx.textBaseline = "bottom";
+                            var footnote = "The headline shortage index (index_all_shortage) is standardized to a base value of 100, representing the average over the 1900-2019 period. The underlying indexes for energy, food, industry, and labor shortages are aggregated to form the total index.";
+                            var chartArea = chart.chartArea;
+                            var footnoteX = chartArea.left;
+                            var footnoteY = chartArea.bottom + 10;
+                            ctx.fillText(footnote, footnoteX, footnoteY);
+                        }
+                    }]
                 }
-            },
-            y: {
-                display: true,
-                title: {
-                    display: true,
-                    text: 'Index Value'
-                }
-            }
-        },
-        // Add the plugins property with the annotation configuration
-        plugins: {
-            annotation: {
-                annotations: [{
-                type: 'label',
-                xValue: labels[Math.floor(labels.length * 0.9)], // Position at 90% of the chart width
-                yValue: 50, // Adjust the y-value to a suitable position
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                borderColor: 'black',
-                borderWidth: 1,
-                cornerRadius: 5,
-                label: {
-                content: 'The shortage index is indexed to 100 in the 1900-2019 period.',
-                enabled: true,
-                position: 'end',
-                textAlign: 'left',
-                fontColor: 'white',
-                fontStyle: 'normal',
-                fontSize: 12,
-                xPadding: 10,
-                yPadding: 6                    
-                    }
-                }]
-            }
+            });
         }
-    }
-});        }
     });
 });
     </script>
-    </body>
+</body>
 </html>
