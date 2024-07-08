@@ -37,7 +37,7 @@
     <p>Matteo Iacoviello, Dario Caldara and David Yu construct a monthly news-based measure for the U.S. of shortages of industrial goods, energy, food and labor covering the years from 1900 through present.</p>
 	
 	<p>Download the paper (<u><a href="/research_files/SHORTAGE_PAPER.pdf">PDF</a></u>).</p>
-	<p>Download the index (<u><a href="/shortage_index.csv">CSV</a></u>).</p>
+	<p>Download the index (<u><a href="/shortage_index_web.csv">CSV</a></u>).</p>
     
     <p>Cite as: Caldara, Dario, Matteo Iacoviello, and David Yu (2024), "Measuring Shortages since 1900," working paper.
     (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/shortages.htm on Month DD, YYYY").</p>
@@ -51,7 +51,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    Papa.parse('shortage_index.csv', {
+    Papa.parse('shortage_index_web.csv', {
         download: true,
         header: true,
         complete: function(results) {
