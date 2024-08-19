@@ -132,17 +132,20 @@ document.addEventListener('DOMContentLoaded', function() {
                                     major: {
                                         enabled: true
                                     },
-                                    callback: function(value, index, values) {
-                                        const date = moment(this.getLabelForValue(value), 'MMM YYYY');
+					
+
+				   stepSize: 12 * 2,
+				   callback: function(value, index, values) {
                                         if (startYear >= 2020) {
                                             // For the 2020-2024 chart, show every January
-                                            return date.month() === 0 ? date.format('YYYY') : '';
+                                            return index % (12 * 1) === 0 ? this.getLabelForValue(value) : '';
                                         } else {
                                             // For the 1900-2024 chart, show every other year
-                                            return index % (12 * 2) === 0 ? date.format('YYYY') : '';
+                                            return index % (12 * 2) === 0 ? this.getLabelForValue(value) : '';
                                         }
                                     }
-                                }
+					
+				}
                             },
                             y: {
                                 display: true,
