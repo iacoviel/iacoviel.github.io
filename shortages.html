@@ -137,5 +137,121 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    Papa.parse('shortage_index_web_2020.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+            const shortageData = results.data;
+            const columnNames = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+
+            // Generate dates starting from January 1900
+            const startDate = moment('2020-01-01');
+            const labels = Array.from({ length: shortageData.length }, (_, index) =>
+                startDate.clone().add(index, 'months').format('MMM YYYY')
+            );
+
+            // Modified code for the datasets array
+            const datasets = columnNames.map((columnName, index) => ({
+                label: columnName.replace('_', ' '),
+                data: shortageData.map(row => parseFloat(row[columnName])),
+                borderColor: (() => {
+                    switch (columnName) {
+                        case 'index_all_shortage':
+                            return 'black';
+                        case 'energy_shortage':
+                            return 'red';
+                        case 'food_shortage':
+                            return 'green';
+                        case 'industry_shortage':
+                            return 'blue';
+                        case 'labor_shortage':
+                            return 'purple';
+                        default:
+                            return `hsl(${(index * 60) % 360}, 100%, 50%)`;
+                    }
+                })(),
+                fill: false
+            }));
+
+            new Chart(document.getElementById('shortageChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Monthly Shortage Index'
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: false
+                            },
+                            ticks: {
+                                autoSkip: true,
+                                maxRotation: 0,
+                                major: {
+                                    enabled: true
+                                },
+                                // Adjust this value to change the frequency of labels
+                            stepSize: 12 * 2,
+                                callback: function(value, index, values) {
+                                    return index % (12 * 2) === 0 ? this.getLabelForValue(value) : '';                                }
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Index Value'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
 </body>
 </html>
