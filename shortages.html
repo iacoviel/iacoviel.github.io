@@ -51,7 +51,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    Papa.parse('shortage_index_web.csv', {
+    Papa.parse('/shortages_files/shortage_index_web.csv', {
         download: true,
         header: true,
         complete: function(results) {
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    Papa.parse('shortage_index_web_2020.csv', {
+    Papa.parse('/shortages_files/shortage_index_web_2020.csv', {
         download: true,
         header: true,
         complete: function(results) {
