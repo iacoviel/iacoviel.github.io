@@ -24,13 +24,14 @@
         .chart-container {
             width: 1200px;
             height: 600px;
-            margin: 0 auto 60px; /* Increased bottom margin for more space between charts */
+            margin: 0 auto 100px; /* Increased bottom margin for more space between charts */
         }
         .footnote {
             text-align: center;
             font-size: 12px;
             font-family: Arial, sans-serif;
-            margin-top: 10px;
+            margin-top: 0px;
+            margin-bottom: 60px; /* Add space after the footnote */
         }
         h2 {
             text-align: center;
@@ -50,16 +51,14 @@
     (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/shortages.htm on Month DD, YYYY").</p>
 
  	
-    <div class="footnote">
-        The overall shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
-    </div>
+
 
     <h2>Shortage Index 1900-2024</h2>
     <div class="chart-container">
         <canvas id="shortageChart1"></canvas>
     </div>
     <div class="footnote">
-        The overall shortage index (index_all_shortage2) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
+        The overall shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
     </div>
 
     <h2>Shortage Index 2020-2024</h2>
@@ -67,7 +66,7 @@
         <canvas id="shortageChart2"></canvas>
     </div>
     <div class="footnote">
-        The overall shortage index (index_all_shortage3) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
+        The overall shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
     </div>
 
 <script>
