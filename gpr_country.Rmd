@@ -21,7 +21,6 @@ p {line-height: 1.5;}
 
 ![](gpr_banner2.JPG){width=1750}
 
-#### <span style="color:red;">Update June 1, 2023: We have added Vietnam to the set of countries for which we publish country-specific GPR data.</span>
 
 ## <span style= "font-family: Helvetica"> <b> Overview </b> </span>
 
@@ -30,7 +29,7 @@ p {line-height: 1.5;}
 
 #### <br> Cite as: Caldara, Dario and Matteo Iacoviello (2022), "<u>[Measuring Geopolitical Risk](/gpr_files/GPR_PAPER.pdf)</u>," American Economic Review, April, 112(4), pp.1194-1225. (This paper uses country-specific indexes for 26 countries.)
 
-#### Caldara, Dario, Sarah Conlisk, Matteo Iacoviello, and Maddie Penn, "<u>[Do Geopolitical Risks Raise or Lower Inflation?](research_files/GPR_INFLATION_PAPER.pdf)</u>," February 2023 (This paper extends the construction of the country-specific indexes to 43 countries.)
+#### Caldara, Dario, Sarah Conlisk, Matteo Iacoviello, and Maddie Penn, "<u>[Do Geopolitical Risks Raise or Lower Inflation?](research_files/GPR_INFLATION_PAPER.pdf)</u>," February 2023 (This paper extends the construction of the country-specific indexes to 44 countries.)
 
 ##### (When using the data, we suggest referring to both the website and the date of download; e.g. "Data downloaded from https://www.matteoiacoviello.com/gpr.htm on Month DD, YYYY").
 
@@ -39,10 +38,11 @@ p {line-height: 1.5;}
 #### <u>[North America](/gpr_country_files/gprc_nam.htm)</u>: Canada, Mexico, USA <br> <u>[South America](/gpr_country_files/gprc_sam.htm)</u>: Argentina, Brazil, Chile, Colombia, Peru, Venezuela <br> <u>[Europe (North and East)](/gpr_country_files/gprc_neeu.htm)</u>: Denmark, Finland, Hungary, Norway, Poland, Russia, Sweden, Ukraine, United Kingdom <br> <u>[Europe (South and West)](/gpr_country_files/gprc_sweu.htm)</u>: Belgium, France, Germany, Italy, The Netherlands, Portugal, Spain, Switzerland <br> <u>[Middle East and Africa](gpr_country_files/gprc_me.htm)</u>: Egypt, Israel, Saudi Arabia, South Africa, Tunisia, Turkey <br> <u>[Asia and Oceania](/gpr_country_files/gprc_as.htm)</u>: Australia, China, Hong Kong, Japan, South Korea, The Philippines, Taiwan, Indonesia, India, Malaysia, Thailand, Vietnam <br>  
 
 ## <br> <span style= "font-family: Helvetica"> <b> Data </b> </span>
-#### Download our monthly data here: <u> [Excel format](/gpr_files/data_gpr_export.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_export.dta)</u> <br><i> The monthly data are updated at the beginning of each month. (Last update: October 2, 2023).<br>The monthly data include the country-specific GPR indexes.<br>Each series mnemonics is described in the last columns of the Excel file and in the Stata file. </i>
-#### Daily data for the Recent GPR index are available here: <u> [Excel format](/gpr_files/data_gpr_daily_recent.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_daily_recent.dta)</u> <br><i> The daily data are updated every Monday. (Last update: October 23, 2023) </i>
+#### Download our monthly data here: <u> [Excel format](/gpr_files/data_gpr_export.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_export.dta)</u> <br><i> The monthly data are updated at the beginning of each month.* (Last update: December 1, 2024).<br>The monthly data include the country-specific GPR indexes.<br>Each series mnemonics is described in the last columns of the Excel file and in the Stata file. </i>
+#### Daily data for the Recent GPR index are available here: <u> [Excel format](/gpr_files/data_gpr_daily_recent.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_daily_recent.dta)</u> <br><i> The daily data are updated every Monday.* (Last update: December 23, 2024) </i>
+##### *If the first day of the month or week falls on a federal holiday, data updates will take place the next business day.
 #### Access older vintages of the data <u>[here](https://github.com/iacoviel/iacoviel.github.io/tree/master/gpr_archive_files)</u>.
-###### Monthly vintages are named as follows, where YYYYMM are the year and month of the update version:<br>Excel format: data_gpr_export_YYYYMM.xls <br>Stata format: data_gpr_export_YYYYMM.dta<br>Daily vintages are named as follows, where YYYYMMDD are the year, month, and day of the update version:<br>Excel format: data_gpr_daily_recent_YYYYMMDD.xls <br>Stata format: data_gpr_daily_recent_YYYYMMDD.dta<br>Note: The latest data are preliminary and subject to revisions since some newspapers are added to the search database with delay.
+###### Monthly vintages are named as follows, where YYYYMM are the year and month of the update version:<br>Excel format: data_gpr_export_YYYYMM.xls <br>Stata format: data_gpr_export_YYYYMM.dta<br>Daily vintages are named as follows, where YYYYMMDD are the year, month, and day of the update version:<br>Excel format: data_gpr_daily_recent_YYYYMMDD.xls <br>Stata format: data_gpr_daily_recent_YYYYMMDD.dta<br>Note: The latest data are preliminary and subject to revisions since some newspapers are added to the search database with delay. Additionally, in some cases there could be minor revisions of the data extending further back when duplicate or missing articles or newspaper editions are removed from or added to the database. 
 
 
 
@@ -64,7 +64,7 @@ library(RColorBrewer)
 homeDir <- "U:/tf/GPR/GPR_python"
 
 #Up to what month is data updated?
-date <- "October 2023"
+date <- "November 2024"
 
 country <- read_csv(paste0(homeDir, "/website/country_codes.csv"))
 
@@ -340,4 +340,4 @@ tabsetPanel(tabPanel("Recent Index", fig2_1),
 ```
 Note:  Move the slider below the chart to zoom in on a specific date range. Click and drag a square around any area to zoom in further. Double click the chart to zoom back out. Select or deselect individual countries to compare their GPR indexes. Double click to isolate one series and again to select all series. 
 
-<br><i>License: All the material in this webpage, including interactive visualizations and code, are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.<br>This webpage is maintained by Lilliana Wells, Will Yang, David Yu, and Matteo Iacoviello.</i>
+<br><i>License: All the material in this webpage, including interactive visualizations and code, are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.<br>This webpage is maintained by Lilliana Wells, Will Yang, Sam Nate, and Matteo Iacoviello.</i>

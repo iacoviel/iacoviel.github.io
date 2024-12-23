@@ -27,8 +27,6 @@ p {line-height: 1.5;}
 
 ![](gprnew_banner2.jpg){width=1750}
 
-#### <span style="color:red;">Update June 1, 2023: We have added Vietnam to the set of countries for which we publish country-specific GPR data.</span>
-
 ## <span style= "font-family: Helvetica"> <b> Overview and Paper</b> </span>
 
 #### Dario Caldara and Matteo Iacoviello construct a measure of adverse geopolitical events and associated risks based on a tally of newspaper articles covering geopolitical tensions, and examine its evolution and economic effects since 1900. The geopolitical risk (GPR) index spikes around the two world wars, at the beginning of the Korean War, during the Cuban Missile Crisis, and after 9/11. Higher geopolitical risk foreshadows lower investment, stock prices, and employment. Higher geopolitical risk is also associated with higher probability of economic disasters and with larger downside risks to the global economy.
@@ -51,10 +49,12 @@ p {line-height: 1.5;}
 
 
 ## <br> <span style= "font-family: Helvetica"> <b> Data </b> </span>
-#### Download our monthly data here: <u> [Excel format](/gpr_files/data_gpr_export.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_export.dta)</u> <br><i> The monthly data are updated at the beginning of each month. (Last update: October 2, 2023).<br>The monthly data include the country-specific GPR indexes.<br>Each series mnemonics is described in the last columns of the Excel file and in the Stata file. </i>
-#### Daily data for the Recent GPR index are available here: <u> [Excel format](/gpr_files/data_gpr_daily_recent.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_daily_recent.dta)</u> <br><i> The daily data are updated every Monday. (Last update: October 23, 2023) </i>
+#### Download our monthly data here: <u> [Excel format](/gpr_files/data_gpr_export.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_export.dta)</u> <br><i> The monthly data are updated at the beginning of each month.* (Last update: December 1, 2024).<br>The monthly data include the country-specific GPR indexes.<br>Each series mnemonics is described in the last columns of the Excel file and in the Stata file. </i>
+#### Daily data for the Recent GPR index are available here: <u> [Excel format](/gpr_files/data_gpr_daily_recent.xls)</u>; <u>[Stata format](/gpr_files/data_gpr_daily_recent.dta)</u> <br><i> The daily data are updated every Monday.* (Last update: December 23, 2024) </i>
+##### *If the first day of the month or week falls on a federal holiday, data updates will take place the next business day.  
 #### Access older vintages of the data <u>[here](https://github.com/iacoviel/iacoviel.github.io/tree/master/gpr_archive_files)</u>.
-###### Monthly vintages are named as follows, where YYYYMM are the year and month of the update version:<br>Excel format: data_gpr_export_YYYYMM.xls <br>Stata format: data_gpr_export_YYYYMM.dta<br>Daily vintages are named as follows, where YYYYMMDD are the year, month, and day of the update version:<br>Excel format: data_gpr_daily_recent_YYYYMMDD.xls <br>Stata format: data_gpr_daily_recent_YYYYMMDD.dta<br>Note: The latest data are preliminary and subject to revisions since some newspapers are added to the search database with delay.
+#### A log of past updates to the data can be found <u>[here](https://github.com/iacoviel/iacoviel.github.io/blob/master/gpr_files/log.txt)</u>.
+###### Monthly vintages are named as follows, where YYYYMM are the year and month of the update version:<br>Excel format: data_gpr_export_YYYYMM.xls <br>Stata format: data_gpr_export_YYYYMM.dta<br>Daily vintages are named as follows, where YYYYMMDD are the year, month, and day of the update version:<br>Excel format: data_gpr_daily_recent_YYYYMMDD.xls <br>Stata format: data_gpr_daily_recent_YYYYMMDD.dta<br>Note: The latest data are preliminary and subject to revisions since some newspapers are added to the search database with delay. Additionally, in some cases there could be minor revisions of the data extending further back when duplicate or missing articles or newspaper editions are removed from or added to the database. 
 
 
 ```{r setup, include=FALSE, warning=FALSE, message = FALSE}
@@ -75,7 +75,7 @@ library(zoo)
 homeDir <- "U:/tf/GPR/GPR_python"
 
 #Up to what month is data updated?
-date <- "October 2023"
+date <- "November 2024"
 
 
 types <- c("date", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", 
@@ -219,17 +219,17 @@ fig3_1 <- plot_ly(data = gpr,
                   x = as.Date(gpr$Date), 
                   y = ~SHAREH_CAT_1, 
                   type = "scatter", mode = "lines", 
-                  name = "War Threats (Category 1)", 
+                  name = "War Threats (1)", 
                   text = ~textDate,
                   hover_name = ~textDate, 
                   hovertemplate = "%{y}") %>% 
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_2, mode = "lines", name = "Peace Threats (Category 2)") %>%
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_3, mode = "lines", name = "Military Buildups (Category 3)") %>%
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_4, mode = "lines", name = "Nuclear Threats (Category 4)") %>%
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_5, mode = "lines", name = "Terror Threats (Category 5)") %>%
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_6, mode = "lines", name = "Beginning of War (Category 6)") %>%
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_7, mode = "lines", name = "Escalation of War (Category 7)") %>%
-  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_8, mode = "lines", name = "Terror Acts (Category 8)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_2, mode = "lines", name = "Peace Threats (2)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_3, mode = "lines", name = "Military Buildups (3)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_4, mode = "lines", name = "Nuclear Threats (4)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_5, mode = "lines", name = "Terror Threats (5)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_6, mode = "lines", name = "Beginning of War (6)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_7, mode = "lines", name = "Escalation of War (7)") %>%
+  add_trace(x=~as.Date(Date), y=~SHAREH_CAT_8, mode = "lines", name = "Terror Acts (8)") %>%
   #style(visible = "legendonly",
   #              traces = -c(1)) %>%
   layout(xaxis = list(title = "", autotypenumbers = 'strict', type = "date", range = list("1900-01-01", max(as.Date(gpr$Date))+125)),
@@ -251,12 +251,12 @@ fig4_1 <- plot_ly(data = gprdaily,
                   text = ~textdate,
                   hover_name = ~textdate, 
                   hovertemplate = "%{y}") %>% 
-  add_trace(x=~Date, y=~GPRD_MA7, mode = "lines", name = "7-day Moving Average") %>%
+  add_trace(x=~Date, y=~GPRD_MA7, mode = "lines", name = "7-day Average") %>%
   add_trace(x=~Date,
             y=~GPRD_MA30,
             mode = "lines",
             line = list(color = rgb(200, 10, 20, maxColorValue = 255)),
-            name = "30-day Moving Average") %>%
+            name = "30-day Average") %>%
   #add_lines() %>%
   style(visible = "legendonly",
                   traces = -c(1)) %>%
@@ -279,10 +279,10 @@ fig4_2 <- plot_ly(data = gprdaily,
                   text = ~textdate,
                   hover_name = ~textdate, 
                   hovertemplate = "%{y}") %>% 
-  add_trace(x=~Date, y=~GPRD_MA7l, mode = "lines", name = "7-day Moving Average") %>%
+  add_trace(x=~Date, y=~GPRD_MA7l, mode = "lines", name = "7-day Average") %>%
   add_trace(x=~Date, y=~GPRD_MA30l, mode = "lines", 
             line = list(color = rgb(200, 10, 20, maxColorValue = 255)),
-            name = "30-day Moving Average") %>%
+            name = "30-day Average") %>%
   #add_lines() %>%
   style(visible = "legendonly",
                   traces = -c(1)) %>%
@@ -310,4 +310,4 @@ tabsetPanel(tabPanel("Daily", fig4_1),
 ```
 Note:  Move the slider below the chart to zoom in on a specific date range. Click and drag a square around any area to zoom in further. Double click the chart to zoom back out. Select or deselect individual series to compare GPR indexes. Double click to isolate one series and again to select all series. Log scales of indexes refer to log(1+GPR) of the corresponding GPR index.
 
-<br><i>License: All the material in this webpage, including interactive visualizations and code, are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.<br>This webpage is maintained by Lilliana Wells, Will Yang, David Yu, and Matteo Iacoviello.</i>
+<br><i>License: All the material in this webpage, including interactive visualizations and code, are completely open access under the [Creative Commons BY license](https://creativecommons.org/licenses/by/4.0/). You have the permission to use, distribute, and reproduce these in any medium, provided the source and authors are credited.<br>This webpage is maintained by Lilliana Wells, Will Yang, Sam Nate, and Matteo Iacoviello.</i>
