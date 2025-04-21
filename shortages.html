@@ -128,6 +128,7 @@
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#full-sample">Full Sample</a></li>
+                <li><a href="#country-comparison">Country Comparison</a></li>
                 <li><a href="#recent-data">Recent Data</a></li>
                 <li><a href="#downloads">Downloads</a></li>
             </ul>
@@ -165,6 +166,16 @@
             </div>
         </div>
 
+        <h2 id="country-comparison">Shortage Index by Country: Full Sample (1900-present)</h2>
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <canvas id="shortageChart3"></canvas>
+            </div>
+            <div class="footnote">
+                This chart compares shortage indices across countries. The index values are scaled to be comparable across countries, with each national index representing the intensity of reported shortages in that country's economy.
+            </div>
+        </div>
+
         <h2 id="recent-data">Shortage Index: 2020-present</h2>
         <div class="chart-container">
             <div class="chart-wrapper">
@@ -177,15 +188,13 @@
     </div>
 
     <script>
-        // (Keep the existing JavaScript code here)
         document.addEventListener('DOMContentLoaded', function() {
-            function createChart(csvFile, canvasId, startYear) {
+            function createChart(csvFile, canvasId, startYear, columnNames, colorMap) {
                 Papa.parse(csvFile, {
                     download: true,
                     header: true,
                     complete: function(results) {
                         const shortageData = results.data;
-                        const columnNames = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
                         
                         // Generate dates starting from January of the specified year
                         const startDate = moment(`${startYear}-01-01`);
@@ -196,22 +205,7 @@
                         const datasets = columnNames.map((columnName, index) => ({
                             label: columnName.replace('_', ' '),
                             data: shortageData.map(row => parseFloat(row[columnName])),
-                            borderColor: (() => {
-                                switch (columnName) {
-                                    case 'index_all_shortage':
-                                        return 'black';
-                                    case 'energy_shortage':
-                                        return 'red';
-                                    case 'food_shortage':
-                                        return 'green';
-                                    case 'industry_shortage':
-                                        return 'blue';
-                                    case 'labor_shortage':
-                                        return 'purple';
-                                    default:
-                                        return `hsl(${(index * 60) % 360}, 100%, 50%)`;
-                                }
-                            })(),
+                            borderColor: colorMap[columnName] || `hsl(${(index * 60) % 360}, 100%, 50%)`,
                             fill: false
                         }));
 
@@ -267,9 +261,37 @@
                 });
             }
 
-            // Create two charts with different data files and starting dates
-            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart1', 1900);
-            createChart('/shortages_files/shortage_index_web_2020.csv', 'shortageChart2', 2020);
+            // Define column names and color maps for each chart
+            const chart1Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+            const chart1Colors = {
+                'index_all_shortage': 'black',
+                'energy_shortage': 'red',
+                'food_shortage': 'green',
+                'industry_shortage': 'blue',
+                'labor_shortage': 'purple'
+            };
+
+            const chart2Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+            const chart2Colors = {
+                'index_all_shortage': 'black',
+                'energy_shortage': 'red',
+                'food_shortage': 'green',
+                'industry_shortage': 'blue',
+                'labor_shortage': 'purple'
+            };
+
+            const chart3Columns = ['index_all', 'index_usa', 'index_gbr', 'index_jpn'];
+            const chart3Colors = {
+                'index_all': 'black',
+                'index_usa': '#3498db', // Blue
+                'index_uk': '#e74c3c',  // Red
+                'index_japan': '#2ecc71' // Green
+            };
+
+            // Create three charts with different data files and configurations
+            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart1', 1900, chart1Columns, chart1Colors);
+            createChart('/shortages_files/shortage_index_web_2020.csv', 'shortageChart2', 2020, chart2Columns, chart2Colors);
+            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart3', 1900, chart1Columns, chart1Colors);
         });
     </script>
 </body>
