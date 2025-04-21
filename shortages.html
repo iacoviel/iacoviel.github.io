@@ -169,17 +169,17 @@
         <h2 id="country-comparison">Shortage Index by Country: Full Sample (1900-present)</h2>
         <div class="chart-container">
             <div class="chart-wrapper">
-                <canvas id="shortageChart3"></canvas>
+                <canvas id="shortageChart2"></canvas>
             </div>
             <div class="footnote">
-                This chart compares shortage indices across countries. The index values are scaled to be comparable across countries, with each national index representing the intensity of reported shortages in that country's economy.
+                This chart shows country-specific shortage indices. For each country, the index is scaled to an average value of 100 for the years 1900 through 2019.
             </div>
         </div>
 
         <h2 id="recent-data">Shortage Index: 2020-present</h2>
         <div class="chart-container">
             <div class="chart-wrapper">
-                <canvas id="shortageChart2"></canvas>
+                <canvas id="shortageChart3"></canvas>
             </div>
             <div class="footnote">
                 The overall shortage index (index_all_shortage) is scaled to an average value of 100 for the years 1900 through 2019. The individual indexes for energy, food, industry, and labor shortages add up to the overall index.
@@ -271,17 +271,8 @@
                 'labor_shortage': 'purple'
             };
 
-            const chart2Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+            const chart2Columns = ['index_all', 'index_can', 'index_deu', 'index_fra', 'index_gbr', 'index_jpn', 'index_usa'];
             const chart2Colors = {
-                'index_all_shortage': 'black',
-                'energy_shortage': 'red',
-                'food_shortage': 'green',
-                'industry_shortage': 'blue',
-                'labor_shortage': 'purple'
-            };
-
-            const chart3Columns = ['index_all', 'index_can', 'index_deu', 'index_fra', 'index_gbr', 'index_jpn', 'index_usa'];
-            const chart3Colors = {
                 'index_all': 'black',
                 'index_can': 'brown' 
                 'index_deu': 'magenta'
@@ -291,10 +282,19 @@
                 'index_usa': 'blue' // Blue
             };
 
+            const chart3Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+            const chart3Colors = {
+                'index_all_shortage': 'black',
+                'energy_shortage': 'red',
+                'food_shortage': 'green',
+                'industry_shortage': 'blue',
+                'labor_shortage': 'purple'
+            };
+
             // Create three charts with different data files and configurations
             createChart('/shortages_files/shortage_index_web.csv', 'shortageChart1', 1900, chart1Columns, chart1Colors);
-            createChart('/shortages_files/shortage_index_web_2020.csv', 'shortageChart2', 2020, chart2Columns, chart2Colors);
-            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart3', 1900, chart1Columns, chart1Colors);
+            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart2', 1900, chart1Columns, chart1Colors);
+            createChart('/shortages_files/shortage_index_web_2020.csv', 'shortageChart3', 2020, chart2Columns, chart2Colors);
         });
     </script>
 </body>
