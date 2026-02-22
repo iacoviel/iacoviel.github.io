@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-GPR Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --accent: #2980b9;
+            --accent-light: #3498db;
+            --bg: #ffffff;
+            --bg-alt: #f5f7fa;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --border: #dce3ea;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* --- NAV --- */
+        nav {
+            background: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.15em;
+            color: #fff;
+            letter-spacing: 0.5px;
+            padding: 14px 0;
+        }
+        nav .logo span { color: var(--accent-light); }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 6px;
+        }
+        nav ul li a {
+            color: rgba(255,255,255,0.82);
+            text-decoration: none;
+            font-size: 0.92em;
+            font-weight: 400;
+            padding: 14px 14px;
+            display: block;
+            transition: color 0.2s, background 0.2s;
+            border-radius: 4px;
+        }
+        nav ul li a:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            background: var(--bg-alt);
+            color: var(--text);
+            padding: 72px 24px 64px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero .subtitle {
+            font-size: 1.15em;
+            font-weight: 300;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+        .hero .authors {
+            font-size: 0.95em;
+            color: var(--text-light);
+            margin-bottom: 28px;
+        }
+        .hero .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 11px 26px;
+            border-radius: 6px;
+            font-size: 0.92em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--border); }
+        .btn-outline:hover { border-color: var(--primary); }
+
+        /* --- SECTIONS --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        section { padding: 56px 0; }
+        section:nth-child(even) { background: var(--bg-alt); }
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* --- ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-top: 24px;
+        }
+        .about-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+        .about-card h3 {
+            font-size: 1.05em;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .about-card p {
+            font-size: 0.93em;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* --- CHART --- */
+        .chart-controls {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: end;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .control-group label {
+            font-size: 0.82em;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .control-group select,
+        .control-group input[type="number"] {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9em;
+            color: var(--text);
+            background: #fff;
+            min-width: 130px;
+        }
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(41,128,185,0.15);
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            padding-bottom: 2px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+            color: var(--text);
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        .checkbox-group input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+        .chart-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        #chart { width: 100%; height: 520px; }
+
+        /* --- DOWNLOADS --- */
+        .download-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .download-table th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9em;
+            padding: 14px 18px;
+            text-align: left;
+        }
+        .download-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.93em;
+        }
+        .download-table tr:last-child td { border-bottom: none; }
+        .download-table tr:hover td { background: var(--bg-alt); }
+        .download-table a {
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .download-table a:hover { text-decoration: underline; }
+
+        /* --- CITATION --- */
+        .cite-box {
+            background: #fff;
+            border-left: 4px solid var(--accent);
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            font-size: 0.93em;
+            line-height: 1.7;
+        }
+        .cite-box .cite-label {
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .updated {
+            font-size: 0.88em;
+            color: var(--text-light);
+            margin-top: 16px;
+        }
+        .note {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 28px 24px;
+            font-size: 0.85em;
+        }
+        footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            .about-grid { grid-template-columns: 1fr; }
+            nav .nav-inner { flex-direction: column; gap: 0; }
+            nav ul { padding-bottom: 8px; }
+            .chart-controls { flex-direction: column; }
+            #chart { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="logo"><span>AI</span>-GPR Index</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#chart-section">Interactive Chart</a></li>
+            <li><a href="#downloads">Downloads</a></li>
+            <li><a href="#citation">Citation</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <h1>The <span>AI-GPR</span> Index</h1>
+    <p class="subtitle">A daily measure of geopolitical risk constructed using large language models, covering 1960 to present.</p>
+    <p class="authors">Matteo Iacoviello &middot; Jonathan Tong</p>
+    <div class="btn-group">
+        <a href="#chart-section" class="btn btn-primary">Explore the Data</a>
+        <a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn btn-outline" download>Download Data (CSV)</a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <h2 class="section-title">About the Index</h2>
+        <p style="margin-bottom: 18px;">The AI-GPR Index measures geopolitical risk by applying large language models (LLMs) to newspaper articles. Building on the conceptual framework of the original GPR Index (Caldara and Iacoviello, 2022), it replaces keyword matching with semantic understanding: instead of searching for specific word combinations, GPT-4o-mini reads each article and assigns a continuous risk score from 0.0 to 1.0 based on the article's geopolitical content.</p>
+        <p style="margin-bottom: 18px;">The index is constructed at daily frequency using articles from the New York Times, Washington Post, and Chicago Tribune, spanning 1960 through 2025.</p>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>AI-GPR</h3>
+                <p>The main index. Aggregates LLM-assigned geopolitical risk scores across all newspaper articles on each date, normalized by total newspaper article count. Captures the overall level of geopolitical risk as perceived in the news.</p>
+            </div>
+            <div class="about-card">
+                <h3>GPR Original (Keyword-Based)</h3>
+                <p>A keyword-based GPR index constructed using the Caldara and Iacoviello (2022) proximity search methodology on the same three newspapers. Counts articles matching specific combinations of geopolitical and risk-related terms.</p>
+            </div>
+            <div class="about-card">
+                <h3>GPR Oil Disruptions</h3>
+                <p>A sub-index identifying articles that discuss oil or energy supply disruptions driven by geopolitical events. Constructed using a second LLM classification layer applied to high-GPR articles containing oil-related keywords.</p>
+            </div>
+            <div class="about-card">
+                <h3>Methodology</h3>
+                <p>Articles matching a broad keyword filter are scored by GPT-4o-mini on a 0&ndash;1 scale reflecting the intensity of geopolitical risk content. All indices are normalized to a mean of 100 over 1985&ndash;2019. See the paper for full details.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INTERACTIVE CHART -->
+<section id="chart-section" style="background: var(--bg-alt);">
+    <div class="container">
+        <h2 class="section-title">Interactive Chart</h2>
+
+        <div class="chart-controls">
+            <div class="control-group">
+                <label>Series</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="cb-ai" checked> AI-GPR</label>
+                    <label><input type="checkbox" id="cb-aer"> GPR Original</label>
+                    <label><input type="checkbox" id="cb-oil"> Oil Disruptions</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Smoothing</label>
+                <select id="smoothing">
+                    <option value="1">Raw (daily)</option>
+                    <option value="30">30-day MA</option>
+                    <option value="90" selected>90-day MA</option>
+                    <option value="180">180-day MA</option>
+                    <option value="365">365-day MA</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Frequency</label>
+                <select id="freq">
+                    <option value="daily">Daily</option>
+                    <option value="monthly" selected>Monthly</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Start Year</label>
+                <input type="number" id="start-year" value="1960" min="1960" max="2025" step="1">
+            </div>
+            <div class="control-group">
+                <label>End Year</label>
+                <input type="number" id="end-year" value="2025" min="1960" max="2025" step="1">
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div id="chart"></div>
+        </div>
+        <p class="note" style="margin-top: 12px;">Use the range slider below the chart to zoom into specific periods. Hover over the chart for exact values. Double-click to reset zoom.</p>
+    </div>
+</section>
+
+<!-- DOWNLOADS -->
+<section id="downloads">
+    <div class="container">
+        <h2 class="section-title">Downloads</h2>
+        <p>The data files contain the AI-GPR index, the keyword-based GPR index, and the GPR oil disruption sub-index. All indices are normalized to a mean of 100 over 1985&ndash;2019.</p>
+
+        <table class="download-table">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Description</th>
+                    <th>Columns</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ai_gpr_data_daily.csv</td>
+                    <td>Daily index values, 1960&ndash;2025</td>
+                    <td>Date, GPR_AI, GPR_AER, GPR_OIL</td>
+                    <td><a href="ai_gpr_files/ai_gpr_data_daily.csv" download>Download</a></td>
+                </tr>
+                <tr>
+                    <td>ai_gpr_data_monthly.csv</td>
+                    <td>Monthly averages, 1960&ndash;2025</td>
+                    <td>Date, GPR_AI, GPR_AER, GPR_OIL</td>
+                    <td><a href="ai_gpr_files/ai_gpr_data_monthly.csv" download>Download</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="updated">Last updated: February 2026 with data through December 2025.</p>
+        <p class="note">When using the data, please cite the paper and note the date of download.</p>
+    </div>
+</section>
+
+<!-- CITATION -->
+<section id="citation" style="background: var(--bg-alt);">
+    <div class="container">
+        <h2 class="section-title">Citation</h2>
+        <div class="cite-box">
+            <div class="cite-label">Cite as:</div>
+            <p>Iacoviello, Matteo and Jonathan Tong (2025). &ldquo;Measuring Geopolitical Risk Using Artificial Intelligence.&rdquo; Working Paper.</p>
+        </div>
+        <p class="note" style="margin-top: 14px;">When using the data, we suggest referring to both the website and the date of download; e.g., &ldquo;Data downloaded from https://www.matteoiacoviello.com/ai_gpr.html on [Month DD, YYYY].&rdquo;</p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2025 Matteo Iacoviello &amp; Jonathan Tong &middot; <a href="https://www.matteoiacoviello.com">matteoiacoviello.com</a></p>
+</footer>
+
+<!-- JS -->
+<script>
+// =====================================================================
+// DATA & CHART
+// =====================================================================
+
+let dailyData = null;
+let monthlyData = null;
+
+const COLORS = {
+    ai:  '#2980b9',
+    aer: '#e74c3c',
+    oil: '#27ae60'
+};
+
+function loadCSV(url) {
+    return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: r => resolve(r.data),
+            error: e => reject(e)
+        });
+    });
+}
+
+function movingAverage(values, window) {
+    if (window <= 1) return values;
+    const result = [];
+    for (let i = 0; i < values.length; i++) {
+        if (i < window - 1) {
+            result.push(null);
+        } else {
+            let sum = 0, count = 0;
+            for (let j = i - window + 1; j <= i; j++) {
+                if (values[j] !== null && values[j] !== undefined && !isNaN(values[j])) {
+                    sum += values[j];
+                    count++;
+                }
+            }
+            result.push(count > 0 ? sum / count : null);
+        }
+    }
+    return result;
+}
+
+function updateChart() {
+    const showAI  = document.getElementById('cb-ai').checked;
+    const showAER = document.getElementById('cb-aer').checked;
+    const showOIL = document.getElementById('cb-oil').checked;
+    const window  = parseInt(document.getElementById('smoothing').value);
+    const freq    = document.getElementById('freq').value;
+    const startY  = parseInt(document.getElementById('start-year').value);
+    const endY    = parseInt(document.getElementById('end-year').value);
+
+    const src = freq === 'daily' ? dailyData : monthlyData;
+    if (!src) return;
+
+    // Filter by year range
+    const filtered = src.filter(row => {
+        const y = parseInt(row.Date.substring(0, 4));
+        return y >= startY && y <= endY;
+    });
+
+    const dates = filtered.map(r => r.Date);
+    const traces = [];
+
+    if (showAI) {
+        const raw = filtered.map(r => r.GPR_AI);
+        const smoothed = (freq === 'monthly' && window > 1)
+            ? movingAverage(raw, Math.max(1, Math.round(window / 30)))
+            : movingAverage(raw, window);
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'AI-GPR',
+            line: { color: COLORS.ai, width: 2 },
+            hovertemplate: '%{x}<br>AI-GPR: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    if (showAER) {
+        const raw = filtered.map(r => r.GPR_AER);
+        const smoothed = (freq === 'monthly' && window > 1)
+            ? movingAverage(raw, Math.max(1, Math.round(window / 30)))
+            : movingAverage(raw, window);
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'GPR Original',
+            line: { color: COLORS.aer, width: 1.5 },
+            hovertemplate: '%{x}<br>GPR Original: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    if (showOIL) {
+        const raw = filtered.map(r => r.GPR_OIL);
+        const smoothed = (freq === 'monthly' && window > 1)
+            ? movingAverage(raw, Math.max(1, Math.round(window / 30)))
+            : movingAverage(raw, window);
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'Oil Disruptions',
+            line: { color: COLORS.oil, width: 1.5 },
+            hovertemplate: '%{x}<br>Oil Disruptions: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    const layout = {
+        margin: { t: 20, r: 40, b: 50, l: 60 },
+        xaxis: {
+            rangeslider: { visible: true, thickness: 0.06 },
+            type: 'date',
+            gridcolor: '#eee'
+        },
+        yaxis: {
+            title: { text: 'Index (1985-2019 = 100)', font: { size: 13 } },
+            gridcolor: '#eee',
+            zeroline: false
+        },
+        legend: {
+            orientation: 'h',
+            y: 1.06,
+            x: 0.5,
+            xanchor: 'center',
+            font: { size: 13 }
+        },
+        hovermode: 'x unified',
+        plot_bgcolor: '#fff',
+        paper_bgcolor: '#fff',
+        font: { family: 'Roboto, Arial, sans-serif', size: 12 }
+    };
+
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d'],
+        displaylogo: false
+    };
+
+    Plotly.react('chart', traces, layout, config);
+}
+
+// Load data and initialize
+async function init() {
+    try {
+        [monthlyData, dailyData] = await Promise.all([
+            loadCSV('ai_gpr_files/ai_gpr_data_monthly.csv'),
+            loadCSV('ai_gpr_files/ai_gpr_data_daily.csv')
+        ]);
+        updateChart();
+    } catch (e) {
+        document.getElementById('chart').innerHTML =
+            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Run <code>run_generate_webpage_data.py</code> to generate the data.</p>';
+    }
+}
+
+// Event listeners
+['cb-ai', 'cb-aer', 'cb-oil'].forEach(id =>
+    document.getElementById(id).addEventListener('change', updateChart));
+['smoothing', 'freq', 'start-year', 'end-year'].forEach(id =>
+    document.getElementById(id).addEventListener('change', updateChart));
+
+init();
+</script>
+
+</body>
+</html>
