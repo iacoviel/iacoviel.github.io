@@ -362,7 +362,7 @@
             </div>
             <div class="about-card">
                 <h3>GPR Original (Keyword-Based)</h3>
-                <p>A keyword-based GPR index constructed using the Caldara and Iacoviello (2022) proximity search methodology on the same three newspapers. Counts articles matching specific combinations of geopolitical and risk-related terms.</p>
+                <p>A keyword-based GPR index constructed using the Caldara and Iacoviello (2022) proximity search methodology on the same three newspapers. Counts articles matching specific combinations of geopolitical and risk-related terms. Extended back to 1960.</p>
             </div>
             <div class="about-card">
                 <h3>GPR Oil Disruptions</h3>
@@ -394,6 +394,7 @@
                 <label>Smoothing</label>
                 <select id="smoothing">
                     <option value="1">Raw (daily)</option>
+                    <option value="0">One-day change</option>
                     <option value="30">30-day MA</option>
                     <option value="90" selected>90-day MA</option>
                     <option value="180">180-day MA</option>
@@ -466,7 +467,7 @@
         <h2 class="section-title">Citation</h2>
         <div class="cite-box">
             <div class="cite-label">Cite as:</div>
-            <p>Iacoviello, Matteo and Jonathan Tong (2025). &ldquo;Measuring Geopolitical Risk using Artificial Intelligence.&rdquo; Working Paper.</p>
+            <p>Iacoviello, Matteo and Jonathan Tong (2025). &ldquo;The AI-GPR Index: Measuring Geopolitical Risk using Artificial Intelligence.&rdquo; Working Paper.</p>
         </div>
         <p class="note" style="margin-top: 14px;">When using the data, we suggest referring to both the website and the date of download; e.g., &ldquo;Data downloaded from https://www.matteoiacoviello.com/ai_gpr.html on [Month DD, YYYY].&rdquo;</p>
     </div>
@@ -503,6 +504,19 @@ function loadCSV(url) {
             error: e => reject(e)
         });
     });
+}
+
+function oneDayChange(values) {
+    const result = [null];
+    for (let i = 1; i < values.length; i++) {
+        if (values[i] !== null && values[i] !== undefined && !isNaN(values[i]) &&
+            values[i-1] !== null && values[i-1] !== undefined && !isNaN(values[i-1])) {
+            result.push(values[i] - values[i-1]);
+        } else {
+            result.push(null);
+        }
+    }
+    return result;
 }
 
 function movingAverage(values, window) {
@@ -546,11 +560,15 @@ function updateChart() {
     const dates = filtered.map(r => r.Date);
     const traces = [];
 
+    function applySmoothing(raw) {
+        if (window === 0) return oneDayChange(raw);
+        if (freq === 'monthly' && window > 1)
+            return movingAverage(raw, Math.max(1, Math.round(window / 30)));
+        return movingAverage(raw, window);
+    }
+
     if (showAI) {
-        const raw = filtered.map(r => r.GPR_AI);
-        const smoothed = (freq === 'monthly' && window > 1)
-            ? movingAverage(raw, Math.max(1, Math.round(window / 30)))
-            : movingAverage(raw, window);
+        const smoothed = applySmoothing(filtered.map(r => r.GPR_AI));
         traces.push({
             x: dates, y: smoothed,
             name: 'AI-GPR',
@@ -560,10 +578,7 @@ function updateChart() {
     }
 
     if (showAER) {
-        const raw = filtered.map(r => r.GPR_AER);
-        const smoothed = (freq === 'monthly' && window > 1)
-            ? movingAverage(raw, Math.max(1, Math.round(window / 30)))
-            : movingAverage(raw, window);
+        const smoothed = applySmoothing(filtered.map(r => r.GPR_AER));
         traces.push({
             x: dates, y: smoothed,
             name: 'GPR Original',
@@ -573,10 +588,7 @@ function updateChart() {
     }
 
     if (showOIL) {
-        const raw = filtered.map(r => r.GPR_OIL);
-        const smoothed = (freq === 'monthly' && window > 1)
-            ? movingAverage(raw, Math.max(1, Math.round(window / 30)))
-            : movingAverage(raw, window);
+        const smoothed = applySmoothing(filtered.map(r => r.GPR_OIL));
         traces.push({
             x: dates, y: smoothed,
             name: 'Oil Disruptions',
@@ -593,10 +605,10 @@ function updateChart() {
             gridcolor: '#eee'
         },
         yaxis: {
-            title: { text: 'Index (1985-2019 = 100)', font: { size: 13 } },
+            title: { text: window === 0 ? 'One-day change' : 'Index (1985-2019 = 100)', font: { size: 13 } },
             gridcolor: '#eee',
             zeroline: true,
-            rangemode: 'tozero'
+            rangemode: window === 0 ? 'normal' : 'tozero'
         },
         legend: {
             orientation: 'h',
