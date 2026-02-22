@@ -403,8 +403,8 @@
             <div class="control-group">
                 <label>Frequency</label>
                 <select id="freq">
-                    <option value="daily">Daily</option>
-                    <option value="monthly" selected>Monthly</option>
+                    <option value="daily" selected>Daily</option>
+                    <option value="monthly">Monthly</option>
                 </select>
             </div>
             <div class="control-group">
@@ -595,7 +595,8 @@ function updateChart() {
         yaxis: {
             title: { text: 'Index (1985-2019 = 100)', font: { size: 13 } },
             gridcolor: '#eee',
-            zeroline: false
+            zeroline: true,
+            rangemode: 'tozero'
         },
         legend: {
             orientation: 'h',
