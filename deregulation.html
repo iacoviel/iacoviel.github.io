@@ -651,7 +651,7 @@ function updateChart() {
 
     if (chartType === 'headline') {
         // Headline index
-        const raw = filtered.map(r => r.deregulation || 0);
+        const raw = filtered.map(r => r.deregulation);
         const smoothed = movingAverage(raw, smoothing);
 
         traces.push({
@@ -663,9 +663,9 @@ function updateChart() {
         });
     } else if (chartType === 'comparison') {
         // Deregulation vs Regulation
-        const deregRaw = filtered.map(r => r.deregulation || 0);
+        const deregRaw = filtered.map(r => r.deregulation);
         const deregSmoothed = movingAverage(deregRaw, smoothing);
-        const regRaw = filtered.map(r => r.regulation || 0);
+        const regRaw = filtered.map(r => r.regulation);
         const regSmoothed = movingAverage(regRaw, smoothing);
 
         traces.push({
@@ -684,9 +684,9 @@ function updateChart() {
         });
     } else if (chartType === 'foreign') {
         // U.S. vs Foreign
-        const usRaw = filtered.map(r => r.deregulation || 0);
+        const usRaw = filtered.map(r => r.deregulation);
         const usSmoothed = movingAverage(usRaw, smoothing);
-        const foreignRaw = filtered.map(r => r.foreign || 0);
+        const foreignRaw = filtered.map(r => r.foreign);
         const foreignSmoothed = movingAverage(foreignRaw, smoothing);
 
         traces.push({
@@ -705,9 +705,9 @@ function updateChart() {
         });
     } else if (chartType === 'timing') {
         // Proposed vs Enacted
-        const proposedRaw = filtered.map(r => r.proposed || 0);
+        const proposedRaw = filtered.map(r => r.proposed);
         const proposedSmoothed = movingAverage(proposedRaw, smoothing);
-        const enactedRaw = filtered.map(r => r.enacted || 0);
+        const enactedRaw = filtered.map(r => r.enacted);
         const enactedSmoothed = movingAverage(enactedRaw, smoothing);
 
         traces.push({
