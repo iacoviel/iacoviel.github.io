@@ -102,6 +102,16 @@
             color: var(--text-light);
             margin-bottom: 18px;
         }
+        .hero .authors a {
+            color: var(--text-light);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .hero .authors a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
         .hero .btn-group {
             display: flex;
             gap: 12px;
@@ -339,7 +349,7 @@
 <section class="hero" id="home">
     <h1>The <span>Deregulation</span> Index</h1>
     <p class="subtitle">A measure of U.S. deregulation constructed using large language models from 1960 to present.</p>
-    <p class="authors">Danilo Cascaldi-Garcia · Matteo Iacoviello</p>
+    <p class="authors"><a href="https://www.danilocascaldigarcia.com" target="_blank">Danilo Cascaldi-Garcia</a> · <a href="https://www.matteoiacoviello.com" target="_blank">Matteo Iacoviello</a></p>
     <p style="font-size: 0.9em; color: #27ae60; margin-top: 8px;">
         <strong>✓ Updated through December 2025
     </p>
@@ -460,6 +470,12 @@
                     <td><button class="btn btn-primary" onclick="downloadHeadlineDaily()">Download</button></td>
                 </tr>
                 <tr>
+                    <td>Headline Index (Monthly)</td>
+                    <td>Monthly average deregulation index</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadHeadlineMonthly()">Download</button></td>
+                </tr>
+                <tr>
                     <td>Headline Index (Quarterly)</td>
                     <td>Quarterly average deregulation index</td>
                     <td>CSV</td>
@@ -470,6 +486,12 @@
                     <td>Daily indexes by sector (finance, energy, etc.)</td>
                     <td>CSV</td>
                     <td><button class="btn btn-primary" onclick="downloadSectoralDaily()">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Sectoral Indexes (Monthly)</td>
+                    <td>Monthly average sectoral indexes</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadSectoralMonthly()">Download</button></td>
                 </tr>
                 <tr>
                     <td>Sectoral Indexes (Quarterly)</td>
@@ -551,10 +573,26 @@ function loadCSV(url) {
 function movingAverage(values, window) {
     if (window <= 1) return values;
     const result = [];
+
+    // Find the first non-null value to determine true data start
+    let firstValidIdx = values.findIndex(v => v !== null && v !== undefined && !isNaN(v));
+    if (firstValidIdx === -1) {
+        // No valid data at all
+        return values.map(() => null);
+    }
+
     for (let i = 0; i < values.length; i++) {
-        if (i < window - 1) {
+        // Before data starts: null
+        if (i < firstValidIdx) {
+            result.push(null);
+            continue;
+        }
+
+        // Wait for window calendar days from first valid observation
+        if (i < firstValidIdx + window - 1) {
             result.push(null);
         } else {
+            // After startup period, average whatever valid observations exist in the window
             let sum = 0, count = 0;
             for (let j = i - window + 1; j <= i; j++) {
                 if (values[j] !== null && values[j] !== undefined && !isNaN(values[j])) {
@@ -562,8 +600,8 @@ function movingAverage(values, window) {
                     count++;
                 }
             }
-            // Only show MA if we have at least 'window' valid observations
-            result.push(count >= window ? sum / count : null);
+            // Return average of valid observations (even if less than window size)
+            result.push(count > 0 ? sum / count : null);
         }
     }
     return result;
@@ -631,6 +669,71 @@ function toQuarterly(data) {
             health: q.health / q.count,
             housing: q.housing / q.count,
             agriculture: q.agriculture / q.count
+        };
+    });
+}
+
+// Convert daily to monthly
+function toMonthly(data) {
+    const monthly = {};
+
+    data.forEach(row => {
+        // Parse date string directly to avoid timezone issues
+        const [year, month, day] = row.Date.split('-').map(Number);
+        const mKey = `${year}-${String(month).padStart(2, '0')}`;
+
+        if (!monthly[mKey]) {
+            monthly[mKey] = { Date: mKey, count: 0, fedreg_count: 0 };
+            // Initialize main indices
+            monthly[mKey].deregulation = 0;
+            monthly[mKey].regulation = 0;
+            monthly[mKey].foreign = 0;
+            monthly[mKey].proposed = 0;
+            monthly[mKey].enacted = 0;
+            monthly[mKey].federal_register = 0;
+            // Initialize sectoral columns
+            ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+                monthly[mKey][s] = 0;
+            });
+        }
+
+        // Sum raw values for main indices
+        monthly[mKey].deregulation += row.deregulation || 0;
+        monthly[mKey].regulation += row.regulation || 0;
+        monthly[mKey].foreign += row.foreign || 0;
+        monthly[mKey].proposed += row.proposed || 0;
+        monthly[mKey].enacted += row.enacted || 0;
+        if (row.federal_register !== null && row.federal_register !== undefined && !isNaN(row.federal_register)) {
+            monthly[mKey].federal_register += row.federal_register;
+            monthly[mKey].fedreg_count++;
+        }
+
+        // Sum sectoral values
+        ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+            monthly[mKey][s] += row[s] || 0;
+        });
+
+        monthly[mKey].count++;
+    });
+
+    // Average values
+    return Object.values(monthly).map(m => {
+        return {
+            Date: m.Date,
+            deregulation: m.deregulation / m.count,
+            regulation: m.regulation / m.count,
+            foreign: m.foreign / m.count,
+            proposed: m.proposed / m.count,
+            enacted: m.enacted / m.count,
+            federal_register: m.fedreg_count > 0 ? m.federal_register / m.fedreg_count : null,
+            finance: m.finance / m.count,
+            energy: m.energy / m.count,
+            telecom: m.telecom / m.count,
+            transport: m.transport / m.count,
+            trade: m.trade / m.count,
+            health: m.health / m.count,
+            housing: m.housing / m.count,
+            agriculture: m.agriculture / m.count
         };
     });
 }
@@ -878,6 +981,24 @@ function downloadHeadlineDaily() {
     downloadCSV(csv, 'deregulation_index_daily.csv');
 }
 
+function downloadHeadlineMonthly() {
+    if (!dailyData) return;
+    const monthly = toMonthly(dailyData);
+
+    // Note: For monthly data, we just provide the averaged values
+    // MA calculations don't make as much sense for monthly aggregates
+    const csv = Papa.unparse(monthly.map(r => ({
+        month: r.Date,
+        deregulation_index: (r.deregulation !== null && r.deregulation !== undefined) ? r.deregulation.toFixed(2) : '0.00',
+        regulation_index: (r.regulation !== null && r.regulation !== undefined) ? r.regulation.toFixed(2) : '0.00',
+        foreign_deregulation_index: (r.foreign !== null && r.foreign !== undefined) ? r.foreign.toFixed(2) : '0.00',
+        deregulation_proposed: (r.proposed !== null && r.proposed !== undefined) ? r.proposed.toFixed(2) : '0.00',
+        deregulation_enacted: (r.enacted !== null && r.enacted !== undefined) ? r.enacted.toFixed(2) : '0.00',
+        federal_register_index: (r.federal_register !== null && r.federal_register !== undefined) ? r.federal_register.toFixed(2) : ''
+    })));
+    downloadCSV(csv, 'deregulation_index_monthly.csv');
+}
+
 function downloadHeadlineQuarterly() {
     if (!dailyData) return;
     const quarterly = toQuarterly(dailyData);
@@ -899,6 +1020,12 @@ function downloadHeadlineQuarterly() {
 function downloadSectoralDaily() {
     if (!dailyData) return;
     downloadCSV(Papa.unparse(dailyData), 'deregulation_sectoral_daily.csv');
+}
+
+function downloadSectoralMonthly() {
+    if (!dailyData) return;
+    const monthly = toMonthly(dailyData);
+    downloadCSV(Papa.unparse(monthly), 'deregulation_sectoral_monthly.csv');
 }
 
 function downloadSectoralQuarterly() {
@@ -952,7 +1079,9 @@ async function initialize() {
             foreign: row.foreign_deregulation_index,
             proposed: row.deregulation_proposed,
             enacted: row.deregulation_enacted,
-            federal_register: row.federal_register_index,  // Federal Register index (1994-2026, NaN before 1994)
+            // HARD-CODED: Federal Register data quality is reliable only from 1995-01-03 onwards
+            // Set anything before this date to null (1994 data is poor quality)
+            federal_register: (row.date >= '1995-01-03') ? row.federal_register_index : null,
             // Add sectoral data (also raw)
             finance: sectoralMap[row.date]?.finance || 0,
             energy: sectoralMap[row.date]?.energy || 0,
