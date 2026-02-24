@@ -884,13 +884,6 @@ async function initialize() {
         console.log('Loaded sectoral data:', sectoralData.length, 'rows');
         console.log('Merged data:', dailyData.length, 'rows');
 
-        // Filter out rows with missing values (first 365 days have NaN due to MA)
-        dailyData = dailyData.filter(row =>
-            row.deregulation !== null &&
-            row.deregulation !== undefined &&
-            !isNaN(row.deregulation)
-        );
-
         updateChart();
     } catch (error) {
         console.error('Error loading data:', error);
