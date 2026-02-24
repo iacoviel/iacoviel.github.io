@@ -579,12 +579,12 @@ function toQuarterly(data) {
 
         if (!quarterly[qKey]) {
             quarterly[qKey] = { Date: qKey, count: 0 };
-            // Initialize with _raw suffix columns for aggregation
-            quarterly[qKey].deregulation_raw = 0;
-            quarterly[qKey].regulation_raw = 0;
-            quarterly[qKey].foreign_raw = 0;
-            quarterly[qKey].proposed_raw = 0;
-            quarterly[qKey].enacted_raw = 0;
+            // Initialize main indices
+            quarterly[qKey].deregulation = 0;
+            quarterly[qKey].regulation = 0;
+            quarterly[qKey].foreign = 0;
+            quarterly[qKey].proposed = 0;
+            quarterly[qKey].enacted = 0;
             // Initialize sectoral columns
             ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
                 quarterly[qKey][s] = 0;
@@ -592,11 +592,11 @@ function toQuarterly(data) {
         }
 
         // Sum raw values for main indices
-        quarterly[qKey].deregulation_raw += row.deregulation_raw || 0;
-        quarterly[qKey].regulation_raw += row.regulation_raw || 0;
-        quarterly[qKey].foreign_raw += row.foreign_raw || 0;
-        quarterly[qKey].proposed_raw += row.proposed_raw || 0;
-        quarterly[qKey].enacted_raw += row.enacted_raw || 0;
+        quarterly[qKey].deregulation += row.deregulation || 0;
+        quarterly[qKey].regulation += row.regulation || 0;
+        quarterly[qKey].foreign += row.foreign || 0;
+        quarterly[qKey].proposed += row.proposed || 0;
+        quarterly[qKey].enacted += row.enacted || 0;
 
         // Sum sectoral values
         ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
@@ -606,15 +606,15 @@ function toQuarterly(data) {
         quarterly[qKey].count++;
     });
 
-    // Average and rename _raw columns back to normal names
+    // Average values
     return Object.values(quarterly).map(q => {
         return {
             Date: q.Date,
-            deregulation: q.deregulation_raw / q.count,
-            regulation: q.regulation_raw / q.count,
-            foreign: q.foreign_raw / q.count,
-            proposed: q.proposed_raw / q.count,
-            enacted: q.enacted_raw / q.count,
+            deregulation: q.deregulation / q.count,
+            regulation: q.regulation / q.count,
+            foreign: q.foreign / q.count,
+            proposed: q.proposed / q.count,
+            enacted: q.enacted / q.count,
             finance: q.finance / q.count,
             energy: q.energy / q.count,
             telecom: q.telecom / q.count,
@@ -650,7 +650,7 @@ function updateChart() {
     const traces = [];
 
     if (chartType === 'headline') {
-        // Headline index
+        // Headline index - apply MA to raw data
         const raw = filtered.map(r => r.deregulation);
         const smoothed = movingAverage(raw, smoothing);
 
@@ -662,7 +662,7 @@ function updateChart() {
             hovertemplate: '%{x}<br>Index: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'comparison') {
-        // Deregulation vs Regulation
+        // Deregulation vs Regulation - apply MA to raw data
         const deregRaw = filtered.map(r => r.deregulation);
         const deregSmoothed = movingAverage(deregRaw, smoothing);
         const regRaw = filtered.map(r => r.regulation);
@@ -683,7 +683,7 @@ function updateChart() {
             hovertemplate: '%{x}<br>Regulation: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'foreign') {
-        // U.S. vs Foreign
+        // U.S. vs Foreign - apply MA to raw data
         const usRaw = filtered.map(r => r.deregulation);
         const usSmoothed = movingAverage(usRaw, smoothing);
         const foreignRaw = filtered.map(r => r.foreign);
@@ -704,7 +704,7 @@ function updateChart() {
             hovertemplate: '%{x}<br>Foreign: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'timing') {
-        // Proposed vs Enacted
+        // Proposed vs Enacted - apply MA to raw data
         const proposedRaw = filtered.map(r => r.proposed);
         const proposedSmoothed = movingAverage(proposedRaw, smoothing);
         const enactedRaw = filtered.map(r => r.enacted);
@@ -781,16 +781,61 @@ function updateChart() {
     Plotly.newPlot('chart', traces, layout, config);
 }
 
-// Download functions
+// Download functions - Add MA columns computed client-side
 function downloadHeadlineDaily() {
     if (!dailyData) return;
-    const csv = Papa.unparse(dailyData.map(r => ({
+
+    // Extract raw values
+    const deregRaw = dailyData.map(r => r.deregulation);
+    const regRaw = dailyData.map(r => r.regulation);
+    const foreignRaw = dailyData.map(r => r.foreign);
+    const proposedRaw = dailyData.map(r => r.proposed);
+    const enactedRaw = dailyData.map(r => r.enacted);
+
+    // Compute moving averages (30-day, 90-day, 365-day)
+    const dereg_ma1 = movingAverage(deregRaw, 30);
+    const dereg_ma3 = movingAverage(deregRaw, 90);
+    const dereg_ma12 = movingAverage(deregRaw, 365);
+
+    const reg_ma1 = movingAverage(regRaw, 30);
+    const reg_ma3 = movingAverage(regRaw, 90);
+    const reg_ma12 = movingAverage(regRaw, 365);
+
+    const foreign_ma1 = movingAverage(foreignRaw, 30);
+    const foreign_ma3 = movingAverage(foreignRaw, 90);
+    const foreign_ma12 = movingAverage(foreignRaw, 365);
+
+    const proposed_ma1 = movingAverage(proposedRaw, 30);
+    const proposed_ma3 = movingAverage(proposedRaw, 90);
+    const proposed_ma12 = movingAverage(proposedRaw, 365);
+
+    const enacted_ma1 = movingAverage(enactedRaw, 30);
+    const enacted_ma3 = movingAverage(enactedRaw, 90);
+    const enacted_ma12 = movingAverage(enactedRaw, 365);
+
+    // Build CSV with raw + MA columns
+    const csv = Papa.unparse(dailyData.map((r, i) => ({
         date: r.Date,
         deregulation_index: r.deregulation || 0,
+        deregulation_index_ma1: dereg_ma1[i] !== null ? dereg_ma1[i].toFixed(2) : '',
+        deregulation_index_ma3: dereg_ma3[i] !== null ? dereg_ma3[i].toFixed(2) : '',
+        deregulation_index_ma12: dereg_ma12[i] !== null ? dereg_ma12[i].toFixed(2) : '',
         regulation_index: r.regulation || 0,
+        regulation_index_ma1: reg_ma1[i] !== null ? reg_ma1[i].toFixed(2) : '',
+        regulation_index_ma3: reg_ma3[i] !== null ? reg_ma3[i].toFixed(2) : '',
+        regulation_index_ma12: reg_ma12[i] !== null ? reg_ma12[i].toFixed(2) : '',
         foreign_deregulation_index: r.foreign || 0,
+        foreign_deregulation_index_ma1: foreign_ma1[i] !== null ? foreign_ma1[i].toFixed(2) : '',
+        foreign_deregulation_index_ma3: foreign_ma3[i] !== null ? foreign_ma3[i].toFixed(2) : '',
+        foreign_deregulation_index_ma12: foreign_ma12[i] !== null ? foreign_ma12[i].toFixed(2) : '',
         deregulation_proposed: r.proposed || 0,
-        deregulation_enacted: r.enacted || 0
+        deregulation_proposed_ma1: proposed_ma1[i] !== null ? proposed_ma1[i].toFixed(2) : '',
+        deregulation_proposed_ma3: proposed_ma3[i] !== null ? proposed_ma3[i].toFixed(2) : '',
+        deregulation_proposed_ma12: proposed_ma12[i] !== null ? proposed_ma12[i].toFixed(2) : '',
+        deregulation_enacted: r.enacted || 0,
+        deregulation_enacted_ma1: enacted_ma1[i] !== null ? enacted_ma1[i].toFixed(2) : '',
+        deregulation_enacted_ma3: enacted_ma3[i] !== null ? enacted_ma3[i].toFixed(2) : '',
+        deregulation_enacted_ma12: enacted_ma12[i] !== null ? enacted_ma12[i].toFixed(2) : ''
     })));
     downloadCSV(csv, 'deregulation_index_daily.csv');
 }
@@ -798,6 +843,9 @@ function downloadHeadlineDaily() {
 function downloadHeadlineQuarterly() {
     if (!dailyData) return;
     const quarterly = toQuarterly(dailyData);
+
+    // Note: For quarterly data, we just provide the averaged values
+    // MA calculations don't make as much sense for quarterly aggregates
     const csv = Papa.unparse(quarterly.map(r => ({
         quarter: r.Date,
         deregulation_index: r.deregulation || 0,
@@ -856,20 +904,16 @@ async function initialize() {
         });
 
         // Transform and merge
+        // Parse raw data - CSV now contains ONLY raw values (no pre-computed MAs)
         dailyData = headlineData.map(row => ({
             Date: row.date,
-            deregulation: row.deregulation_index,
-            regulation: row.regulation_index,
-            foreign: row.foreign_deregulation_index,
-            proposed: row.deregulation_proposed,
-            enacted: row.deregulation_enacted,
-            // Raw values for quarterly aggregation
-            deregulation_raw: parseFloat(row.deregulation_index_raw) || 0,
-            regulation_raw: parseFloat(row.regulation_index_raw) || 0,
-            foreign_raw: parseFloat(row.foreign_deregulation_index_raw) || 0,
-            proposed_raw: parseFloat(row.deregulation_proposed_raw) || 0,
-            enacted_raw: parseFloat(row.deregulation_enacted_raw) || 0,
-            // Add sectoral data
+            // Store raw values directly (no separate _raw suffix in data structure)
+            deregulation: parseFloat(row.deregulation_index) || 0,
+            regulation: parseFloat(row.regulation_index) || 0,
+            foreign: parseFloat(row.foreign_deregulation_index) || 0,
+            proposed: parseFloat(row.deregulation_proposed) || 0,
+            enacted: parseFloat(row.deregulation_enacted) || 0,
+            // Add sectoral data (also raw)
             finance: sectoralMap[row.date]?.finance || 0,
             energy: sectoralMap[row.date]?.energy || 0,
             telecom: sectoralMap[row.date]?.telecom || 0,

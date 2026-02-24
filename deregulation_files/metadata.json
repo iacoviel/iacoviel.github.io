@@ -18,43 +18,43 @@
     "deregulation_share": "5.37%",
     "llm_model": "GPT-4o-mini",
     "prompt_version": "v2",
-    "moving_average": "365 days",
+    "moving_average": "Computed client-side (30-day, 90-day, 365-day options)",
     "normalization": "Mean = 100 over 1960-2019"
   },
   "variables": {
     "deregulation_index": {
       "label": "U.S. Deregulation Index",
-      "description": "Main index measuring deregulation activity in the United States",
+      "description": "Main index measuring deregulation activity in the United States (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day",
+      "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More deregulation activity"
     },
     "regulation_index": {
       "label": "U.S. Regulation Index",
-      "description": "Index measuring new regulation activity in the United States",
+      "description": "Index measuring new regulation activity in the United States (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day",
+      "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More regulation activity"
     },
     "foreign_deregulation_index": {
       "label": "Foreign Deregulation Index",
-      "description": "Index measuring deregulation activity in foreign countries",
+      "description": "Index measuring deregulation activity in foreign countries (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day",
+      "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More foreign deregulation activity"
     },
     "deregulation_proposed": {
       "label": "Proposed Deregulation",
-      "description": "Deregulation measures that are proposed but not yet enacted",
+      "description": "Deregulation measures that are proposed but not yet enacted (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day",
+      "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More proposed deregulation"
     },
     "deregulation_enacted": {
       "label": "Enacted Deregulation",
-      "description": "Deregulation measures that have been enacted into law",
+      "description": "Deregulation measures that have been enacted into law (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day",
+      "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More enacted deregulation"
     }
   },
@@ -68,51 +68,51 @@
   "sectors": {
     "finance": {
       "label": "Finance",
-      "description": "Deregulation activity in the finance sector",
+      "description": "Deregulation activity in the finance sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "energy": {
       "label": "Energy",
-      "description": "Deregulation activity in the energy sector",
+      "description": "Deregulation activity in the energy sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "telecom": {
       "label": "Telecom",
-      "description": "Deregulation activity in the telecom sector",
+      "description": "Deregulation activity in the telecom sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "transport": {
       "label": "Transport",
-      "description": "Deregulation activity in the transport sector",
+      "description": "Deregulation activity in the transport sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "trade": {
       "label": "Trade",
-      "description": "Deregulation activity in the trade sector",
+      "description": "Deregulation activity in the trade sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "health": {
       "label": "Health",
-      "description": "Deregulation activity in the health sector",
+      "description": "Deregulation activity in the health sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "housing": {
       "label": "Housing",
-      "description": "Deregulation activity in the housing sector",
+      "description": "Deregulation activity in the housing sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     },
     "agriculture": {
       "label": "Agriculture",
-      "description": "Deregulation activity in the agriculture sector",
+      "description": "Deregulation activity in the agriculture sector (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
-      "moving_average": "365-day"
+      "moving_average": "Not pre-computed - apply client-side"
     }
   }
 }
