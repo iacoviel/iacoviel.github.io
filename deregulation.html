@@ -388,6 +388,7 @@
                     <option value="comparison">Deregulation vs Regulation</option>
                     <option value="foreign">U.S. vs Foreign</option>
                     <option value="timing">Proposed vs Enacted</option>
+                    <option value="fedreg">News vs Federal Register</option>
                     <option value="sectoral">Sectoral Breakdown</option>
                 </select>
             </div>
@@ -561,7 +562,8 @@ function movingAverage(values, window) {
                     count++;
                 }
             }
-            result.push(count > 0 ? sum / count : null);
+            // Only show MA if we have at least 'window' valid observations
+            result.push(count >= window ? sum / count : null);
         }
     }
     return result;
@@ -578,13 +580,14 @@ function toQuarterly(data) {
         const qKey = `${year}-Q${quarter}`;
 
         if (!quarterly[qKey]) {
-            quarterly[qKey] = { Date: qKey, count: 0 };
+            quarterly[qKey] = { Date: qKey, count: 0, fedreg_count: 0 };
             // Initialize main indices
             quarterly[qKey].deregulation = 0;
             quarterly[qKey].regulation = 0;
             quarterly[qKey].foreign = 0;
             quarterly[qKey].proposed = 0;
             quarterly[qKey].enacted = 0;
+            quarterly[qKey].federal_register = 0;
             // Initialize sectoral columns
             ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
                 quarterly[qKey][s] = 0;
@@ -597,6 +600,10 @@ function toQuarterly(data) {
         quarterly[qKey].foreign += row.foreign || 0;
         quarterly[qKey].proposed += row.proposed || 0;
         quarterly[qKey].enacted += row.enacted || 0;
+        if (row.federal_register !== null && row.federal_register !== undefined && !isNaN(row.federal_register)) {
+            quarterly[qKey].federal_register += row.federal_register;
+            quarterly[qKey].fedreg_count++;
+        }
 
         // Sum sectoral values
         ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
@@ -615,6 +622,7 @@ function toQuarterly(data) {
             foreign: q.foreign / q.count,
             proposed: q.proposed / q.count,
             enacted: q.enacted / q.count,
+            federal_register: q.fedreg_count > 0 ? q.federal_register / q.fedreg_count : null,
             finance: q.finance / q.count,
             energy: q.energy / q.count,
             telecom: q.telecom / q.count,
@@ -658,7 +666,7 @@ function updateChart() {
             x: dates,
             y: smoothed,
             name: 'Deregulation Index',
-            line: { color: '#2d6930', width: 2.5 },
+            line: { color: '#1f5a8a', width: 2.5 },
             hovertemplate: '%{x}<br>Index: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'comparison') {
@@ -672,7 +680,7 @@ function updateChart() {
             x: dates,
             y: deregSmoothed,
             name: 'Deregulation',
-            line: { color: '#2d6930', width: 2.5 },
+            line: { color: '#1f5a8a', width: 2.5 },
             hovertemplate: '%{x}<br>Deregulation: %{y:.1f}<extra></extra>'
         });
         traces.push({
@@ -693,7 +701,7 @@ function updateChart() {
             x: dates,
             y: usSmoothed,
             name: 'U.S. Deregulation',
-            line: { color: '#2d6930', width: 2.5 },
+            line: { color: '#1f5a8a', width: 2.5 },
             hovertemplate: '%{x}<br>U.S.: %{y:.1f}<extra></extra>'
         });
         traces.push({
@@ -721,8 +729,29 @@ function updateChart() {
             x: dates,
             y: enactedSmoothed,
             name: 'Enacted',
-            line: { color: '#2d6930', width: 2.5 },
+            line: { color: '#1f5a8a', width: 2.5 },
             hovertemplate: '%{x}<br>Enacted: %{y:.1f}<extra></extra>'
+        });
+    } else if (chartType === 'fedreg') {
+        // News vs Federal Register - apply MA to raw data
+        const newsRaw = filtered.map(r => r.deregulation);
+        const newsSmoothed = movingAverage(newsRaw, smoothing);
+        const fedregRaw = filtered.map(r => r.federal_register);
+        const fedregSmoothed = movingAverage(fedregRaw, smoothing);
+
+        traces.push({
+            x: dates,
+            y: newsSmoothed,
+            name: 'News Index',
+            line: { color: '#1f5a8a', width: 2.5 },
+            hovertemplate: '%{x}<br>News: %{y:.1f}<extra></extra>'
+        });
+        traces.push({
+            x: dates,
+            y: fedregSmoothed,
+            name: 'Federal Register',
+            line: { color: '#c0392b', width: 2.5 },
+            hovertemplate: '%{x}<br>Fed Reg: %{y:.1f}<extra></extra>'
         });
     } else {
         // Sectoral indexes
@@ -791,6 +820,7 @@ function downloadHeadlineDaily() {
     const foreignRaw = dailyData.map(r => r.foreign);
     const proposedRaw = dailyData.map(r => r.proposed);
     const enactedRaw = dailyData.map(r => r.enacted);
+    const fedregRaw = dailyData.map(r => r.federal_register);
 
     // Compute moving averages (30-day, 90-day, 365-day)
     const dereg_ma1 = movingAverage(deregRaw, 30);
@@ -812,6 +842,10 @@ function downloadHeadlineDaily() {
     const enacted_ma1 = movingAverage(enactedRaw, 30);
     const enacted_ma3 = movingAverage(enactedRaw, 90);
     const enacted_ma12 = movingAverage(enactedRaw, 365);
+
+    const fedreg_ma1 = movingAverage(fedregRaw, 30);
+    const fedreg_ma3 = movingAverage(fedregRaw, 90);
+    const fedreg_ma12 = movingAverage(fedregRaw, 365);
 
     // Build CSV with raw + MA columns
     const csv = Papa.unparse(dailyData.map((r, i) => ({
@@ -835,7 +869,11 @@ function downloadHeadlineDaily() {
         deregulation_enacted: (r.enacted !== null && r.enacted !== undefined) ? r.enacted.toFixed(2) : '0.00',
         deregulation_enacted_ma1: enacted_ma1[i] !== null ? enacted_ma1[i].toFixed(2) : '',
         deregulation_enacted_ma3: enacted_ma3[i] !== null ? enacted_ma3[i].toFixed(2) : '',
-        deregulation_enacted_ma12: enacted_ma12[i] !== null ? enacted_ma12[i].toFixed(2) : ''
+        deregulation_enacted_ma12: enacted_ma12[i] !== null ? enacted_ma12[i].toFixed(2) : '',
+        federal_register_index: (r.federal_register !== null && r.federal_register !== undefined) ? r.federal_register.toFixed(2) : '',
+        federal_register_index_ma1: fedreg_ma1[i] !== null ? fedreg_ma1[i].toFixed(2) : '',
+        federal_register_index_ma3: fedreg_ma3[i] !== null ? fedreg_ma3[i].toFixed(2) : '',
+        federal_register_index_ma12: fedreg_ma12[i] !== null ? fedreg_ma12[i].toFixed(2) : ''
     })));
     downloadCSV(csv, 'deregulation_index_daily.csv');
 }
@@ -852,7 +890,8 @@ function downloadHeadlineQuarterly() {
         regulation_index: (r.regulation !== null && r.regulation !== undefined) ? r.regulation.toFixed(2) : '0.00',
         foreign_deregulation_index: (r.foreign !== null && r.foreign !== undefined) ? r.foreign.toFixed(2) : '0.00',
         deregulation_proposed: (r.proposed !== null && r.proposed !== undefined) ? r.proposed.toFixed(2) : '0.00',
-        deregulation_enacted: (r.enacted !== null && r.enacted !== undefined) ? r.enacted.toFixed(2) : '0.00'
+        deregulation_enacted: (r.enacted !== null && r.enacted !== undefined) ? r.enacted.toFixed(2) : '0.00',
+        federal_register_index: (r.federal_register !== null && r.federal_register !== undefined) ? r.federal_register.toFixed(2) : ''
     })));
     downloadCSV(csv, 'deregulation_index_quarterly.csv');
 }
@@ -913,6 +952,7 @@ async function initialize() {
             foreign: row.foreign_deregulation_index,
             proposed: row.deregulation_proposed,
             enacted: row.deregulation_enacted,
+            federal_register: row.federal_register_index,  // Federal Register index (1994-2026, NaN before 1994)
             // Add sectoral data (also raw)
             finance: sectoralMap[row.date]?.finance || 0,
             energy: sectoralMap[row.date]?.energy || 0,

@@ -56,6 +56,15 @@
       "unit": "Index (mean=100 in 1960-2019)",
       "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More enacted deregulation"
+    },
+    "federal_register_index": {
+      "label": "Federal Register Deregulation Index",
+      "description": "Deregulation activity measured from Federal Register documents (rules and executive orders) using LLM classification (raw daily values)",
+      "unit": "Index (rebased to match news index mean over 1995-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More Federal Register deregulation activity",
+      "coverage": "1994-2026",
+      "source": "Federal Register documents classified with Amazon Nova Micro LLM"
     }
   },
   "citation": {
