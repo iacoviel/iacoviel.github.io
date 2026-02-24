@@ -816,23 +816,23 @@ function downloadHeadlineDaily() {
     // Build CSV with raw + MA columns
     const csv = Papa.unparse(dailyData.map((r, i) => ({
         date: r.Date,
-        deregulation_index: r.deregulation || 0,
+        deregulation_index: (r.deregulation !== null && r.deregulation !== undefined) ? r.deregulation.toFixed(2) : '0.00',
         deregulation_index_ma1: dereg_ma1[i] !== null ? dereg_ma1[i].toFixed(2) : '',
         deregulation_index_ma3: dereg_ma3[i] !== null ? dereg_ma3[i].toFixed(2) : '',
         deregulation_index_ma12: dereg_ma12[i] !== null ? dereg_ma12[i].toFixed(2) : '',
-        regulation_index: r.regulation || 0,
+        regulation_index: (r.regulation !== null && r.regulation !== undefined) ? r.regulation.toFixed(2) : '0.00',
         regulation_index_ma1: reg_ma1[i] !== null ? reg_ma1[i].toFixed(2) : '',
         regulation_index_ma3: reg_ma3[i] !== null ? reg_ma3[i].toFixed(2) : '',
         regulation_index_ma12: reg_ma12[i] !== null ? reg_ma12[i].toFixed(2) : '',
-        foreign_deregulation_index: r.foreign || 0,
+        foreign_deregulation_index: (r.foreign !== null && r.foreign !== undefined) ? r.foreign.toFixed(2) : '0.00',
         foreign_deregulation_index_ma1: foreign_ma1[i] !== null ? foreign_ma1[i].toFixed(2) : '',
         foreign_deregulation_index_ma3: foreign_ma3[i] !== null ? foreign_ma3[i].toFixed(2) : '',
         foreign_deregulation_index_ma12: foreign_ma12[i] !== null ? foreign_ma12[i].toFixed(2) : '',
-        deregulation_proposed: r.proposed || 0,
+        deregulation_proposed: (r.proposed !== null && r.proposed !== undefined) ? r.proposed.toFixed(2) : '0.00',
         deregulation_proposed_ma1: proposed_ma1[i] !== null ? proposed_ma1[i].toFixed(2) : '',
         deregulation_proposed_ma3: proposed_ma3[i] !== null ? proposed_ma3[i].toFixed(2) : '',
         deregulation_proposed_ma12: proposed_ma12[i] !== null ? proposed_ma12[i].toFixed(2) : '',
-        deregulation_enacted: r.enacted || 0,
+        deregulation_enacted: (r.enacted !== null && r.enacted !== undefined) ? r.enacted.toFixed(2) : '0.00',
         deregulation_enacted_ma1: enacted_ma1[i] !== null ? enacted_ma1[i].toFixed(2) : '',
         deregulation_enacted_ma3: enacted_ma3[i] !== null ? enacted_ma3[i].toFixed(2) : '',
         deregulation_enacted_ma12: enacted_ma12[i] !== null ? enacted_ma12[i].toFixed(2) : ''
@@ -848,11 +848,11 @@ function downloadHeadlineQuarterly() {
     // MA calculations don't make as much sense for quarterly aggregates
     const csv = Papa.unparse(quarterly.map(r => ({
         quarter: r.Date,
-        deregulation_index: r.deregulation || 0,
-        regulation_index: r.regulation || 0,
-        foreign_deregulation_index: r.foreign || 0,
-        deregulation_proposed: r.proposed || 0,
-        deregulation_enacted: r.enacted || 0
+        deregulation_index: (r.deregulation !== null && r.deregulation !== undefined) ? r.deregulation.toFixed(2) : '0.00',
+        regulation_index: (r.regulation !== null && r.regulation !== undefined) ? r.regulation.toFixed(2) : '0.00',
+        foreign_deregulation_index: (r.foreign !== null && r.foreign !== undefined) ? r.foreign.toFixed(2) : '0.00',
+        deregulation_proposed: (r.proposed !== null && r.proposed !== undefined) ? r.proposed.toFixed(2) : '0.00',
+        deregulation_enacted: (r.enacted !== null && r.enacted !== undefined) ? r.enacted.toFixed(2) : '0.00'
     })));
     downloadCSV(csv, 'deregulation_index_quarterly.csv');
 }
@@ -907,12 +907,12 @@ async function initialize() {
         // Parse raw data - CSV now contains ONLY raw values (no pre-computed MAs)
         dailyData = headlineData.map(row => ({
             Date: row.date,
-            // Store raw values directly (no separate _raw suffix in data structure)
-            deregulation: parseFloat(row.deregulation_index) || 0,
-            regulation: parseFloat(row.regulation_index) || 0,
-            foreign: parseFloat(row.foreign_deregulation_index) || 0,
-            proposed: parseFloat(row.deregulation_proposed) || 0,
-            enacted: parseFloat(row.deregulation_enacted) || 0,
+            // Store raw values directly - PapaParse with dynamicTyping already converts to numbers
+            deregulation: row.deregulation_index,
+            regulation: row.regulation_index,
+            foreign: row.foreign_deregulation_index,
+            proposed: row.deregulation_proposed,
+            enacted: row.deregulation_enacted,
             // Add sectoral data (also raw)
             finance: sectoralMap[row.date]?.finance || 0,
             energy: sectoralMap[row.date]?.energy || 0,
@@ -927,6 +927,7 @@ async function initialize() {
         console.log('Loaded headline data:', headlineData.length, 'rows');
         console.log('Loaded sectoral data:', sectoralData.length, 'rows');
         console.log('Merged data:', dailyData.length, 'rows');
+        console.log('First row sample:', dailyData[0]);
 
         updateChart();
     } catch (error) {
