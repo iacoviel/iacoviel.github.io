@@ -1,0 +1,118 @@
+{
+  "dataset_name": "U.S. Deregulation Index",
+  "description": "News-based index of deregulation activity constructed using large language models to classify newspaper articles",
+  "source": "Cascaldi-Garcia and Iacoviello (2026)",
+  "coverage": {
+    "start_date": "1960-01-01",
+    "end_date": "2025-12-31",
+    "frequency": "daily",
+    "newspapers": [
+      "New York Times",
+      "Washington Post",
+      "Chicago Tribune"
+    ]
+  },
+  "construction": {
+    "articles_analyzed": 745302,
+    "articles_with_deregulation": 40010,
+    "deregulation_share": "5.37%",
+    "llm_model": "GPT-4o-mini",
+    "prompt_version": "v2",
+    "moving_average": "365 days",
+    "normalization": "Mean = 100 over 1960-2019"
+  },
+  "variables": {
+    "deregulation_index": {
+      "label": "U.S. Deregulation Index",
+      "description": "Main index measuring deregulation activity in the United States",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day",
+      "higher_means": "More deregulation activity"
+    },
+    "regulation_index": {
+      "label": "U.S. Regulation Index",
+      "description": "Index measuring new regulation activity in the United States",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day",
+      "higher_means": "More regulation activity"
+    },
+    "foreign_deregulation_index": {
+      "label": "Foreign Deregulation Index",
+      "description": "Index measuring deregulation activity in foreign countries",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day",
+      "higher_means": "More foreign deregulation activity"
+    },
+    "deregulation_proposed": {
+      "label": "Proposed Deregulation",
+      "description": "Deregulation measures that are proposed but not yet enacted",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day",
+      "higher_means": "More proposed deregulation"
+    },
+    "deregulation_enacted": {
+      "label": "Enacted Deregulation",
+      "description": "Deregulation measures that have been enacted into law",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day",
+      "higher_means": "More enacted deregulation"
+    }
+  },
+  "citation": {
+    "text": "Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). \"Quantifying Deregulation and its Economic Effects: A Large Language Model Approach.\" Federal Reserve Board.",
+    "bibtex": "@article{cascaldi2026deregulation,\n  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},\n  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},\n  journal={Federal Reserve Board},\n  year={2026}\n}"
+  },
+  "last_updated": "2026-02-24",
+  "version": "1.0",
+  "data_points": 24107,
+  "sectors": {
+    "finance": {
+      "label": "Finance",
+      "description": "Deregulation activity in the finance sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "energy": {
+      "label": "Energy",
+      "description": "Deregulation activity in the energy sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "telecom": {
+      "label": "Telecom",
+      "description": "Deregulation activity in the telecom sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "transport": {
+      "label": "Transport",
+      "description": "Deregulation activity in the transport sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "trade": {
+      "label": "Trade",
+      "description": "Deregulation activity in the trade sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "health": {
+      "label": "Health",
+      "description": "Deregulation activity in the health sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "housing": {
+      "label": "Housing",
+      "description": "Deregulation activity in the housing sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    },
+    "agriculture": {
+      "label": "Agriculture",
+      "description": "Deregulation activity in the agriculture sector",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "365-day"
+    }
+  }
+}
