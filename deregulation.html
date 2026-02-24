@@ -9,14 +9,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         :root {
-            --primary: #34495e;
-            --accent: #e67e22;
-            --accent-light: #f39c12;
+            --primary: #1e4620;
+            --accent: #2d6930;
+            --accent-light: #3d8b40;
             --bg: #ffffff;
-            --bg-alt: #ecf0f1;
+            --bg-alt: #f0f4f0;
             --text: #2c3e50;
-            --text-light: #7f8c8d;
-            --border: #bdc3c7;
+            --text-light: #555555;
+            --border: #c5d4c5;
             --shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
 
@@ -520,16 +520,16 @@
 let dailyData = null;
 let quarterlyData = null;
 
-// Color scheme for sectors (charcoal/orange theme)
+// Color scheme for sectors (dark green theme)
 const SECTOR_COLORS = {
-    finance: '#e67e22',      // Primary orange
-    energy: '#27ae60',       // Green
+    finance: '#2d6930',      // Primary dark green
+    energy: '#27ae60',       // Medium green
     telecom: '#9b59b6',      // Purple
     transport: '#3498db',    // Blue
-    trade: '#f39c12',        // Gold
+    trade: '#d4af37',        // Gold
     health: '#16a085',       // Teal
     agriculture: '#2ecc71',  // Light green
-    housing: '#e74c3c'       // Red
+    housing: '#c0392b'       // Dark red
 };
 
 // Load CSV data
@@ -658,7 +658,7 @@ function updateChart() {
             x: dates,
             y: smoothed,
             name: 'Deregulation Index',
-            line: { color: '#e67e22', width: 2.5 },
+            line: { color: '#2d6930', width: 2.5 },
             hovertemplate: '%{x}<br>Index: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'comparison') {
@@ -672,14 +672,14 @@ function updateChart() {
             x: dates,
             y: deregSmoothed,
             name: 'Deregulation',
-            line: { color: '#e67e22', width: 2.5 },
+            line: { color: '#2d6930', width: 2.5 },
             hovertemplate: '%{x}<br>Deregulation: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: regSmoothed,
             name: 'Regulation',
-            line: { color: '#34495e', width: 2.5 },
+            line: { color: '#1e4620', width: 2.5 },
             hovertemplate: '%{x}<br>Regulation: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'foreign') {
@@ -693,14 +693,14 @@ function updateChart() {
             x: dates,
             y: usSmoothed,
             name: 'U.S. Deregulation',
-            line: { color: '#e67e22', width: 2.5 },
+            line: { color: '#2d6930', width: 2.5 },
             hovertemplate: '%{x}<br>U.S.: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: foreignSmoothed,
             name: 'Foreign Deregulation',
-            line: { color: '#34495e', width: 2.5 },
+            line: { color: '#1e4620', width: 2.5 },
             hovertemplate: '%{x}<br>Foreign: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'timing') {
@@ -714,14 +714,14 @@ function updateChart() {
             x: dates,
             y: proposedSmoothed,
             name: 'Proposed',
-            line: { color: '#f39c12', width: 2.5 },
+            line: { color: '#3d8b40', width: 2.5 },
             hovertemplate: '%{x}<br>Proposed: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: enactedSmoothed,
             name: 'Enacted',
-            line: { color: '#e67e22', width: 2.5 },
+            line: { color: '#2d6930', width: 2.5 },
             hovertemplate: '%{x}<br>Enacted: %{y:.1f}<extra></extra>'
         });
     } else {
