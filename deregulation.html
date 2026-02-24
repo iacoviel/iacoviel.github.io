@@ -572,9 +572,8 @@ function toQuarterly(data) {
     const quarterly = {};
 
     data.forEach(row => {
-        const date = new Date(row.Date);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
+        // Parse date string directly to avoid timezone issues
+        const [year, month, day] = row.Date.split('-').map(Number);
         const quarter = Math.ceil(month / 3);
         const qKey = `${year}-Q${quarter}`;
 
