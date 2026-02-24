@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deregulation Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e4620;
+            --accent: #2d6930;
+            --accent-light: #3d8b40;
+            --bg: #ffffff;
+            --bg-alt: #f0f4f0;
+            --text: #2c3e50;
+            --text-light: #555555;
+            --border: #c5d4c5;
+            --shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.5;
+            font-size: 16px;
+        }
+
+        /* --- NAV --- */
+        nav {
+            background: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.15em;
+            color: #fff;
+            letter-spacing: 0.5px;
+            padding: 14px 0;
+        }
+        nav .logo span { color: var(--accent-light); }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 6px;
+        }
+        nav ul li a {
+            color: rgba(255,255,255,0.82);
+            text-decoration: none;
+            font-size: 0.92em;
+            font-weight: 400;
+            padding: 14px 14px;
+            display: block;
+            transition: color 0.2s, background 0.2s;
+            border-radius: 4px;
+        }
+        nav ul li a:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            background: var(--bg-alt);
+            color: var(--text);
+            padding: 40px 24px 32px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero h1 {
+            font-size: 2.4em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero .subtitle {
+            font-size: 1.05em;
+            font-weight: 300;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 16px;
+        }
+        .hero .authors {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-bottom: 18px;
+        }
+        .hero .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 11px 26px;
+            border-radius: 6px;
+            font-size: 0.92em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+            cursor: pointer;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+        .btn-primary { background: var(--accent); color: #fff; border: none; }
+        .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--border); }
+        .btn-outline:hover { border-color: var(--primary); }
+
+        /* --- SECTIONS --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        section { padding: 32px 0; }
+        section:nth-child(even) { background: var(--bg-alt); }
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* --- ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 16px;
+        }
+        .about-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+        }
+        .about-card h3 {
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .about-card p {
+            color: var(--text-light);
+            font-size: 0.92em;
+            line-height: 1.45;
+        }
+
+        /* --- CHART CONTROLS --- */
+        .chart-controls {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            background: var(--bg-alt);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .control-group label {
+            font-size: 0.85em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--text-light);
+        }
+        .control-group select,
+        .control-group input {
+            padding: 7px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--text);
+            background: #fff;
+            min-width: 130px;
+        }
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(41,128,185,0.15);
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            padding-bottom: 2px;
+            flex-wrap: wrap;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+            color: var(--text);
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        .checkbox-group input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+        .chart-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        #chart { width: 100%; height: 480px; }
+
+        /* --- DOWNLOADS --- */
+        .download-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .download-table th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9em;
+            padding: 14px 18px;
+            text-align: left;
+        }
+        .download-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.93em;
+        }
+        .download-table tr:last-child td { border-bottom: none; }
+        .download-table tr:hover td { background: var(--bg-alt); }
+        .download-table a {
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .download-table a:hover { text-decoration: underline; }
+
+        /* --- CITATION --- */
+        .cite-box {
+            background: #fff;
+            border-left: 4px solid var(--accent);
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            font-size: 0.93em;
+            line-height: 1.7;
+        }
+        .cite-box .cite-label {
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .updated {
+            font-size: 0.88em;
+            color: var(--text-light);
+            margin-top: 16px;
+        }
+        .note {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 28px 24px;
+            font-size: 0.85em;
+        }
+        footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            .about-grid { grid-template-columns: 1fr; }
+            nav .nav-inner { flex-direction: column; gap: 0; }
+            nav ul { padding-bottom: 8px; }
+            .chart-controls { flex-direction: column; }
+            #chart { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="logo"><span>Deregulation</span> Index</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#chart-section">Interactive Chart</a></li>
+            <li><a href="#downloads">Downloads</a></li>
+            <li><a href="#citation">Citation</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <h1>The <span>Deregulation</span> Index</h1>
+    <p class="subtitle">A measure of U.S. deregulation constructed using large language models from 1960 to present.</p>
+    <p class="authors">Danilo Cascaldi-Garcia · Matteo Iacoviello</p>
+    <p style="font-size: 0.9em; color: #27ae60; margin-top: 8px;">
+        <strong>✓ Updated through December 2025
+    </p>
+    <div class="btn-group">
+        <a href="https://www.matteoiacoviello.com/research_files/DEREGULATION_PAPER.pdf" class="btn btn-primary">Download Paper (PDF)</a>
+        <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
+        <a href="#downloads" class="btn btn-outline">Download Data</a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <h2 class="section-title">About the Index</h2>
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>What is it?</h3>
+                <p>The Deregulation Index measures the intensity of U.S. deregulation activity based on newspaper coverage. Using large language models (LLMs) to classify over 600,000 New York Times articles from 1960 to 2025, we construct daily time series that capture major deregulatory episodes across sectors and regulatory types.</p>
+            </div>
+            <div class="about-card">
+                <h3>How is it constructed?</h3>
+                <p>We apply GPT-4o-mini to semantically classify articles, distinguishing deregulation from increased regulation and assigning intensity scores (0.0-1.0). The model evaluates whether articles discuss advocacy, proposals, or enacted measures. Human validation confirms strong agreement between LLM and human classifications.</p>
+            </div>
+            <div class="about-card">
+                <h3>Key Features</h3>
+                <p>The index captures major reform episodes including transportation and telecommunications liberalization in the 1970s-1980s, financial deregulation in the 1980s-1990s, and recent deregulatory activity. We provide decompositions by sector (finance, energy, telecom, transportation, etc.) and regulation type (price controls, entry barriers, etc.).</p>
+            </div>
+            <div class="about-card">
+                <h3>Validation</h3>
+                <p>We validate the news-based index against a parallel index constructed from Federal Register documents. The news index leads the Federal Register by nine months, consistent with media coverage reflecting policy intentions before formal implementation. The strong correlation confirms both measures capture genuine regulatory policy variation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INTERACTIVE CHART -->
+<section id="chart-section">
+    <div class="container">
+        <h2 class="section-title">Interactive Chart</h2>
+
+        <div class="chart-controls">
+            <div class="control-group">
+                <label>Chart Type</label>
+                <select id="chart-type">
+                    <option value="headline">Deregulation Index (Main)</option>
+                    <option value="comparison">Deregulation vs Regulation</option>
+                    <option value="foreign">U.S. vs Foreign</option>
+                    <option value="timing">Proposed vs Enacted</option>
+                    <option value="sectoral">Sectoral Breakdown</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Smoothing (days)</label>
+                <select id="smoothing">
+                    <option value="1">None (Raw)</option>
+                    <option value="30">30-day MA</option>
+                    <option value="90" selected>90-day MA</option>
+                    <option value="365">365-day MA</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Start Year</label>
+                <input type="number" id="start-year" value="1960" min="1960" max="2025">
+            </div>
+
+            <div class="control-group">
+                <label>End Year</label>
+                <input type="number" id="end-year" value="2025" min="1960" max="2025">
+            </div>
+        </div>
+
+        <!-- Sectoral checkboxes (hidden by default) -->
+        <div class="chart-controls" id="sectoral-controls" style="display: none;">
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="cb-finance" checked> Finance</label>
+                <label><input type="checkbox" id="cb-energy" checked> Energy</label>
+                <label><input type="checkbox" id="cb-telecom" checked> Telecom</label>
+                <label><input type="checkbox" id="cb-transport" checked> Transportation</label>
+                <label><input type="checkbox" id="cb-trade" checked> Trade</label>
+                <label><input type="checkbox" id="cb-health" checked> Health</label>
+                <label><input type="checkbox" id="cb-agriculture" checked> Agriculture</label>
+                <label><input type="checkbox" id="cb-housing" checked> Housing</label>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div id="chart"></div>
+        </div>
+
+        <p class="note">
+            Note: The deregulation index is normalized to mean = 100 over 1995-2019. Higher values indicate more intense deregulation activity.
+        </p>
+    </div>
+</section>
+
+<!-- DOWNLOADS -->
+<section id="downloads">
+    <div class="container">
+        <h2 class="section-title">Download Data</h2>
+
+        <table class="download-table">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Description</th>
+                    <th>Format</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Headline Index (Daily)</td>
+                    <td>Daily deregulation index, 1960-2025</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadHeadlineDaily()">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Headline Index (Quarterly)</td>
+                    <td>Quarterly average deregulation index</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadHeadlineQuarterly()">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Sectoral Indexes (Daily)</td>
+                    <td>Daily indexes by sector (finance, energy, etc.)</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadSectoralDaily()">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Sectoral Indexes (Quarterly)</td>
+                    <td>Quarterly average sectoral indexes</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadSectoralQuarterly()">Download</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="updated">
+            Last updated: February 2026
+        </p>
+    </div>
+</section>
+
+<!-- CITATION -->
+<section id="citation">
+    <div class="container">
+        <h2 class="section-title">Citation</h2>
+
+        <div class="cite-box">
+            <div class="cite-label">Please cite as:</div>
+            Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). "Quantifying Deregulation and its Economic Effects: A Large Language Model Approach." <em>Working Paper</em>, Federal Reserve Board.
+        </div>
+
+        <div class="cite-box" style="margin-top: 14px;">
+            <div class="cite-label">BibTeX:</div>
+            <pre style="font-size: 0.85em; line-height: 1.5;">@article{cascaldi2026deregulation,
+  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},
+  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},
+  journal={Working Paper, Federal Reserve Board},
+  year={2026}
+}</pre>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Danilo Cascaldi-Garcia and Matteo Iacoviello | Federal Reserve Board</p>
+    <p style="margin-top: 8px;">
+        Data available at <a href="https://www.matteoiacoviello.com/deregulation.html">www.matteoiacoviello.com/deregulation.html</a>
+    </p>
+</footer>
+
+<script>
+// Global data storage
+let dailyData = null;
+let quarterlyData = null;
+
+// Color scheme for sectors (dark green theme)
+const SECTOR_COLORS = {
+    finance: '#2d6930',      // Primary dark green
+    energy: '#27ae60',       // Medium green
+    telecom: '#9b59b6',      // Purple
+    transport: '#3498db',    // Blue
+    trade: '#d4af37',        // Gold
+    health: '#16a085',       // Teal
+    agriculture: '#2ecc71',  // Light green
+    housing: '#c0392b'       // Dark red
+};
+
+// Load CSV data
+function loadCSV(url) {
+    return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: r => resolve(r.data),
+            error: e => reject(e)
+        });
+    });
+}
+
+// Moving average calculation
+function movingAverage(values, window) {
+    if (window <= 1) return values;
+    const result = [];
+    for (let i = 0; i < values.length; i++) {
+        if (i < window - 1) {
+            result.push(null);
+        } else {
+            let sum = 0, count = 0;
+            for (let j = i - window + 1; j <= i; j++) {
+                if (values[j] !== null && values[j] !== undefined && !isNaN(values[j])) {
+                    sum += values[j];
+                    count++;
+                }
+            }
+            result.push(count > 0 ? sum / count : null);
+        }
+    }
+    return result;
+}
+
+// Convert daily to quarterly
+function toQuarterly(data) {
+    const quarterly = {};
+
+    data.forEach(row => {
+        // Parse date string directly to avoid timezone issues
+        const [year, month, day] = row.Date.split('-').map(Number);
+        const quarter = Math.ceil(month / 3);
+        const qKey = `${year}-Q${quarter}`;
+
+        if (!quarterly[qKey]) {
+            quarterly[qKey] = { Date: qKey, count: 0 };
+            // Initialize with _raw suffix columns for aggregation
+            quarterly[qKey].deregulation_raw = 0;
+            quarterly[qKey].regulation_raw = 0;
+            quarterly[qKey].foreign_raw = 0;
+            quarterly[qKey].proposed_raw = 0;
+            quarterly[qKey].enacted_raw = 0;
+            // Initialize sectoral columns
+            ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+                quarterly[qKey][s] = 0;
+            });
+        }
+
+        // Sum raw values for main indices
+        quarterly[qKey].deregulation_raw += row.deregulation_raw || 0;
+        quarterly[qKey].regulation_raw += row.regulation_raw || 0;
+        quarterly[qKey].foreign_raw += row.foreign_raw || 0;
+        quarterly[qKey].proposed_raw += row.proposed_raw || 0;
+        quarterly[qKey].enacted_raw += row.enacted_raw || 0;
+
+        // Sum sectoral values
+        ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+            quarterly[qKey][s] += row[s] || 0;
+        });
+
+        quarterly[qKey].count++;
+    });
+
+    // Average and rename _raw columns back to normal names
+    return Object.values(quarterly).map(q => {
+        return {
+            Date: q.Date,
+            deregulation: q.deregulation_raw / q.count,
+            regulation: q.regulation_raw / q.count,
+            foreign: q.foreign_raw / q.count,
+            proposed: q.proposed_raw / q.count,
+            enacted: q.enacted_raw / q.count,
+            finance: q.finance / q.count,
+            energy: q.energy / q.count,
+            telecom: q.telecom / q.count,
+            transport: q.transport / q.count,
+            trade: q.trade / q.count,
+            health: q.health / q.count,
+            housing: q.housing / q.count,
+            agriculture: q.agriculture / q.count
+        };
+    });
+}
+
+// Update chart based on controls
+function updateChart() {
+    const chartType = document.getElementById('chart-type').value;
+    const smoothing = parseInt(document.getElementById('smoothing').value);
+    const startYear = parseInt(document.getElementById('start-year').value);
+    const endYear = parseInt(document.getElementById('end-year').value);
+
+    if (!dailyData) return;
+
+    // Show/hide sectoral controls
+    document.getElementById('sectoral-controls').style.display =
+        chartType === 'sectoral' ? 'block' : 'none';
+
+    // Filter by year
+    const filtered = dailyData.filter(row => {
+        const year = parseInt(row.Date.substring(0, 4));
+        return year >= startYear && year <= endYear;
+    });
+
+    const dates = filtered.map(r => r.Date);
+    const traces = [];
+
+    if (chartType === 'headline') {
+        // Headline index - use raw data for smoothing, not pre-smoothed MA
+        const raw = filtered.map(r => r.deregulation_raw);
+        const smoothed = movingAverage(raw, smoothing);
+
+        traces.push({
+            x: dates,
+            y: smoothed,
+            name: 'Deregulation Index',
+            line: { color: '#2d6930', width: 2.5 },
+            hovertemplate: '%{x}<br>Index: %{y:.1f}<extra></extra>'
+        });
+    } else if (chartType === 'comparison') {
+        // Deregulation vs Regulation - use raw data for smoothing
+        const deregRaw = filtered.map(r => r.deregulation_raw);
+        const deregSmoothed = movingAverage(deregRaw, smoothing);
+        const regRaw = filtered.map(r => r.regulation_raw);
+        const regSmoothed = movingAverage(regRaw, smoothing);
+
+        traces.push({
+            x: dates,
+            y: deregSmoothed,
+            name: 'Deregulation',
+            line: { color: '#2d6930', width: 2.5 },
+            hovertemplate: '%{x}<br>Deregulation: %{y:.1f}<extra></extra>'
+        });
+        traces.push({
+            x: dates,
+            y: regSmoothed,
+            name: 'Regulation',
+            line: { color: '#C41E3A', width: 2.5 },
+            hovertemplate: '%{x}<br>Regulation: %{y:.1f}<extra></extra>'
+        });
+    } else if (chartType === 'foreign') {
+        // U.S. vs Foreign - use raw data for smoothing
+        const usRaw = filtered.map(r => r.deregulation_raw);
+        const usSmoothed = movingAverage(usRaw, smoothing);
+        const foreignRaw = filtered.map(r => r.foreign_raw);
+        const foreignSmoothed = movingAverage(foreignRaw, smoothing);
+
+        traces.push({
+            x: dates,
+            y: usSmoothed,
+            name: 'U.S. Deregulation',
+            line: { color: '#2d6930', width: 2.5 },
+            hovertemplate: '%{x}<br>U.S.: %{y:.1f}<extra></extra>'
+        });
+        traces.push({
+            x: dates,
+            y: foreignSmoothed,
+            name: 'Foreign Deregulation',
+            line: { color: '#C41E3A', width: 2.5 },
+            hovertemplate: '%{x}<br>Foreign: %{y:.1f}<extra></extra>'
+        });
+    } else if (chartType === 'timing') {
+        // Proposed vs Enacted - use raw data for smoothing
+        const proposedRaw = filtered.map(r => r.proposed_raw);
+        const proposedSmoothed = movingAverage(proposedRaw, smoothing);
+        const enactedRaw = filtered.map(r => r.enacted_raw);
+        const enactedSmoothed = movingAverage(enactedRaw, smoothing);
+
+        traces.push({
+            x: dates,
+            y: proposedSmoothed,
+            name: 'Proposed',
+            line: { color: '#3d8b40', width: 2.5 },
+            hovertemplate: '%{x}<br>Proposed: %{y:.1f}<extra></extra>'
+        });
+        traces.push({
+            x: dates,
+            y: enactedSmoothed,
+            name: 'Enacted',
+            line: { color: '#2d6930', width: 2.5 },
+            hovertemplate: '%{x}<br>Enacted: %{y:.1f}<extra></extra>'
+        });
+    } else {
+        // Sectoral indexes
+        const sectors = [
+            { id: 'finance', name: 'Finance', checked: 'cb-finance' },
+            { id: 'energy', name: 'Energy', checked: 'cb-energy' },
+            { id: 'telecom', name: 'Telecom', checked: 'cb-telecom' },
+            { id: 'transport', name: 'Transportation', checked: 'cb-transport' },
+            { id: 'trade', name: 'Trade', checked: 'cb-trade' },
+            { id: 'health', name: 'Health', checked: 'cb-health' },
+            { id: 'agriculture', name: 'Agriculture', checked: 'cb-agriculture' },
+            { id: 'housing', name: 'Housing', checked: 'cb-housing' }
+        ];
+
+        sectors.forEach(sector => {
+            const checkbox = document.getElementById(sector.checked);
+            if (checkbox && checkbox.checked) {
+                const raw = filtered.map(r => r[sector.id] || 0);
+                const smoothed = movingAverage(raw, smoothing);
+
+                traces.push({
+                    x: dates,
+                    y: smoothed,
+                    name: sector.name,
+                    line: { color: SECTOR_COLORS[sector.id], width: 2 },
+                    hovertemplate: `%{x}<br>${sector.name}: %{y:.1f}<extra></extra>`
+                });
+            }
+        });
+    }
+
+    const layout = {
+        margin: { l: 60, r: 40, t: 40, b: 60 },
+        xaxis: {
+            title: 'Date',
+            showgrid: true,
+            gridcolor: '#e0e0e0'
+        },
+        yaxis: {
+            title: 'Index (mean = 100)',
+            showgrid: true,
+            gridcolor: '#e0e0e0'
+        },
+        hovermode: 'x unified',
+        legend: {
+            orientation: 'h',
+            y: -0.15,
+            x: 0.5,
+            xanchor: 'center'
+        },
+        font: { family: 'Roboto, Arial, sans-serif' }
+    };
+
+    const config = { responsive: true, displayModeBar: true };
+
+    Plotly.newPlot('chart', traces, layout, config);
+}
+
+// Download functions
+function downloadHeadlineDaily() {
+    if (!dailyData) return;
+    const csv = Papa.unparse(dailyData.map(r => ({
+        date: r.Date,
+        deregulation_index: r.deregulation_raw || 0,
+        regulation_index: r.regulation_raw || 0,
+        foreign_deregulation_index: r.foreign_raw || 0,
+        deregulation_proposed: r.proposed_raw || 0,
+        deregulation_enacted: r.enacted_raw || 0
+    })));
+    downloadCSV(csv, 'deregulation_index_daily.csv');
+}
+
+function downloadHeadlineQuarterly() {
+    if (!dailyData) return;
+    const quarterly = toQuarterly(dailyData);
+    const csv = Papa.unparse(quarterly.map(r => ({
+        quarter: r.Date,
+        deregulation_index: r.deregulation || 0,
+        regulation_index: r.regulation || 0,
+        foreign_deregulation_index: r.foreign || 0,
+        deregulation_proposed: r.proposed || 0,
+        deregulation_enacted: r.enacted || 0
+    })));
+    downloadCSV(csv, 'deregulation_index_quarterly.csv');
+}
+
+function downloadSectoralDaily() {
+    if (!dailyData) return;
+    downloadCSV(Papa.unparse(dailyData), 'deregulation_sectoral_daily.csv');
+}
+
+function downloadSectoralQuarterly() {
+    if (!dailyData) return;
+    const quarterly = toQuarterly(dailyData);
+    downloadCSV(Papa.unparse(quarterly), 'deregulation_sectoral_quarterly.csv');
+}
+
+function downloadCSV(content, filename) {
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+
+// Event listeners
+document.getElementById('chart-type').addEventListener('change', updateChart);
+document.getElementById('smoothing').addEventListener('change', updateChart);
+document.getElementById('start-year').addEventListener('change', updateChart);
+document.getElementById('end-year').addEventListener('change', updateChart);
+
+// Sectoral checkboxes
+['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'agriculture', 'housing'].forEach(sector => {
+    const checkbox = document.getElementById(`cb-${sector}`);
+    if (checkbox) checkbox.addEventListener('change', updateChart);
+});
+
+// Initialize - Load placeholder data or from actual file
+async function initialize() {
+    try {
+        // Load headline data
+        const headlineData = await loadCSV('deregulation_files/deregulation_index_headline.csv');
+
+        // Load sectoral data
+        const sectoralData = await loadCSV('deregulation_files/deregulation_index_sectors.csv');
+
+        // Merge headline and sectoral data by date
+        const sectoralMap = {};
+        sectoralData.forEach(row => {
+            sectoralMap[row.date] = row;
+        });
+
+        // Transform and merge
+        dailyData = headlineData.map(row => ({
+            Date: row.date,
+            deregulation: row.deregulation_index,
+            regulation: row.regulation_index,
+            foreign: row.foreign_deregulation_index,
+            proposed: row.deregulation_proposed,
+            enacted: row.deregulation_enacted,
+            // Raw values for quarterly aggregation
+            deregulation_raw: parseFloat(row.deregulation_index_raw) || 0,
+            regulation_raw: parseFloat(row.regulation_index_raw) || 0,
+            foreign_raw: parseFloat(row.foreign_deregulation_index_raw) || 0,
+            proposed_raw: parseFloat(row.deregulation_proposed_raw) || 0,
+            enacted_raw: parseFloat(row.deregulation_enacted_raw) || 0,
+            // Add sectoral data
+            finance: sectoralMap[row.date]?.finance || 0,
+            energy: sectoralMap[row.date]?.energy || 0,
+            telecom: sectoralMap[row.date]?.telecom || 0,
+            transport: sectoralMap[row.date]?.transport || 0,
+            trade: sectoralMap[row.date]?.trade || 0,
+            health: sectoralMap[row.date]?.health || 0,
+            housing: sectoralMap[row.date]?.housing || 0,
+            agriculture: sectoralMap[row.date]?.agriculture || 0
+        }));
+
+        console.log('Loaded headline data:', headlineData.length, 'rows');
+        console.log('Loaded sectoral data:', sectoralData.length, 'rows');
+        console.log('Merged data:', dailyData.length, 'rows');
+
+        updateChart();
+    } catch (error) {
+        console.error('Error loading data:', error);
+        document.getElementById('chart').innerHTML =
+            '<div style="padding: 40px; text-align: center; color: #e74c3c;">Error loading data. Please try again later.</div>';
+    }
+}
+
+// Start
+initialize();
+</script>
+
+</body>
+</html>
