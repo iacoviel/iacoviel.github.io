@@ -891,12 +891,22 @@ function updateChart() {
         xaxis: {
             title: '',
             showgrid: true,
-            gridcolor: '#e0e0e0'
+            gridcolor: '#e0e0e0',
+            mirror: true,
+            showline: true,
+            linecolor: '#888',
+            tickfont: { size: 15, weight: 400 }
         },
         yaxis: {
             title: 'Index (mean = 100)',
             showgrid: true,
-            gridcolor: '#e0e0e0'
+            gridcolor: '#e0e0e0',
+            rangemode: 'tozero',
+            mirror: true,
+            showline: true,
+            linecolor: '#888',
+            titlefont: { size: 19, weight: 400 },
+            tickfont: { size: 15, weight: 400 }
         },
         hovermode: 'x unified',
         legend: {
