@@ -346,6 +346,7 @@
         <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
         <a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn btn-outline" download>Download Data (CSV)</a>
     </div>
+    <p class="updated">Last updated: March 2, 2026 with data through March 2, 2026.</p>
 </section>
 
 <!-- ABOUT -->
@@ -353,7 +354,7 @@
     <div class="container">
         <h2 class="section-title">About the Index</h2>
         <p style="margin-bottom: 18px;">The AI-GPR Index measures geopolitical risk by applying large language models (LLMs) to newspaper articles. Building on the conceptual framework of the original GPR Index (Caldara and Iacoviello, 2022), it replaces keyword matching with semantic understanding: instead of searching for specific word combinations, GPT-4o-mini reads each article and assigns a continuous risk score from 0.0 to 1.0 based on the article's geopolitical content.</p>
-        <p style="margin-bottom: 18px;">The index is constructed at daily frequency using articles from the New York Times, Washington Post, and Chicago Tribune, spanning 1960 through 2025.</p>
+        <p style="margin-bottom: 18px;">The index is constructed at daily frequency using articles from the New York Times, Washington Post, and Chicago Tribune, spanning 1960 through 2026.</p>
 
         <div class="about-grid">
             <div class="about-card">
@@ -410,11 +411,11 @@
             </div>
             <div class="control-group">
                 <label>Start Year</label>
-                <input type="number" id="start-year" value="1960" min="1960" max="2025" step="1">
+                <input type="number" id="start-year" value="1960" min="1960" max="2026" step="1">
             </div>
             <div class="control-group">
                 <label>End Year</label>
-                <input type="number" id="end-year" value="2025" min="1960" max="2025" step="1">
+                <input type="number" id="end-year" value="2026" min="1960" max="2026" step="1">
             </div>
         </div>
 
@@ -443,20 +444,20 @@
             <tbody>
                 <tr>
                     <td>ai_gpr_data_daily.csv</td>
-                    <td>Daily index values, 1960&ndash;2025</td>
+                    <td>Daily index values, 1960&ndash;2026</td>
                     <td>Date, GPR_AI, GPR_AER, GPR_OIL</td>
                     <td><a href="ai_gpr_files/ai_gpr_data_daily.csv" download>Download</a></td>
                 </tr>
                 <tr>
                     <td>ai_gpr_data_monthly.csv</td>
-                    <td>Monthly averages, 1960&ndash;2025</td>
+                    <td>Monthly averages, 1960&ndash;2026</td>
                     <td>Date, GPR_AI, GPR_AER, GPR_OIL</td>
                     <td><a href="ai_gpr_files/ai_gpr_data_monthly.csv" download>Download</a></td>
                 </tr>
             </tbody>
         </table>
 
-        <p class="updated">Last updated: February 2026 with data through December 2025.</p>
+        <p class="updated">Last updated: March 2026 with data through March 2026.</p>
         <p class="note">When using the data, please cite the paper and note the date of download.</p>
     </div>
 </section>
@@ -636,9 +637,10 @@ function updateChart() {
 // Load data and initialize
 async function init() {
     try {
+        const v = Date.now();
         [monthlyData, dailyData] = await Promise.all([
-            loadCSV('ai_gpr_files/ai_gpr_data_monthly.csv'),
-            loadCSV('ai_gpr_files/ai_gpr_data_daily.csv')
+            loadCSV('ai_gpr_files/ai_gpr_data_monthly.csv?v=' + v),
+            loadCSV('ai_gpr_files/ai_gpr_data_daily.csv?v=' + v)
         ]);
         updateChart();
     } catch (e) {
