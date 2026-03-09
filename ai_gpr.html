@@ -346,7 +346,7 @@
         <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
         <a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn btn-outline" download>Download Data (CSV)</a>
     </div>
-    <p class="updated">Last updated: March 6, 2026 with data through March 6, 2026.</p>
+    <p class="updated">Last updated: March 9, 2026 with data through March 9, 2026.</p>
 </section>
 
 <!-- ABOUT -->
@@ -366,7 +366,7 @@
                 <p>A keyword-based GPR index constructed using the Caldara and Iacoviello (2022) proximity search methodology on the same three newspapers. Counts articles matching specific combinations of geopolitical and risk-related terms. Extended back to 1960.</p>
             </div>
             <div class="about-card">
-                <h3>GPR Oil Disruptions</h3>
+                <h3>GPR Oil Disruptions GPR</h3>
                 <p>A sub-index identifying articles that discuss oil or energy supply disruptions driven by geopolitical events. Constructed using a second LLM classification layer applied to high-GPR articles containing oil-related keywords.</p>
             </div>
             <div class="about-card">
@@ -388,7 +388,8 @@
                 <div class="checkbox-group">
                     <label><input type="checkbox" id="cb-ai" checked> AI-GPR</label>
                     <label><input type="checkbox" id="cb-aer"> GPR Original</label>
-                    <label><input type="checkbox" id="cb-oil"> Oil Disruptions</label>
+                    <label><input type="checkbox" id="cb-oil"> Oil Disruptions GPR</label>
+                    <label><input type="checkbox" id="cb-nonoil"> Non-Oil GPR</label>
                 </div>
             </div>
             <div class="control-group">
@@ -489,9 +490,10 @@ let dailyData = null;
 let monthlyData = null;
 
 const COLORS = {
-    ai:  '#2980b9',
-    aer: '#e74c3c',
-    oil: '#27ae60'
+    ai:     '#2980b9',
+    aer:    '#e74c3c',
+    oil:    '#27ae60',
+    nonoil: '#8e44ad'
 };
 
 function loadCSV(url) {
@@ -541,9 +543,10 @@ function movingAverage(values, window) {
 }
 
 function updateChart() {
-    const showAI  = document.getElementById('cb-ai').checked;
-    const showAER = document.getElementById('cb-aer').checked;
-    const showOIL = document.getElementById('cb-oil').checked;
+    const showAI     = document.getElementById('cb-ai').checked;
+    const showAER    = document.getElementById('cb-aer').checked;
+    const showOIL    = document.getElementById('cb-oil').checked;
+    const showNONOIL = document.getElementById('cb-nonoil').checked;
     const window  = parseInt(document.getElementById('smoothing').value);
     const freq    = document.getElementById('freq').value;
     const startY  = parseInt(document.getElementById('start-year').value);
@@ -592,9 +595,19 @@ function updateChart() {
         const smoothed = applySmoothing(filtered.map(r => r.GPR_OIL));
         traces.push({
             x: dates, y: smoothed,
-            name: 'Oil Disruptions',
+            name: 'Oil Disruptions GPR',
             line: { color: COLORS.oil, width: 1.5 },
-            hovertemplate: '%{x}<br>Oil Disruptions: %{y:.1f}<extra></extra>'
+            hovertemplate: '%{x}<br>Oil Disruptions GPR: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    if (showNONOIL) {
+        const smoothed = applySmoothing(filtered.map(r => r.GPR_NONOIL));
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'Non-Oil GPR',
+            line: { color: COLORS.nonoil, width: 1.5 },
+            hovertemplate: '%{x}<br>Non-Oil GPR: %{y:.1f}<extra></extra>'
         });
     }
 
@@ -650,7 +663,7 @@ async function init() {
 }
 
 // Event listeners
-['cb-ai', 'cb-aer', 'cb-oil'].forEach(id =>
+['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
 ['smoothing', 'freq', 'start-year', 'end-year'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
