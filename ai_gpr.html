@@ -39,12 +39,12 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         nav .nav-inner {
-            max-width: 1100px;
+            max-width: 1260px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 36px;
         }
         nav .logo {
             font-weight: 700;
@@ -78,12 +78,28 @@
         .hero {
             background: var(--bg-alt);
             color: var(--text);
-            padding: 72px 24px 64px;
+            padding: 52px 24px 46px;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.07;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
         }
         .hero h1 {
-            font-size: 2.8em;
+            font-size: 2.9em;
             font-weight: 700;
             margin-bottom: 12px;
             letter-spacing: -0.5px;
@@ -91,16 +107,26 @@
         }
         .hero h1 span { color: var(--accent); }
         .hero .subtitle {
-            font-size: 1.15em;
+            font-size: 1.12em;
             font-weight: 300;
             color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto 32px;
+            max-width: 680px;
+            margin: 0 auto 18px;
         }
         .hero .authors {
-            font-size: 0.95em;
+            font-size: 1em;
             color: var(--text-light);
             margin-bottom: 28px;
+        }
+        .hero .authors a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(41,128,185,0.3);
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .hero .authors a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
         }
         .hero .btn-group {
             display: flex;
@@ -124,9 +150,9 @@
 
         /* --- SECTIONS --- */
         .container {
-            max-width: 1100px;
+            max-width: 1260px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 36px;
         }
         section { padding: 56px 0; }
         section:nth-child(even) { background: var(--bg-alt); }
@@ -166,7 +192,7 @@
             line-height: 1.6;
         }
 
-        /* --- CHART --- */
+        /* --- CHART (main) --- */
         .chart-controls {
             background: #fff;
             border: 1px solid var(--border);
@@ -310,6 +336,121 @@
         footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
         footer a:hover { color: #fff; }
 
+        /* --- COUNTRY SECTIONS: role tabs --- */
+        .role-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+        .role-tab {
+            padding: 7px 16px; border-radius: 5px; font-size: 0.85em; font-weight: 500;
+            cursor: pointer; border: 1.5px solid var(--border);
+            background: #fff; color: var(--text-light);
+            transition: all 0.15s;
+        }
+        .role-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        /* --- COUNTRY SECTIONS: pair-tab (event type / bilateral mini-buttons) --- */
+        .pair-tab {
+            padding: 2px 5px; border-radius: 3px; font-size: 0.64em; font-weight: 500;
+            cursor: pointer; border: 1.5px solid var(--border);
+            background: #fff; color: var(--text-light);
+            transition: all 0.15s; white-space: nowrap;
+        }
+
+        /* --- COUNTRY SECTIONS: bilateral pair matrix --- */
+        .pair-matrix-wrap { overflow-x: auto; margin-top: 6px; }
+        .pair-matrix { border-collapse: collapse; font-size: 0.72em; table-layout: fixed; }
+        .pair-matrix th.corner { min-width: 110px; }
+        .pair-matrix th.col-hdr {
+            writing-mode: vertical-rl; transform: rotate(180deg);
+            white-space: nowrap; padding: 4px 0; font-weight: 500;
+            width: 14px; max-width: 14px; overflow: hidden;
+            color: var(--text-light); text-align: left; vertical-align: bottom;
+        }
+        .pair-matrix th.col-hdr.active { color: #c0392b; font-weight: 700; }
+        .pair-matrix th.row-hdr {
+            white-space: nowrap; padding: 0 6px 0 0; line-height: 14px;
+            font-weight: 400; color: var(--text-light); text-align: right;
+        }
+        .pair-matrix th.row-hdr.active { color: #c0392b; font-weight: 700; }
+        .pair-matrix td {
+            width: 14px; max-width: 14px; height: 14px; max-height: 14px;
+            line-height: 14px; padding: 0; border: 1px solid #e8ecf0; overflow: hidden;
+        }
+        .pair-matrix td.diag  { background: #e8e8e8; }
+        .pair-matrix td.empty { background: #f7f8fa; }
+        .pair-matrix td.avail {
+            background: #c8dff0; cursor: pointer; transition: background 0.12s;
+        }
+        .pair-matrix td.avail:hover { background: var(--accent); opacity: 0.75; }
+        .pair-matrix td.avail.selected { background: var(--accent); }
+        .pair-matrix th.axis-label-x {
+            text-align: center; font-weight: 600; font-size: 0.85em;
+            color: var(--primary); padding: 2px 0 4px;
+            border-bottom: 1px solid var(--border);
+        }
+        .axis-label-y {
+            display: flex; align-items: center; justify-content: center;
+            padding: 0 2px; border-right: 1px solid var(--border);
+        }
+        .axis-label-y span {
+            writing-mode: vertical-rl; transform: rotate(180deg);
+            font-weight: 600; font-size: 0.85em;
+            color: var(--primary); white-space: nowrap;
+        }
+
+        /* --- COUNTRY SECTIONS: download button & chart wrap --- */
+        .btn-download {
+            padding: 8px 18px; border-radius: 5px; font-size: 0.85em; font-weight: 500;
+            cursor: pointer; border: 1.5px solid var(--border);
+            background: #fff; color: var(--text-light);
+            text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .chart-wrap {
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 8px; box-shadow: var(--shadow); overflow: hidden;
+        }
+        .plotly-chart { width: 100%; height: 480px; }
+        .chart-footnote {
+            margin-top: 10px; font-size: 0.82em; color: var(--text-light);
+            line-height: 1.5; padding: 0 4px;
+        }
+        .toggle-label {
+            display: flex; align-items: center; gap: 7px;
+            font-size: 0.85em; color: var(--text-light); cursor: pointer;
+            user-select: none;
+        }
+
+        /* --- EXPLORE CARDS --- */
+        .explore-cards {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+            margin-top: 28px;
+        }
+        .explore-card {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 24px 20px 20px; border-radius: 10px;
+            border: 1.5px solid var(--border); background: #fff;
+            box-shadow: var(--shadow); text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+            cursor: pointer;
+        }
+        .explore-card:hover {
+            transform: translateY(-3px); border-color: var(--accent);
+            box-shadow: 0 6px 20px rgba(41,128,185,0.15);
+        }
+        .explore-card .card-icon {
+            width: 52px; height: 52px; margin-bottom: 14px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+        }
+        .explore-card h3 {
+            font-size: 1.0em; font-weight: 700; color: var(--primary); margin-bottom: 8px;
+        }
+        .explore-card p {
+            font-size: 0.85em; color: var(--text-light); line-height: 1.55; flex: 1;
+        }
+        .explore-card .card-cta {
+            margin-top: 14px; font-size: 0.82em; font-weight: 600;
+            color: var(--accent);
+        }
+        @media (max-width: 700px) { .explore-cards { grid-template-columns: 1fr; } }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2em; }
@@ -330,6 +471,9 @@
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#chart-section">Interactive Chart</a></li>
+            <li><a href="#section-country">Country</a></li>
+            <li><a href="#section-eventtype">Event Type</a></li>
+            <li><a href="#section-bilateral">Bilateral</a></li>
             <li><a href="#downloads">Downloads</a></li>
             <li><a href="#citation">Citation</a></li>
         </ul>
@@ -338,15 +482,59 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
-    <h1>The <span>AI-GPR</span> Index</h1>
-    <p class="subtitle">A daily measure of geopolitical risk constructed using large language models, covering 1960 to present.</p>
-    <p class="authors">Matteo Iacoviello &middot; Jonathan Tong</p>
-    <div class="btn-group">
-        <a href="research_files/AI_GPR_PAPER.pdf" class="btn btn-primary">Download Paper (PDF)</a>
-        <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
-        <a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn btn-outline" download>Download Data (CSV)</a>
+    <!-- decorative background: globe grid lines + floating dots -->
+    <svg class="hero-bg-svg" viewBox="0 0 1200 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- latitude lines -->
+        <ellipse cx="600" cy="170" rx="520" ry="130" fill="none" stroke="#fff" stroke-width="1"/>
+        <ellipse cx="600" cy="170" rx="520" ry="80"  fill="none" stroke="#fff" stroke-width="0.8"/>
+        <ellipse cx="600" cy="170" rx="520" ry="30"  fill="none" stroke="#fff" stroke-width="0.6"/>
+        <ellipse cx="600" cy="170" rx="520" ry="155" fill="none" stroke="#fff" stroke-width="0.5"/>
+        <!-- longitude arcs (approximate as ellipses rotated) -->
+        <ellipse cx="600" cy="170" rx="100" ry="130" fill="none" stroke="#fff" stroke-width="0.8"/>
+        <ellipse cx="600" cy="170" rx="230" ry="130" fill="none" stroke="#fff" stroke-width="0.7"/>
+        <ellipse cx="600" cy="170" rx="370" ry="130" fill="none" stroke="#fff" stroke-width="0.6"/>
+        <ellipse cx="600" cy="170" rx="480" ry="130" fill="none" stroke="#fff" stroke-width="0.5"/>
+        <!-- equator -->
+        <line x1="80" y1="170" x2="1120" y2="170" stroke="#fff" stroke-width="1.2"/>
+        <!-- scattered dots -->
+        <circle cx="200" cy="110" r="3" fill="#fff"/>
+        <circle cx="340" cy="85"  r="2" fill="#fff"/>
+        <circle cx="500" cy="130" r="4" fill="#fff"/>
+        <circle cx="660" cy="75"  r="2.5" fill="#fff"/>
+        <circle cx="820" cy="115" r="3" fill="#fff"/>
+        <circle cx="980" cy="90"  r="2" fill="#fff"/>
+        <circle cx="1080" cy="145" r="3.5" fill="#fff"/>
+        <circle cx="130" cy="210" r="2.5" fill="#fff"/>
+        <circle cx="420" cy="240" r="2" fill="#fff"/>
+        <circle cx="750" cy="225" r="3" fill="#fff"/>
+        <circle cx="950" cy="250" r="2" fill="#fff"/>
+        <!-- connecting lines between dots -->
+        <line x1="200" y1="110" x2="340" y2="85"  stroke="#fff" stroke-width="0.6"/>
+        <line x1="340" y1="85"  x2="500" y2="130" stroke="#fff" stroke-width="0.6"/>
+        <line x1="500" y1="130" x2="660" y2="75"  stroke="#fff" stroke-width="0.5"/>
+        <line x1="660" y1="75"  x2="820" y2="115" stroke="#fff" stroke-width="0.5"/>
+        <line x1="820" y1="115" x2="980" y2="90"  stroke="#fff" stroke-width="0.5"/>
+        <line x1="980" y1="90"  x2="1080" y2="145" stroke="#fff" stroke-width="0.5"/>
+        <line x1="200" y1="110" x2="130" y2="210" stroke="#fff" stroke-width="0.4"/>
+        <line x1="420" y1="240" x2="500" y2="130" stroke="#fff" stroke-width="0.4"/>
+        <line x1="750" y1="225" x2="820" y2="115" stroke="#fff" stroke-width="0.4"/>
+        <line x1="950" y1="250" x2="980" y2="90"  stroke="#fff" stroke-width="0.4"/>
+    </svg>
+    <div class="hero-content">
+        <h1>The <span>AI-GPR</span> Index</h1>
+        <p class="subtitle">A daily measure of geopolitical risk constructed using large language models, covering 1960 to present.</p>
+        <p class="authors">
+            <a href="https://www.matteoiacoviello.com/" target="_blank" rel="noopener">Matteo Iacoviello</a>
+            &nbsp;&middot;&nbsp;
+            Jonathan Tong
+        </p>
+        <div class="btn-group">
+            <a href="research_files/AI_GPR_PAPER.pdf" class="btn btn-primary">Download Paper (PDF)</a>
+            <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
+            <a href="#downloads" class="btn btn-outline">Download Data</a>
+        </div>
+        <p class="updated">Last updated: March 9, 2026 with data through March 9, 2026.</p>
     </div>
-    <p class="updated">Last updated: March 9, 2026 with data through March 9, 2026.</p>
 </section>
 
 <!-- ABOUT -->
@@ -373,6 +561,46 @@
                 <h3>Methodology</h3>
                 <p>Articles matching a broad keyword filter are scored by GPT-4o-mini on a 0&ndash;1 scale reflecting the intensity of geopolitical risk content. All indices are normalized to a mean of 100 over 1985&ndash;2019. See the paper for full details.</p>
             </div>
+        </div>
+
+        <div class="explore-cards">
+            <a href="#section-country" class="explore-card">
+                <div class="card-icon" style="background:#eaf4fb;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2980b9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </div>
+                <h3>Country GPR</h3>
+                <p>Geopolitical risk decomposed by country — track the risk footprint of individual nations as initiator, respondent, or spillover across the full 1960–2026 sample.</p>
+                <span class="card-cta">Explore Country Index →</span>
+            </a>
+            <a href="#section-eventtype" class="explore-card">
+                <div class="card-icon" style="background:#fef6ea;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="12" width="4" height="9" rx="1"/>
+                        <rect x="10" y="7" width="4" height="14" rx="1"/>
+                        <rect x="17" y="3" width="4" height="18" rx="1"/>
+                    </svg>
+                </div>
+                <h3>GPR by Event Type</h3>
+                <p>Breaks down geopolitical risk by category — military conflict, terrorism, sanctions, coups, nuclear threats, and more — revealing which types of events drive aggregate risk at each moment in history.</p>
+                <span class="card-cta">Explore Event Types →</span>
+            </a>
+            <a href="#section-bilateral" class="explore-card">
+                <div class="card-icon" style="background:#edfaf1;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="5" cy="12" r="3"/>
+                        <circle cx="19" cy="12" r="3"/>
+                        <path d="M8 10l8-4M8 14l8 4"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                </div>
+                <h3>Bilateral GPR</h3>
+                <p>Directed country-pair indices capturing which nation initiates and which responds — select any initiator–respondent pair from an interactive matrix spanning 1960 to 2026.</p>
+                <span class="card-cta">Explore Bilateral Pairs →</span>
+            </a>
         </div>
     </div>
 </section>
@@ -427,51 +655,208 @@
     </div>
 </section>
 
+<!-- COUNTRY GPR INDEX -->
+<section id="section-country" style="background: var(--bg);">
+    <div class="container">
+        <div class="section-title">Country GPR Index</div>
+
+        <div class="chart-controls">
+            <div class="control-group">
+                <label>Country</label>
+                <select id="countrySelect"></select>
+            </div>
+            <div class="control-group" id="roleGroup">
+                <label>Role</label>
+                <div class="role-tabs">
+                    <div class="role-tab active" data-role="all">All</div>
+                    <div class="role-tab" data-role="initiator">Initiator</div>
+                    <div class="role-tab" data-role="respondent">Respondent</div>
+                    <div class="role-tab" data-role="spillover">Spillover</div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Smoothing</label>
+                <select id="maSelect1">
+                    <option value="1">None (raw monthly)</option>
+                    <option value="3">3-month MA</option>
+                    <option value="12" selected>1-year MA</option>
+                </select>
+            </div>
+            <div class="control-group" style="justify-content:flex-end;gap:10px">
+                <label class="toggle-label">
+                    <input type="checkbox" id="showOverall1"> Show overall GPR_AI
+                </label>
+                <a class="btn-download" id="downloadCountry" href="#">&#8595; Download CSV</a>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div id="chartCountry" class="plotly-chart"></div>
+        </div>
+        <p class="chart-footnote">
+            <strong>Note:</strong> The AI-GPR Country Index uses machine learning to identify specific countries and roles
+            (Initiator, Respondent, Spillover) within news text associated with geopolitical risk.
+            Smoothing reflects a trailing moving average, dropping initial observations where the window is incomplete.
+            Country-level data are available through December 2025.
+        </p>
+    </div>
+</section>
+
+<!-- GPR BY EVENT TYPE -->
+<section id="section-eventtype" style="background: var(--bg-alt);">
+    <div class="container">
+        <div class="section-title">GPR by Event Type</div>
+
+        <div class="chart-controls">
+            <div class="control-group" style="flex:1;min-width:100%">
+                <label>Event Types (click to toggle)</label>
+                <div class="role-tabs" id="eventtypeButtons"></div>
+            </div>
+            <div class="control-group">
+                <label>Smoothing</label>
+                <select id="maSelect3">
+                    <option value="1">None (raw monthly)</option>
+                    <option value="3">3-month MA</option>
+                    <option value="12" selected>1-year MA</option>
+                </select>
+            </div>
+            <div class="control-group" style="justify-content:flex-end;gap:10px">
+                <label class="toggle-label">
+                    <input type="checkbox" id="showOverall3"> Show overall GPR_AI
+                </label>
+                <a class="btn-download" id="downloadEventtype" href="#">&#8595; Download CSV</a>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div id="chartEventtype" class="plotly-chart"></div>
+        </div>
+        <p class="chart-footnote">
+            <strong>Note:</strong> Each series sums the AI-GPR sentiment score for articles classified under that
+            event type, scaled to the overall AI-GPR index. Event types are assigned by the LLM classifier.
+            Event-type data are available through December 2025.
+        </p>
+    </div>
+</section>
+
+<!-- BILATERAL GPR INDEX -->
+<section id="section-bilateral" style="background: var(--bg);">
+    <div class="container">
+        <div class="section-title">Bilateral GPR Index</div>
+
+        <div class="chart-controls">
+            <div class="control-group" style="flex:1;min-width:100%">
+                <label>Select a country pair &mdash; row (y-axis) initiates, column (x-axis) responds</label>
+                <div class="pair-matrix-wrap" id="bilateralPairButtons"></div>
+            </div>
+            <div class="control-group">
+                <label>Smoothing</label>
+                <select id="maSelect2">
+                    <option value="1">None (raw monthly)</option>
+                    <option value="3">3-month MA</option>
+                    <option value="12" selected>1-year MA</option>
+                </select>
+            </div>
+            <div class="control-group" style="justify-content:flex-end;gap:10px">
+                <label class="toggle-label">
+                    <input type="checkbox" id="showOverall2"> Show overall GPR_AI
+                </label>
+                <a class="btn-download" id="downloadBilateral" href="#">&#8595; Download CSV</a>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div id="chartBilateral" class="plotly-chart"></div>
+        </div>
+        <p class="chart-footnote">
+            <strong>Note:</strong> The bilateral index measures geopolitical risk in articles where both countries
+            appear together as initiator and respondent (in either direction). Top pairs are ranked by total
+            cumulative sentiment across the full sample. Scaled to the overall AI-GPR index (mean&nbsp;=&nbsp;100, 1985&ndash;2019).
+            Bilateral data are available through December 2025.
+        </p>
+    </div>
+</section>
+
 <!-- DOWNLOADS -->
-<section id="downloads">
+<section id="downloads" style="background: var(--bg-alt);">
     <div class="container">
         <h2 class="section-title">Downloads</h2>
-        <p>The data files contain the AI-GPR index, the keyword-based GPR index, and the GPR oil disruption sub-index. All indices are normalized to a mean of 100 over 1985&ndash;2019.</p>
 
-        <table class="download-table">
+        <h3 style="margin: 0 0 10px; font-size: 1.05em; color: var(--accent);">Main Index</h3>
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 28px; font-size: 0.92em;">
             <thead>
-                <tr>
-                    <th>File</th>
-                    <th>Description</th>
-                    <th>Columns</th>
-                    <th></th>
+                <tr style="background: var(--bg); border-bottom: 2px solid var(--border);">
+                    <th style="text-align:left; padding: 8px 12px;">File</th>
+                    <th style="text-align:left; padding: 8px 12px;">Description</th>
+                    <th style="text-align:center; padding: 8px 12px;">Download</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>ai_gpr_data_daily.csv</td>
-                    <td>Daily index values, 1960&ndash;2026</td>
-                    <td>Date, GPR_AI, GPR_AER, GPR_OIL</td>
-                    <td><a href="ai_gpr_files/ai_gpr_data_daily.csv" download>Download</a></td>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_daily.csv</td>
+                    <td style="padding: 8px 12px;">Daily AI-GPR index, 1960–present</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn-download">&#8595; CSV</a></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_monthly.csv</td>
+                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
-                    <td>ai_gpr_data_monthly.csv</td>
-                    <td>Monthly averages, 1960&ndash;2026</td>
-                    <td>Date, GPR_AI, GPR_AER, GPR_OIL</td>
-                    <td><a href="ai_gpr_files/ai_gpr_data_monthly.csv" download>Download</a></td>
+                    <td style="padding: 8px 12px; font-family: monospace;">AI_GPR_PAPER.pdf</td>
+                    <td style="padding: 8px 12px;">Working paper describing the methodology</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="research_files/AI_GPR_PAPER.pdf" class="btn-download">&#8595; PDF</a></td>
                 </tr>
             </tbody>
         </table>
 
-        <p class="updated">Last updated: March 2026 with data through March 2026.</p>
-        <p class="note">When using the data, please cite the paper and note the date of download.</p>
+        <h3 style="margin: 0 0 10px; font-size: 1.05em; color: var(--accent);">Country Decompositions</h3>
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 10px; font-size: 0.92em;">
+            <thead>
+                <tr style="background: var(--bg); border-bottom: 2px solid var(--border);">
+                    <th style="text-align:left; padding: 8px 12px;">File</th>
+                    <th style="text-align:left; padding: 8px 12px;">Description</th>
+                    <th style="text-align:center; padding: 8px 12px;">Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_country_monthly.csv</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by country (initiator / respondent / all roles)</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_country_monthly.csv" class="btn-download">&#8595; CSV</a></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_eventtype_monthly.csv</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by event type (Threat, Act, Peace)</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_eventtype_monthly.csv" class="btn-download">&#8595; CSV</a></td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_bilateral_monthly.csv</td>
+                    <td style="padding: 8px 12px;">Monthly bilateral GPR for top country pairs (directed: initiator → respondent)</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_bilateral_monthly.csv" class="btn-download">&#8595; CSV</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 
 <!-- CITATION -->
-<section id="citation" style="background: var(--bg-alt);">
+<section id="citation" style="background: var(--bg);">
     <div class="container">
         <h2 class="section-title">Citation</h2>
-        <div class="cite-box">
-            <div class="cite-label">Cite as:</div>
-            <p>Iacoviello, Matteo and Jonathan Tong (2026). &ldquo;The AI-GPR Index: Measuring Geopolitical Risk using Artificial Intelligence.&rdquo; Working Paper.</p>
+        <p>If you use the AI-GPR Index in your research, please cite:</p>
+        <blockquote style="background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 16px 0; padding: 14px 20px; font-size: 0.95em; line-height: 1.6; border-radius: 0 6px 6px 0;">
+            Iacoviello, Matteo and Jonathan Tong (2025). &ldquo;The AI-GPR Index: Measuring Geopolitical Risk using Artificial Intelligence.&rdquo; Working Paper, Federal Reserve Board of Governors.
+        </blockquote>
+        <div style="display:flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+            <a href="research_files/AI_GPR_PAPER.pdf" class="btn btn-primary">Download Paper (PDF)</a>
+            <button id="downloadBib" class="btn btn-outline">Download BibTeX (.bib)</button>
         </div>
-        <p class="note" style="margin-top: 14px;">When using the data, we suggest referring to both the website and the date of download; e.g., &ldquo;Data downloaded from https://www.matteoiacoviello.com/ai_gpr.html on [Month DD, YYYY].&rdquo;</p>
+        <p style="margin-top: 20px; font-size: 0.9em; color: var(--text-muted);">
+            Contact: <a href="mailto:matteo.iacoviello@frb.gov">matteo.iacoviello@frb.gov</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.matteoiacoviello.com/" target="_blank" rel="noopener">www.matteoiacoviello.com</a>
+        </p>
     </div>
 </section>
 
@@ -483,18 +868,8 @@
 <!-- JS -->
 <script>
 // =====================================================================
-// DATA & CHART
+// SHARED UTILITIES
 // =====================================================================
-
-let dailyData = null;
-let monthlyData = null;
-
-const COLORS = {
-    ai:     '#2980b9',
-    aer:    '#e74c3c',
-    oil:    '#27ae60',
-    nonoil: '#8e44ad'
-};
 
 function loadCSV(url) {
     return new Promise((resolve, reject) => {
@@ -509,19 +884,17 @@ function loadCSV(url) {
     });
 }
 
-function oneDayChange(values) {
-    const result = [null];
-    for (let i = 1; i < values.length; i++) {
-        if (values[i] !== null && values[i] !== undefined && !isNaN(values[i]) &&
-            values[i-1] !== null && values[i-1] !== undefined && !isNaN(values[i-1])) {
-            result.push(values[i] - values[i-1]);
-        } else {
-            result.push(null);
-        }
-    }
-    return result;
+// Moving average used by country/event/bilateral sections (strict window, drops initial)
+function movingAvg(arr, w) {
+    if (w <= 1) return arr;
+    return arr.map((_, i) => {
+        if (i < w - 1) return null;
+        const slice = arr.slice(i - w + 1, i + 1).filter(v => v !== null && !isNaN(v));
+        return slice.length === w ? slice.reduce((a, b) => a + b, 0) / w : null;
+    });
 }
 
+// Moving average used by the main chart (lenient — averages available values)
 function movingAverage(values, window) {
     if (window <= 1) return values;
     const result = [];
@@ -542,6 +915,62 @@ function movingAverage(values, window) {
     return result;
 }
 
+function getCol(rows, col) {
+    return rows.map(r => {
+        const v = parseFloat(r[col]);
+        return isNaN(v) ? null : v;
+    });
+}
+
+function parseWindow(selectId) {
+    return parseInt(document.getElementById(selectId).value) || 1;
+}
+
+function baseLayout(title, yLabel) {
+    return {
+        title: { text: title, font: { size: 15, color: '#1a3a5c' }, x: 0.02 },
+        margin: { l: 60, r: 20, t: 44, b: 60 },
+        xaxis: {
+            type: 'date', tickfont: { size: 11 }, gridcolor: '#eef1f5',
+            rangeslider: { visible: true, thickness: 0.07 },
+        },
+        yaxis: {
+            title: { text: yLabel, font: { size: 12 } },
+            tickfont: { size: 11 }, gridcolor: '#eef1f5',
+            rangemode: 'tozero', autorange: true,
+        },
+        legend: { orientation: 'h', x: 0, y: 1.08, yanchor: 'bottom', font: { size: 11 } },
+        hovermode: 'x unified',
+    };
+}
+
+// =====================================================================
+// MAIN CHART (daily / monthly aggregate)
+// =====================================================================
+
+let dailyData   = null;
+let monthlyData = null;
+
+const COLORS = {
+    ai:     '#2980b9',
+    aer:    '#e74c3c',
+    oil:    '#27ae60',
+    nonoil: '#8e44ad'
+};
+
+function oneDayChange(values) {
+    const result = [null];
+    for (let i = 1; i < values.length; i++) {
+        if (values[i] !== null && values[i] !== undefined && !isNaN(values[i]) &&
+            values[i-1] !== null && values[i-1] !== undefined && !isNaN(values[i-1])) {
+            result.push(values[i] - values[i-1]);
+        } else {
+            result.push(null);
+        }
+    }
+    return result;
+}
+
 function updateChart() {
     const showAI     = document.getElementById('cb-ai').checked;
     const showAER    = document.getElementById('cb-aer').checked;
@@ -555,7 +984,6 @@ function updateChart() {
     const src = freq === 'daily' ? dailyData : monthlyData;
     if (!src) return;
 
-    // Filter by year range
     const filtered = src.filter(row => {
         const y = parseInt(row.Date.substring(0, 4));
         return y >= startY && y <= endY;
@@ -647,7 +1075,6 @@ function updateChart() {
     Plotly.react('chart', traces, layout, config);
 }
 
-// Load data and initialize
 async function init() {
     try {
         const v = Date.now();
@@ -662,15 +1089,429 @@ async function init() {
     }
 }
 
-// Event listeners
 ['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
 ['smoothing', 'freq', 'start-year', 'end-year'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
 
 init();
+
+// =====================================================================
+// Y-AXIS AUTO-RESCALE ON SLIDER DRAG (country sections)
+// =====================================================================
+
+function rescaleY(divId, eventdata) {
+    const gd = document.getElementById(divId);
+    if (!gd || !gd.data) return;
+
+    if (eventdata['xaxis.autorange']) {
+        Plotly.relayout(divId, { 'yaxis.autorange': true });
+        return;
+    }
+
+    const r0 = eventdata['xaxis.range[0]'];
+    const r1 = eventdata['xaxis.range[1]'];
+    if (r0 === undefined) return;
+
+    const xMin = new Date(r0).getTime();
+    const xMax = new Date(r1).getTime();
+
+    let yMax = -Infinity;
+    gd.data.forEach(trace => {
+        if (trace.visible === false) return;
+        (trace.x || []).forEach((x, i) => {
+            const t = new Date(x).getTime();
+            if (t >= xMin && t <= xMax) {
+                const y = trace.y[i];
+                if (y !== null && y !== undefined && isFinite(y) && y > yMax) yMax = y;
+            }
+        });
+    });
+
+    if (!isFinite(yMax)) return;
+    Plotly.relayout(divId, { 'yaxis.range': [0, yMax * 1.08] });
+}
+
+function attachRescaleListener(divId) {
+    document.getElementById(divId).on('plotly_relayout', ed => rescaleY(divId, ed));
+}
+
+// =====================================================================
+// COUNTRY GPR INDEX
+// =====================================================================
+
+const COUNTRY_CSV = 'ai_gpr_files/ai_gpr_country_monthly.csv';
+let countryData = null;
+let activeRole  = 'all';
+
+function buildCountryDropdown(rows) {
+    const headers = Object.keys(rows[0]);
+    const countries = new Set();
+    headers.forEach(h => {
+        if (h === 'Date' || h === 'GPR_AI') return;
+        const lastUs = h.lastIndexOf('_');
+        const role = h.substring(lastUs + 1);
+        const country = h.substring(0, lastUs);
+        if (role === 'all') countries.add(country);
+    });
+
+    const sel = document.getElementById('countrySelect');
+    sel.innerHTML = '<option value="__overall__">Overall (GPR_AI)</option>';
+    [...countries].sort().forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c; sel.appendChild(opt);
+    });
+}
+
+function plotCountry() {
+    if (!countryData) return;
+    const sel = document.getElementById('countrySelect');
+    const choice = sel.value;
+    const w = parseWindow('maSelect1');
+    const showOverall = document.getElementById('showOverall1').checked;
+    const dates = countryData.map(r => r['Date']);
+
+    let yRaw, label, color;
+    if (choice === '__overall__') {
+        yRaw = getCol(countryData, 'GPR_AI');
+        label = 'Overall GPR_AI';
+        color = '#1a3a5c';
+        document.getElementById('roleGroup').style.display = 'none';
+    } else {
+        yRaw = getCol(countryData, `${choice}_${activeRole}`);
+        label = `${choice} (${activeRole})`;
+        color = '#2980b9';
+        document.getElementById('roleGroup').style.display = '';
+    }
+
+    const traces = [];
+    if (showOverall && choice !== '__overall__') {
+        traces.push({
+            x: dates, y: movingAvg(getCol(countryData, 'GPR_AI'), w),
+            name: 'Overall GPR_AI', type: 'scatter', mode: 'lines',
+            line: { color: '#c8d6e5', width: 1.5, dash: 'dot' },
+        });
+    }
+
+    traces.push({
+        x: dates, y: movingAvg(yRaw, w),
+        name: label, type: 'scatter', mode: 'lines',
+        line: { color: color, width: 2.5 },
+    });
+
+    const title = choice === '__overall__' ? 'AI-GPR Country Index' : `AI-GPR Country Index — ${choice}`;
+    Plotly.react('chartCountry', traces, baseLayout(title, 'Index'), { responsive: true });
+}
+
+Papa.parse(COUNTRY_CSV, {
+    download: true, header: true,
+    complete: result => {
+        countryData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
+        document.getElementById('downloadCountry').href = COUNTRY_CSV;
+        buildCountryDropdown(countryData);
+        plotCountry();
+        attachRescaleListener('chartCountry');
+    }
+});
+
+document.getElementById('countrySelect').addEventListener('change', plotCountry);
+document.getElementById('maSelect1').addEventListener('change', plotCountry);
+document.getElementById('showOverall1').addEventListener('change', plotCountry);
+document.querySelectorAll('.role-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activeRole = tab.dataset.role;
+        plotCountry();
+    });
+});
+
+// =====================================================================
+// GPR BY EVENT TYPE
+// =====================================================================
+
+const EVENTTYPE_CSV = 'ai_gpr_files/ai_gpr_eventtype_monthly.csv';
+let eventtypeData = null;
+
+const EVENT_COLORS = {
+    military_conflict:  '#c0392b',
+    diplomatic_tension: '#2980b9',
+    terrorism:          '#e67e22',
+    civil_war:          '#8e44ad',
+    nuclear_threat:     '#27ae60',
+    coup:               '#f39c12',
+    sanctions:          '#16a085',
+    other:              '#95a5a6',
+};
+
+const EVENT_LABELS = {
+    military_conflict:  'Mil. Conflict',
+    diplomatic_tension: 'Diplomatic',
+    terrorism:          'Terrorism',
+    civil_war:          'Civil War',
+    nuclear_threat:     'Nuclear',
+    coup:               'Coup',
+    sanctions:          'Sanctions',
+    other:              'Other',
+};
+
+let selectedEventTypes = new Set();
+
+function buildEventtypeButtons() {
+    const container = document.getElementById('eventtypeButtons');
+    container.innerHTML = '';
+    Object.keys(EVENT_COLORS).forEach((et, i) => {
+        const color = EVENT_COLORS[et];
+        const isActive = i === 0;
+        if (isActive) selectedEventTypes.add(et);
+
+        const btn = document.createElement('div');
+        btn.className = 'pair-tab';
+        btn.textContent = EVENT_LABELS[et] || et;
+        btn.style.borderColor = color;
+        btn.style.background  = isActive ? color : '#fff';
+        btn.style.color       = isActive ? '#fff' : color;
+
+        btn.addEventListener('click', () => {
+            if (selectedEventTypes.has(et)) {
+                selectedEventTypes.delete(et);
+                btn.style.background = '#fff';
+                btn.style.color      = color;
+            } else {
+                selectedEventTypes.add(et);
+                btn.style.background = color;
+                btn.style.color      = '#fff';
+            }
+            plotEventtype();
+        });
+        container.appendChild(btn);
+    });
+}
+
+function plotEventtype() {
+    if (!eventtypeData) return;
+    const w = parseWindow('maSelect3');
+    const showOverall = document.getElementById('showOverall3').checked;
+    const dates = eventtypeData.map(r => r['Date']);
+
+    const traces = [];
+    if (showOverall) {
+        traces.push({
+            x: dates, y: movingAvg(getCol(eventtypeData, 'GPR_AI'), w),
+            name: 'Overall GPR_AI', type: 'scatter', mode: 'lines',
+            line: { color: '#c8d6e5', width: 1.5, dash: 'dot' },
+        });
+    }
+    selectedEventTypes.forEach(et => {
+        traces.push({
+            x: dates, y: movingAvg(getCol(eventtypeData, et), w),
+            name: EVENT_LABELS[et] || et, type: 'scatter', mode: 'lines',
+            line: { color: EVENT_COLORS[et], width: 2 },
+        });
+    });
+
+    const etLayout = Object.assign({}, baseLayout('AI-GPR by Event Type', 'Index'), {
+        margin: { l: 60, r: 150, t: 44, b: 60 },
+        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 10.5 } },
+    });
+    Plotly.react('chartEventtype', traces, etLayout, { responsive: true });
+}
+
+Papa.parse(EVENTTYPE_CSV, {
+    download: true, header: true,
+    complete: result => {
+        eventtypeData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
+        document.getElementById('downloadEventtype').href = EVENTTYPE_CSV;
+        buildEventtypeButtons();
+        plotEventtype();
+        attachRescaleListener('chartEventtype');
+    }
+});
+
+document.getElementById('maSelect3').addEventListener('change', plotEventtype);
+document.getElementById('showOverall3').addEventListener('change', plotEventtype);
+
+// =====================================================================
+// BILATERAL GPR INDEX
+// =====================================================================
+
+const BILATERAL_CSV = 'ai_gpr_files/ai_gpr_bilateral_monthly.csv';
+let bilateralData = null;
+let selectedPairs = new Set();
+
+const BILATERAL_COLORS = [
+    '#c0392b', '#2980b9', '#27ae60', '#8e44ad', '#e67e22',
+    '#16a085', '#f39c12', '#2c3e50', '#d35400', '#7f8c8d',
+];
+const pairColorMap = {};
+
+function buildBilateralButtons(rows) {
+    const allPairs = Object.keys(rows[0]).filter(h => h !== 'Date' && h !== 'GPR_AI');
+    const pairSet  = new Set(allPairs);
+
+    allPairs.forEach((pair, i) => { pairColorMap[pair] = BILATERAL_COLORS[i % BILATERAL_COLORS.length]; });
+
+    const initSet = new Set(), respSet = new Set();
+    allPairs.forEach(p => { const [a, b] = p.split('|'); initSet.add(a); respSet.add(b); });
+    const rowCountries = [...initSet].sort();
+    const colCountries = [...respSet].sort();
+
+    const container = document.getElementById('bilateralPairButtons');
+    container.innerHTML = '';
+    const table = document.createElement('table');
+    table.className = 'pair-matrix';
+
+    const thead = document.createElement('thead');
+
+    const labelRow = document.createElement('tr');
+    const respLabelCorner = document.createElement('th');
+    respLabelCorner.className = 'corner'; respLabelCorner.rowSpan = 2;
+    labelRow.appendChild(respLabelCorner);
+    const initLabel = document.createElement('th');
+    initLabel.className = 'axis-label-x'; initLabel.colSpan = colCountries.length;
+    initLabel.textContent = 'Respondent';
+    labelRow.appendChild(initLabel);
+    thead.appendChild(labelRow);
+
+    const hrow = document.createElement('tr');
+    colCountries.forEach(c => {
+        const th = document.createElement('th');
+        th.className = 'col-hdr'; th.textContent = c; th.dataset.country = c;
+        hrow.appendChild(th);
+    });
+    thead.appendChild(hrow); table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    let firstCell = null;
+    rowCountries.forEach(rowC => {
+        const tr = document.createElement('tr');
+
+        const rh = document.createElement('th');
+        rh.className = 'row-hdr'; rh.textContent = rowC; rh.dataset.country = rowC;
+        tr.appendChild(rh);
+        colCountries.forEach(colC => {
+            const td   = document.createElement('td');
+            const pair = `${rowC}|${colC}`;
+            if (rowC === colC) {
+                td.className = 'diag';
+            } else if (pairSet.has(pair)) {
+                td.className = 'avail';
+                td.title     = `${rowC} → ${colC}`;
+                td.dataset.pair = pair;
+                if (!firstCell) firstCell = td;
+                td.addEventListener('click', () => {
+                    if (selectedPairs.has(pair)) {
+                        selectedPairs.delete(pair);
+                        td.classList.remove('selected');
+                    } else {
+                        selectedPairs.add(pair);
+                        td.classList.add('selected');
+                    }
+                    updateHeaderHighlights();
+                    plotBilateral();
+                });
+            } else {
+                td.className = 'empty';
+            }
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    const respLabel = document.createElement('div');
+    respLabel.className = 'axis-label-y';
+    const respSpan = document.createElement('span');
+    respSpan.textContent = 'Initiator';
+    respLabel.appendChild(respSpan);
+
+    const flexWrap = document.createElement('div');
+    flexWrap.style.cssText = 'display:flex; align-items:stretch;';
+    flexWrap.appendChild(respLabel);
+    flexWrap.appendChild(table);
+    container.appendChild(flexWrap);
+
+    if (firstCell) {
+        firstCell.classList.add('selected');
+        selectedPairs.add(firstCell.dataset.pair);
+        updateHeaderHighlights();
+    }
+}
+
+function updateHeaderHighlights() {
+    document.querySelectorAll('.pair-matrix th.col-hdr, .pair-matrix th.row-hdr')
+             .forEach(el => el.classList.remove('active'));
+    selectedPairs.forEach(pair => {
+        const [init, resp] = pair.split('|');
+        document.querySelector(`.pair-matrix th.row-hdr[data-country="${init}"]`)
+                ?.classList.add('active');
+        document.querySelector(`.pair-matrix th.col-hdr[data-country="${resp}"]`)
+                ?.classList.add('active');
+    });
+}
+
+function plotBilateral() {
+    if (!bilateralData) return;
+    const w = parseWindow('maSelect2');
+    const showOverall = document.getElementById('showOverall2').checked;
+    const dates = bilateralData.map(r => r['Date']);
+
+    const traces = [];
+    if (showOverall) {
+        traces.push({
+            x: dates, y: movingAvg(getCol(bilateralData, 'GPR_AI'), w),
+            name: 'Overall GPR_AI', type: 'scatter', mode: 'lines',
+            line: { color: '#c8d6e5', width: 1.5, dash: 'dot' },
+        });
+    }
+    selectedPairs.forEach(pair => {
+        const [a, b] = pair.split('|');
+        traces.push({
+            x: dates, y: movingAvg(getCol(bilateralData, pair), w),
+            name: `${a} → ${b}`, type: 'scatter', mode: 'lines',
+            line: { color: pairColorMap[pair], width: 2 },
+        });
+    });
+
+    const blLayout = Object.assign({}, baseLayout('AI-GPR Bilateral Index', 'Index'), {
+        margin: { l: 60, r: 150, t: 44, b: 60 },
+        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 10.5 } },
+    });
+    Plotly.react('chartBilateral', traces, blLayout, { responsive: true });
+}
+
+Papa.parse(BILATERAL_CSV, {
+    download: true, header: true,
+    complete: result => {
+        bilateralData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
+        document.getElementById('downloadBilateral').href = BILATERAL_CSV;
+        buildBilateralButtons(bilateralData);
+        plotBilateral();
+        attachRescaleListener('chartBilateral');
+    }
+});
+
+document.getElementById('maSelect2').addEventListener('change', plotBilateral);
+document.getElementById('showOverall2').addEventListener('change', plotBilateral);
+
+// BibTeX download
+document.getElementById('downloadBib').addEventListener('click', function() {
+    const bib = `@techreport{IacovielloTong2025,
+  author      = {Iacoviello, Matteo and Tong, Jonathan},
+  title       = {The {AI-GPR} Index: Measuring Geopolitical Risk using Artificial Intelligence},
+  institution = {Federal Reserve Board of Governors},
+  year        = {2025},
+  type        = {Working Paper},
+  url         = {https://www.matteoiacoviello.com/ai_gpr.html}
+}`;
+    const blob = new Blob([bib], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'iacoviello_tong_aigpr.bib';
+    a.click();
+    URL.revokeObjectURL(a.href);
+});
 </script>
 
 </body>
 </html>
-
