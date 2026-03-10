@@ -686,7 +686,6 @@
                 <label class="toggle-label">
                     <input type="checkbox" id="showOverall1"> Show overall GPR_AI
                 </label>
-                <a class="btn-download" id="downloadCountry" href="#">&#8595; Download CSV</a>
             </div>
         </div>
 
@@ -724,7 +723,6 @@
                 <label class="toggle-label">
                     <input type="checkbox" id="showOverall3"> Show overall GPR_AI
                 </label>
-                <a class="btn-download" id="downloadEventtype" href="#">&#8595; Download CSV</a>
             </div>
         </div>
 
@@ -761,7 +759,6 @@
                 <label class="toggle-label">
                     <input type="checkbox" id="showOverall2"> Show overall GPR_AI
                 </label>
-                <a class="btn-download" id="downloadBilateral" href="#">&#8595; Download CSV</a>
             </div>
         </div>
 
@@ -1207,7 +1204,6 @@ Papa.parse(COUNTRY_CSV, {
     download: true, header: true,
     complete: result => {
         countryData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
-        document.getElementById('downloadCountry').href = COUNTRY_CSV;
         buildCountryDropdown(countryData);
         plotCountry();
         attachRescaleListener('chartCountry');
@@ -1321,7 +1317,6 @@ Papa.parse(EVENTTYPE_CSV, {
     download: true, header: true,
     complete: result => {
         eventtypeData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
-        document.getElementById('downloadEventtype').href = EVENTTYPE_CSV;
         buildEventtypeButtons();
         plotEventtype();
         attachRescaleListener('chartEventtype');
@@ -1484,7 +1479,6 @@ Papa.parse(BILATERAL_CSV, {
     download: true, header: true,
     complete: result => {
         bilateralData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
-        document.getElementById('downloadBilateral').href = BILATERAL_CSV;
         buildBilateralButtons(bilateralData);
         plotBilateral();
         attachRescaleListener('chartBilateral');
