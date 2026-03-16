@@ -533,7 +533,7 @@
             <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
             <a href="#downloads" class="btn btn-outline">Download Data</a>
         </div>
-        <p class="updated">Last updated: March 9, 2026 with data through March 9, 2026.</p>
+        <p class="updated">Last updated: March 14, 2026 with data through March 14, 2026.</p>
     </div>
 </section>
 
@@ -541,7 +541,7 @@
 <section id="about">
     <div class="container">
         <h2 class="section-title">About the Index</h2>
-        <p style="margin-bottom: 18px;">The AI-GPR Index measures geopolitical risk by applying large language models (LLMs) to newspaper articles. Building on the conceptual framework of the original GPR Index (Caldara and Iacoviello, 2022), it replaces keyword matching with semantic understanding: instead of searching for specific word combinations, GPT-4o-mini reads each article and assigns a continuous risk score from 0.0 to 1.0 based on the article's geopolitical content.</p>
+        <p style="margin-bottom: 18px;">The AI-GPR Index measures geopolitical risk by reading newspaper articles with artificial intelligence. Building on the original GPR Index (Caldara and Iacoviello, 2022), it replaces keyword matching with semantic understanding: rather than searching for specific word combinations, the AI reads each article and assigns a risk score based on its geopolitical content.</p>
         <p style="margin-bottom: 18px;">The index is constructed at daily frequency using articles from the New York Times, Washington Post, and Chicago Tribune, spanning 1960 through 2026.</p>
 
         <div class="about-grid">
@@ -658,7 +658,7 @@
 <!-- COUNTRY GPR INDEX -->
 <section id="section-country" style="background: var(--bg);">
     <div class="container">
-        <div class="section-title">Country GPR Index</div>
+        <div class="section-title">Country GPR Index (top 120 countries)</div>
 
         <div class="chart-controls">
             <div class="control-group">
@@ -695,8 +695,8 @@
         <p class="chart-footnote">
             <strong>Note:</strong> The AI-GPR Country Index uses machine learning to identify specific countries and roles
             (Initiator, Respondent, Spillover) within news text associated with geopolitical risk.
-            Smoothing reflects a trailing moving average, dropping initial observations where the window is incomplete.
-            Country-level data are available through December 2025.
+            Smoothing reflects a trailing moving average.
+            Country-level data are available through March 2026. Scaling uses the same monthly factors as the overall AI-GPR index (mean=100, 1985-2019), so that values are comparable to the aggregate index.
         </p>
     </div>
 </section>
@@ -731,8 +731,7 @@
         </div>
         <p class="chart-footnote">
             <strong>Note:</strong> Each series sums the AI-GPR sentiment score for articles classified under that
-            event type, scaled to the overall AI-GPR index. Event types are assigned by the LLM classifier.
-            Event-type data are available through December 2025.
+            Monthly GPR by event type.
         </p>
     </div>
 </section>
@@ -740,7 +739,7 @@
 <!-- BILATERAL GPR INDEX -->
 <section id="section-bilateral" style="background: var(--bg);">
     <div class="container">
-        <div class="section-title">Bilateral GPR Index</div>
+        <div class="section-title">Bilateral GPR Index (top 120 country-pairs)</div>
 
         <div class="chart-controls">
             <div class="control-group" style="flex:1;min-width:100%">
@@ -768,8 +767,8 @@
         <p class="chart-footnote">
             <strong>Note:</strong> The bilateral index measures geopolitical risk in articles where both countries
             appear together as initiator and respondent (in either direction). Top pairs are ranked by total
-            cumulative sentiment across the full sample. Scaled to the overall AI-GPR index (mean&nbsp;=&nbsp;100, 1985&ndash;2019).
-            Bilateral data are available through December 2025.
+            cumulative sentiment across the full sample. Scaled using the same monthly factors of the overall AI-GPR index (mean&nbsp;=&nbsp;100, 1985&ndash;2019), so that values are comparable across pairs and to the aggregate index.
+            Bilateral data are available through March 2026.
         </p>
     </div>
 </section>
@@ -824,7 +823,7 @@
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_eventtype_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly GPR by event type (Threat, Act, Peace)</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by event type</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_eventtype_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
@@ -841,9 +840,9 @@
 <section id="citation" style="background: var(--bg);">
     <div class="container">
         <h2 class="section-title">Citation</h2>
-        <p>If you use the AI-GPR Index in your research, please cite:</p>
+        <p>If you use the AI-GPR Index, please let us know, and cite:</p>
         <blockquote style="background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 16px 0; padding: 14px 20px; font-size: 0.95em; line-height: 1.6; border-radius: 0 6px 6px 0;">
-            Iacoviello, Matteo and Jonathan Tong (2025). &ldquo;The AI-GPR Index: Measuring Geopolitical Risk using Artificial Intelligence.&rdquo; Working Paper, Federal Reserve Board of Governors.
+            Iacoviello, Matteo and Jonathan Tong (2026). &ldquo;The AI-GPR Index: Measuring Geopolitical Risk using Artificial Intelligence.&rdquo; Working Paper, Federal Reserve Board of Governors.
         </blockquote>
         <div style="display:flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
             <a href="research_files/AI_GPR_PAPER.pdf" class="btn btn-primary">Download Paper (PDF)</a>
@@ -1084,7 +1083,7 @@ async function init() {
         updateChart();
     } catch (e) {
         document.getElementById('chart').innerHTML =
-            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Run <code>run_generate_webpage_data.py</code> to generate the data.</p>';
+            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Run <code>run_web.py</code> to generate the data.</p>';
     }
 }
 
@@ -1205,7 +1204,7 @@ function plotCountry() {
 Papa.parse(COUNTRY_CSV, {
     download: true, header: true,
     complete: result => {
-        countryData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
+        countryData = result.data.filter(r => r['Date']);
         buildCountryDropdown(countryData);
         plotCountry();
         attachRescaleListener('chartCountry');
@@ -1318,7 +1317,7 @@ function plotEventtype() {
 Papa.parse(EVENTTYPE_CSV, {
     download: true, header: true,
     complete: result => {
-        eventtypeData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
+        eventtypeData = result.data.filter(r => r['Date']);
         buildEventtypeButtons();
         plotEventtype();
         attachRescaleListener('chartEventtype');
@@ -1480,7 +1479,7 @@ function plotBilateral() {
 Papa.parse(BILATERAL_CSV, {
     download: true, header: true,
     complete: result => {
-        bilateralData = result.data.filter(r => r['Date'] && r['Date'] <= '2025-12');
+        bilateralData = result.data.filter(r => r['Date']);
         buildBilateralButtons(bilateralData);
         plotBilateral();
         attachRescaleListener('chartBilateral');
