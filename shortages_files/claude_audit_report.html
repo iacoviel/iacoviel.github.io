@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Audit: Validation of Shortage Index</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-sublabel {
+            font-size: 18px;
+            margin-top: 10px;
+            opacity: 0.95;
+        }
+        .examples-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        .examples-table th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+            font-weight: 600;
+        }
+        .examples-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+        .examples-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .examples-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        .snippet-text {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .classification-yes {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .classification-no {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .methodology-box {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        .example-snippet {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border-left: 3px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Claude Audit: Validation of Shortage Index</h1>
+    <div class="subtitle">Classification of 872 News Article Abstracts from Historical Newspapers (1900-2024)</div>
+</div>
+
+<div class="section">
+    <h2>Overview</h2>
+    <p>This report documents an audit performed using Claude AI (Claude 3.7 Sonnet reasoning model) to validate
+    the accuracy of our shortage index. We sampled 872 article abstracts from the shortage set and classified
+    whether each abstract mentions actual, economically relevant shortages.</p>
+
+    <p><strong>Purpose:</strong> Verify that our index accurately measures shortages, minimizing both Type-I
+    and Type-II errors.</p>
+
+    <p><strong>Sample:</strong> 872 abstracts from articles in the shortage set (𝒮), drawn from six major U.S. newspapers
+    until 2014, and expanded to include British, Canadian, and Australian newspapers for 2015-2024.</p>
+
+    <div class="note">
+        <strong>Note:</strong> Abstracts in the database are typically short portions of text, often containing
+        the opening sentences or the initial paragraphs of the article. A list of the 872 abstracts is available upon request.
+    </div>
+</div>
+
+<div class="section">
+    <h2>Methodology</h2>
+
+    <div class="methodology-box">
+        <h3 style="margin-top: 0;">Snippet Extraction</h3>
+        <p>For each article, we extracted the first snippet of text that references shortages. These snippets
+        are centered on the shortage word and limited to 110 characters—a length chosen to balance brevity with
+        providing sufficient context.</p>
+
+        <h4>Example Snippet:</h4>
+        <div class="example-snippet">
+        "...Ford motor company said today that still lingering steel shortages would force a closing next week of eighteen..."
+        <br><em>(New York Times, 1952)</em>
+        </div>
+    </div>
+
+    <h3>Classification Scheme</h3>
+    <p>Claude was instructed to classify each snippet using a three-level system:</p>
+    <ul>
+        <li><strong>1 (Yes):</strong> Mentions current or prospective shortages, rationing, scarcity, or bottlenecks
+        related to industry, labor, materials, food, or water</li>
+        <li><strong>0 (No):</strong> Does not mention relevant economic shortages (e.g., mentions end of shortages,
+        or non-economic uses like "shortage of sunshine")</li>
+        <li><strong>99 (Unsure):</strong> Ambiguous or unclear classification</li>
+    </ul>
+
+    <h3>Training Examples Provided to Claude</h3>
+    <p>Before classification, we provided Claude with examples to ensure proper understanding, including
+    false positives:</p>
+    <ul>
+        <li>"Steel shortages will prevail in the near future" → <strong>1</strong> (mentions prospective shortages)</li>
+        <li>"Steel shortages caused a plant closure" → <strong>1</strong> (mentions current shortage impacts)</li>
+        <li>"No shortage of cars has been experienced" → <strong>0</strong> (mentions absence of shortage)</li>
+        <li>"Shortage of workspace" (not work shortage) → <strong>0</strong> (not economically relevant)</li>
+        <li>"Shortage of frigid weather" → <strong>0</strong> (figurative, not economic)</li>
+        <li>"Shortage of funds" from personal account → <strong>0</strong> (not goods/services shortage)</li>
+    </ul>
+
+    <h3>Claude's Performance</h3>
+    <p>Although AI-based validation is not foolproof, Claude performed comparably to a human evaluator,
+    even extrapolating contextual cues. For example, when processing the snippet "Economy may be slowing
+    but Lowe is banking on labour shortages gradually leading to an increase...", Claude classified it
+    as 1 and noted that Philip Lowe (Governor of the Reserve Bank of Australia) was expecting labor
+    shortages to lead to wage growth.</p>
+</div>
+
+<div class="section">
+    <h2>Results Summary</h2>
+
+    <div class="summary-stats">
+        <div class="stat-card">
+            <div class="stat-label">Total Abstracts</div>
+            <div class="stat-number">872</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Actual Shortages</div>
+            <div class="stat-number">817</div>
+            <div class="stat-sublabel">93.7% of sample</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">False Positives</div>
+            <div class="stat-number">54</div>
+            <div class="stat-sublabel">Type I Error: 6.19%</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Unsure</div>
+            <div class="stat-number">1</div>
+            <div class="stat-sublabel">0.11% of sample</div>
+        </div>
+    </div>
+
+    <h3>Key Finding</h3>
+    <p style="font-size: 16px; background-color: #e8f5e9; padding: 20px; border-radius: 5px; border-left: 4px solid #4caf50;">
+        <strong>Out of 872 articles in the shortage set, only 6.30% were classified by Claude as false positives.</strong>
+        This confirms that our search methodology effectively identifies articles mentioning actual shortage concerns,
+        with a low Type I error rate.
+    </p>
+
+    <h3>Example False Positive</h3>
+    <div class="example-snippet">
+        "...says that while there is not necessarily a shortage of people wanting to work in management..."
+        <br><br>
+        <strong>Classification:</strong> <span class="classification-no">0 (No)</span>
+        <br><strong>Explanation:</strong> "No shortage of people wanting to work in management"
+    </div>
+</div>
+
+<div class="section">
+    <h2>Sample of Classified Abstracts</h2>
+    <p>Below are 100 representative examples from the 872 abstracts that were audited. Each entry shows
+    the snippet text, year, Claude's classification, and the explanation for the decision.</p>
+
+    <table class="examples-table">
+        <tr>
+            <th style="width: 4%;">ID</th>
+            <th style="width: 6%;">Year</th>
+            <th style="width: 50%;">Abstract Snippet</th>
+            <th style="width: 8%;">Class</th>
+            <th style="width: 32%;">Explanation</th>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>1960</td>
+            <td class="snippet-text">ould be content with their lot in the near future steel shortages will prevail in most items for the next five //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions perspective steel shortages will prevail in the near future</td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>1959</td>
+            <td class="snippet-text">ns at its butler, pa., plant yesterday because of steel shortages, l.h. warheit, plant manager, disclosed. he s//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Steel shortages caused a plant closure</td>
+        </tr>
+
+        <tr>
+            <td>3</td>
+            <td>1959</td>
+            <td class="snippet-text"> chicago a shortage of railroad freight cars is crimping coal prod//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Shortage of railroad freight cars is crimping coal production</td>
+        </tr>
+
+        <tr>
+            <td>4</td>
+            <td>1959</td>
+            <td class="snippet-text"> the shortage of railroad freight cars could hinder the rise//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of railroad freight cars</td>
+        </tr>
+
+        <tr>
+            <td>5</td>
+            <td>1959</td>
+            <td class="snippet-text"> layoffs could be expected next week because of a steel shortage. it did not estimate the number of future layo//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Layoffs expected due to steel shortage</td>
+        </tr>
+
+        <tr>
+            <td>6</td>
+            <td>1959</td>
+            <td class="snippet-text"> strike caused steel shortages are beginning to hit general motors corp. so //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Steel shortages are hitting General Motors</td>
+        </tr>
+
+        <tr>
+            <td>7</td>
+            <td>1959</td>
+            <td class="snippet-text"> the 1961 spring harvest. but pointed out that material shortages such as those resulting from events like the //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions material shortages</td>
+        </tr>
+
+        <tr>
+            <td>8</td>
+            <td>1959</td>
+            <td class="snippet-text"> obstacle probability of the worst railroad freight car shortage in years.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions probability of worst railroad freight car shortage in years</td>
+        </tr>
+
+        <tr>
+            <td>9</td>
+            <td>1958</td>
+            <td class="snippet-text">ral assembly last week when he spoke of the world water shortage being on the threshhold of solution. the desal//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions world water shortage</td>
+        </tr>
+
+        <tr>
+            <td>10</td>
+            <td>1957</td>
+            <td class="snippet-text"> a shortage of work space at the white house could be solv//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Mentions shortage of work space</td>
+        </tr>
+
+        <tr>
+            <td>11</td>
+            <td>1957</td>
+            <td class="snippet-text"> paris what with gasoline rationing and everything, many of us find it hard to ge//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions gasoline rationing</td>
+        </tr>
+
+        <tr>
+            <td>12</td>
+            <td>1956</td>
+            <td class="snippet-text"> foresee the united states having to resort to gasoline rationing under present circumstances. //...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Does not foresee having to resort to gasoline rationing</td>
+        </tr>
+
+        <tr>
+            <td>13</td>
+            <td>1956</td>
+            <td class="snippet-text">alley areas could be seriously affected with respect to shortages of fuel oil and coal if low water in the miss//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions potential shortages of fuel oil and coal</td>
+        </tr>
+
+        <tr>
+            <td>14</td>
+            <td>1956</td>
+            <td class="snippet-text">anager of lake tankers corporation, said a terrific oil shortage could result. he estimated that barge lines ha//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a potential terrific oil shortage</td>
+        </tr>
+
+        <tr>
+            <td>15</td>
+            <td>1956</td>
+            <td class="snippet-text">ton, sept. 13 up gen. nathan f. twining said today that shortages of skilled manpower could threaten the contin//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortages of skilled manpower</td>
+        </tr>
+
+        <tr>
+            <td>16</td>
+            <td>1956</td>
+            <td class="snippet-text">ry over uncertain deliveries that could develop serious shortage troubles toward the end of the year, the iron //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions uncertain deliveries that could develop serious shortage</td>
+        </tr>
+
+        <tr>
+            <td>17</td>
+            <td>1955</td>
+            <td class="snippet-text"> a serious fuel oil and coal shortage which with severe weather could become so desp//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a serious fuel oil and coal shortage</td>
+        </tr>
+
+        <tr>
+            <td>18</td>
+            <td>1955</td>
+            <td class="snippet-text"> pittsburgh, nov. 13 anxiety over the steel shortage mounted last week. steel companies could do li//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions anxiety over the steel shortage</td>
+        </tr>
+
+        <tr>
+            <td>19</td>
+            <td>1955</td>
+            <td class="snippet-text">. talks yesterday with men who deal in money revealed a shortage of the copper coins which hoarders could ease //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of copper coins</td>
+        </tr>
+
+        <tr>
+            <td>20</td>
+            <td>1955</td>
+            <td class="snippet-text">was called up on the farm . it took the paper and labor shortages of world war ii, and the growth of the reprin//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions paper and labor shortages</td>
+        </tr>
+
+        <tr>
+            <td>21</td>
+            <td>1954</td>
+            <td class="snippet-text">would think not even the communists could contrive food shortages in the rich agricultural area of eastern euro//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Hypothetical - thinks communists could not contrive food shortages</td>
+        </tr>
+
+        <tr>
+            <td>22</td>
+            <td>1954</td>
+            <td class="snippet-text"> only hitch to a larger crop, forecasters say, may be a shortage of quality soybean seed.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions potential shortage of quality soybean seed</td>
+        </tr>
+
+        <tr>
+            <td>23</td>
+            <td>1953</td>
+            <td class="snippet-text">hrubbery of outlying areas and brought on serious water shortages.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Drought brought on serious water shortages</td>
+        </tr>
+
+        <tr>
+            <td>24</td>
+            <td>1953</td>
+            <td class="snippet-text">nd personalities make news, no one could squawk about a shortage of material during this...//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Mentions no shortage of news material</td>
+        </tr>
+
+        <tr>
+            <td>25</td>
+            <td>1953</td>
+            <td class="snippet-text">ndustry, if unhampered by legal squabbles and materials shortages, could drill enough wells into the underwater//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions potential materials shortages for drilling wells</td>
+        </tr>
+
+        <tr>
+            <td>26</td>
+            <td>1952</td>
+            <td class="snippet-text">ord motor company said today that still lingering steel shortages would force a closing next week of eighteen o//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions lingering steel shortages forcing plant closures</td>
+        </tr>
+
+        <tr>
+            <td>27</td>
+            <td>1952</td>
+            <td class="snippet-text">r jobs as skilled workers. in new york alone there is a shortage of 1,500 workers.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of skilled workers in New York</td>
+        </tr>
+
+        <tr>
+            <td>28</td>
+            <td>1952</td>
+            <td class="snippet-text"> the most critical manpower shortage in this nation s history, many authorities agr//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions critical manpower shortage</td>
+        </tr>
+
+        <tr>
+            <td>29</td>
+            <td>1952</td>
+            <td class="snippet-text">trike s effectiveness is less than the unions expected. shortages are still localized in chicago, the nation s //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortages are still localized in Chicago</td>
+        </tr>
+
+        <tr>
+            <td>30</td>
+            <td>1952</td>
+            <td class="snippet-text">ened with a strike which could cause a nation wide fuel shortage for homes and industry.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions potential strike causing a nationwide fuel shortage</td>
+        </tr>
+
+        <tr>
+            <td>31</td>
+            <td>1952</td>
+            <td class="snippet-text">rmine what, if anything, could be done about the copper shortage.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions copper shortage</td>
+        </tr>
+
+        <tr>
+            <td>32</td>
+            <td>1951</td>
+            <td class="snippet-text">ction in the steel supply through either strikes or the shortage of scrap.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of scrap affecting steel supply</td>
+        </tr>
+
+        <tr>
+            <td>33</td>
+            <td>1951</td>
+            <td class="snippet-text">ving possibility during the area s drought caused power shortage. governors of washington, idaho and oregon wer//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions drought-caused power shortage</td>
+        </tr>
+
+        <tr>
+            <td>34</td>
+            <td>1951</td>
+            <td class="snippet-text">elays in the manufacture of new equipment due to metals shortages could reduce the electric power industry s ex//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions metals shortages potentially reducing electric power expansion</td>
+        </tr>
+
+        <tr>
+            <td>35</td>
+            <td>1951</td>
+            <td class="snippet-text">ic northwest in october due to drought conditions and a shortage of water for its generators.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of water for power generators</td>
+        </tr>
+
+        <tr>
+            <td>36</td>
+            <td>1951</td>
+            <td class="snippet-text">o our allies which would be bad for production and make rationing of gasoline imperative in peace, besides crea//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Hypothetical - rationing of gasoline if allies cut off</td>
+        </tr>
+
+        <tr>
+            <td>37</td>
+            <td>1951</td>
+            <td class="snippet-text"> a passenger car shortage that could last several years was foreseen tod//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Foresees a passenger car shortage lasting years</td>
+        </tr>
+
+        <tr>
+            <td>38</td>
+            <td>1951</td>
+            <td class="snippet-text"> detroit, july 7 ap . a possible passenger car shortage that could last several years, is foreseen by //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Foresees a possible passenger car shortage lasting years</td>
+        </tr>
+
+        <tr>
+            <td>39</td>
+            <td>1951</td>
+            <td class="snippet-text"> washington a new bottleneck is appearing on the u.s. industrial scene wh//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a new bottleneck appearing on the industrial scene</td>
+        </tr>
+
+        <tr>
+            <td>40</td>
+            <td>1951</td>
+            <td class="snippet-text">m equipment manufacturer, is confronted with a critical shortage of material which could affect production, the//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a critical shortage of material affecting production</td>
+        </tr>
+
+        <tr>
+            <td>41</td>
+            <td>1951</td>
+            <td class="snippet-text">chile could end or reduce materially the present copper shortage, according to a statement made yesterday by c.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions ending or reducing the copper shortage</td>
+        </tr>
+
+        <tr>
+            <td>42</td>
+            <td>1951</td>
+            <td class="snippet-text"> atlanta, jan. 3 a critical manpower shortage could develop in six southern states in the im//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a critical manpower shortage potentially developing</td>
+        </tr>
+
+        <tr>
+            <td>43</td>
+            <td>1950</td>
+            <td class="snippet-text">scale buying by farmers. who feared a repetition of the shortages of farm equipment that developed during world//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions past shortages of farm equipment during WWII</td>
+        </tr>
+
+        <tr>
+            <td>44</td>
+            <td>1950</td>
+            <td class="snippet-text"> in the face of a possible shortage of goods it probably must be expected that som//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions expectation of shortage of goods</td>
+        </tr>
+
+        <tr>
+            <td>45</td>
+            <td>1950</td>
+            <td class="snippet-text">rit that animated united states motorists when gasoline rationingended and they could say fill her up. //...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Mentions end of gasoline rationing</td>
+        </tr>
+
+        <tr>
+            <td>46</td>
+            <td>1949</td>
+            <td class="snippet-text"> the public that recent rains have eliminated the water shortage. no notion could be more in error. as city off//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Mentions recent rains have eliminated the water shortage</td>
+        </tr>
+
+        <tr>
+            <td>47</td>
+            <td>1949</td>
+            <td class="snippet-text">ighboring new jersey today because of a dangerous water shortage that could force the entire new york metropoli//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a dangerous water shortage</td>
+        </tr>
+
+        <tr>
+            <td>48</td>
+            <td>1949</td>
+            <td class="snippet-text">ighboring new jersey today because of a dangerous water shortage that could force the entire new york metropoli//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a dangerous water shortage</td>
+        </tr>
+
+        <tr>
+            <td>49</td>
+            <td>1949</td>
+            <td class="snippet-text">could help solve farm price problems and the world food shortage without resort to subsidies.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions world food shortage</td>
+        </tr>
+
+        <tr>
+            <td>50</td>
+            <td>1949</td>
+            <td class="snippet-text">ead to adjoining blocks and could not be checked due to shortage of water. at least one third of the business s//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Fire spread due to shortage of water</td>
+        </tr>
+
+        <tr>
+            <td>51</td>
+            <td>1949</td>
+            <td class="snippet-text">he u.s. steel corporation last night declared the steel shortage will be over before new plants suggested by th//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Declares the steel shortage will be over soon</td>
+        </tr>
+
+        <tr>
+            <td>52</td>
+            <td>1949</td>
+            <td class="snippet-text"> government plants. i don t think there will be a steel shortage in two years, which is as soon as additional f//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Doesn't think there will be a steel shortage in two years</td>
+        </tr>
+
+        <tr>
+            <td>53</td>
+            <td>1948</td>
+            <td class="snippet-text">nd british hostesses, within the limitations imposed by shortages of household equipment, have given what they //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions limitations imposed by shortages of household equipment</td>
+        </tr>
+
+        <tr>
+            <td>54</td>
+            <td>1948</td>
+            <td class="snippet-text"> americans have never endured a real manpower shortage. both sides in the civil war fought with the r//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Claims Americans have never endured a real manpower shortage</td>
+        </tr>
+
+        <tr>
+            <td>55</td>
+            <td>1948</td>
+            <td class="snippet-text">pulp to livestock, but there is a catch to it there s a shortage of paper pulp, too.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a shortage of paper pulp</td>
+        </tr>
+
+        <tr>
+            <td>56</td>
+            <td>1948</td>
+            <td class="snippet-text">riated could and should be deferred in view of existing shortages of men and materials.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions existing shortages of men and materials</td>
+        </tr>
+
+        <tr>
+            <td>57</td>
+            <td>1948</td>
+            <td class="snippet-text"> in the united states army to help relieve the manpower shortage of our armed forces is a poor way of meeting a//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Adding women to Army is a poor way to meet manpower shortage</td>
+        </tr>
+
+        <tr>
+            <td>58</td>
+            <td>1948</td>
+            <td class="snippet-text">ections of the state were afflicted with heavy rains, a shortage of farm labor and labor costs they could not m//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of farm labor</td>
+        </tr>
+
+        <tr>
+            <td>59</td>
+            <td>1948</td>
+            <td class="snippet-text"> the steel scrap shortage, intensified by capacity or near capacitysteel//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions the steel scrap shortage</td>
+        </tr>
+
+        <tr>
+            <td>60</td>
+            <td>1948</td>
+            <td class="snippet-text"> legislation to set up meat rationing machinery which congress could slip into gear//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions setting up meat rationing machinery</td>
+        </tr>
+
+        <tr>
+            <td>61</td>
+            <td>1948</td>
+            <td class="snippet-text"> legislation to set up meat rationing machinery which congress could slip into gear//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions setting up meat rationing machinery</td>
+        </tr>
+
+        <tr>
+            <td>62</td>
+            <td>1947</td>
+            <td class="snippet-text"> more positive curbs on prices of essential articles or rationing of scarce goods. in fact, controls of the lat//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions rationing of scarce goods</td>
+        </tr>
+
+        <tr>
+            <td>63</td>
+            <td>1947</td>
+            <td class="snippet-text">cause no plan could ever work, despite present critical scarcities, members of the trade revealed here yesterda//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions present critical scarcities</td>
+        </tr>
+
+        <tr>
+            <td>64</td>
+            <td>1947</td>
+            <td class="snippet-text"> the stage is being set for a meat shortage in 1948 that could become extremely serious, s//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Warns the stage is set for a serious meat shortage in 1948</td>
+        </tr>
+
+        <tr>
+            <td>65</td>
+            <td>1947</td>
+            <td class="snippet-text"> here will end next march 31. considering the continued scarcity of some building materials, it would be utterl//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions continued scarcity of some building materials</td>
+        </tr>
+
+        <tr>
+            <td>66</td>
+            <td>1947</td>
+            <td class="snippet-text"> it were, could only be accounted for by an acute labor shortage. and, in utter disregard of tradition, a goodl//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions an acute labor shortage</td>
+        </tr>
+
+        <tr>
+            <td>67</td>
+            <td>1946</td>
+            <td class="snippet-text">ipe lines to carry natural gas that could ease the coal shortage.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions pipes to carry gas to ease the coal shortage</td>
+        </tr>
+
+        <tr>
+            <td>68</td>
+            <td>1946</td>
+            <td class="snippet-text">he end of price controls on meat, a joke died. the meat shortage, which had carried many a comedian through sum//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions the meat shortage during price controls</td>
+        </tr>
+
+        <tr>
+            <td>69</td>
+            <td>1946</td>
+            <td class="snippet-text">day the nation faces a most serious rail transportation shortage but that the railroads themselves could not fi//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a serious rail transportation shortage</td>
+        </tr>
+
+        <tr>
+            <td>70</td>
+            <td>1946</td>
+            <td class="snippet-text">day the nation faces a most serious real transportation shortage, but that the railroads themselves could not f//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a serious rail transportation shortage</td>
+        </tr>
+
+        <tr>
+            <td>71</td>
+            <td>1946</td>
+            <td class="snippet-text">erform them on fields where personnel was drastically a shortage.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions personnel shortage</td>
+        </tr>
+
+        <tr>
+            <td>72</td>
+            <td>1946</td>
+            <td class="snippet-text">rred yesterday at city hall on the likelihood of a milk shortage in the city next winter and on measures that c//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions likelihood of a milk shortage</td>
+        </tr>
+
+        <tr>
+            <td>73</td>
+            <td>1946</td>
+            <td class="snippet-text">ture anderson said tonight that announcement of a wheat rationing program would probably be, the most severe bl//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions announcement of a wheat rationing program</td>
+        </tr>
+
+        <tr>
+            <td>74</td>
+            <td>1946</td>
+            <td class="snippet-text">ve been unable to fill. while we understand the present shortage of materials and man power have hin ...//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Understands present shortage of materials and manpower</td>
+        </tr>
+
+        <tr>
+            <td>75</td>
+            <td>1946</td>
+            <td class="snippet-text">ngland. the slow up of british reconversion by the coal shortage is reflected in a statement by the british ste//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions coal shortage slowing British reconversion</td>
+        </tr>
+
+        <tr>
+            <td>76</td>
+            <td>1946</td>
+            <td class="snippet-text">et all needs. transportation, manpower and raw matieral shortages are holding back production which easily coul//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions transportation, manpower and raw material shortages holding back production</td>
+        </tr>
+
+        <tr>
+            <td>77</td>
+            <td>1946</td>
+            <td class="snippet-text">ors here that india faced a possible 7,000,000 ton food shortage unless remedial steps could be taken. he urged//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions India facing a possible food shortage</td>
+        </tr>
+
+        <tr>
+            <td>78</td>
+            <td>1946</td>
+            <td class="snippet-text"> if enough building material were available the housing shortage in this city could be overcome in six months, //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Claims housing shortage could be overcome if materials were available</td>
+        </tr>
+
+        <tr>
+            <td>79</td>
+            <td>1945</td>
+            <td class="snippet-text">lies of cotton and other textiles and could end clothes rationing immediately if labor were available to conver//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions ending clothes rationing if labor was available</td>
+        </tr>
+
+        <tr>
+            <td>80</td>
+            <td>1945</td>
+            <td class="snippet-text">r and the return of many veterans to teaching jobs, the shortage of teachers for county schools is so great tha//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions shortage of teachers for county schools</td>
+        </tr>
+
+        <tr>
+            <td>81</td>
+            <td>1945</td>
+            <td class="snippet-text">their belief on the fact that in many communities labor shortages exist and applicants are not forthcoming to f//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions labor shortages exist in many communities</td>
+        </tr>
+
+        <tr>
+            <td>82</td>
+            <td>1945</td>
+            <td class="snippet-text">ctor for the expansion of employment and relief of home scarcity, appears near a stalemate in and about the big//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions relief of home scarcity near a stalemate</td>
+        </tr>
+
+        <tr>
+            <td>83</td>
+            <td>1945</td>
+            <td class="snippet-text">ired gasoline shortage and toledo, o., resumed gasoline rationing.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions Toledo resumed gasoline rationing</td>
+        </tr>
+
+        <tr>
+            <td>84</td>
+            <td>1945</td>
+            <td class="snippet-text"> because a continued shortage of shipping containers could handicap reconver//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions continued shortage of shipping containers handicapping reconversion</td>
+        </tr>
+
+        <tr>
+            <td>85</td>
+            <td>1945</td>
+            <td class="snippet-text"> some officials reported today that an end of meat rationing is possible by oct. 1, but the office of pric//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions possibility of ending meat rationing by Oct 1</td>
+        </tr>
+
+        <tr>
+            <td>86</td>
+            <td>1945</td>
+            <td class="snippet-text"> some officials reported today that an end of meat rationing is possible by oct. 1, but o.p.a. and the agr//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions possibility of ending meat rationing by Oct 1</td>
+        </tr>
+
+        <tr>
+            <td>87</td>
+            <td>1945</td>
+            <td class="snippet-text"> some officials reported today that an end of meat rationing is possible by october 1, but opa and the agr//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions possibility of ending meat rationing by Oct 1 </td>
+        </tr>
+
+        <tr>
+            <td>88</td>
+            <td>1945</td>
+            <td class="snippet-text">a year of heavy troop movements, and this with an acute shortage of equipment will be effective barriers to nor//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions an acute shortage of equipment</td>
+        </tr>
+
+        <tr>
+            <td>89</td>
+            <td>1945</td>
+            <td class="snippet-text"> secretary of agriculture anderson said today that food shortages in the united states could easily last from o//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Says food shortages in the US could last 1-2 years</td>
+        </tr>
+
+        <tr>
+            <td>90</td>
+            <td>1945</td>
+            <td class="snippet-text"> washington, july 5 coal shortages more serious than those of last year could be//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Warns coal shortages more serious than last year could be expected</td>
+        </tr>
+
+        <tr>
+            <td>91</td>
+            <td>1945</td>
+            <td class="snippet-text">ction convicts, who apparently rioted because of a meat scarcity, could be driven back into their cells and ord//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions a meat scarcity causing a prison riot</td>
+        </tr>
+
+        <tr>
+            <td>92</td>
+            <td>1945</td>
+            <td class="snippet-text">f the a.f.l. metal trades council, said today the labor shortage in west coast ship repair yards could be overc//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Says labor shortage in ship repair yards could be overcome</td>
+        </tr>
+
+        <tr>
+            <td>93</td>
+            <td>1945</td>
+            <td class="snippet-text"> may 31 senator morse of oregon asserted today that the shortage of skilled ship repair workers in west coast y//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Asserts there is a shortage of skilled ship repair workers</td>
+        </tr>
+
+        <tr>
+            <td>94</td>
+            <td>1945</td>
+            <td class="snippet-text">has always been a man s world and not even the manpower shortage could weaken its determination to remain just //...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Says even manpower shortage could not make shipyards less of a "man's world"</td>
+        </tr>
+
+        <tr>
+            <td>95</td>
+            <td>1945</td>
+            <td class="snippet-text">l co., who added that little relief from the acute coal shortage could be expected before the third quarter, at//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Says little relief from acute coal shortage expected before Q3</td>
+        </tr>
+
+        <tr>
+            <td>96</td>
+            <td>1945</td>
+            <td class="snippet-text">boston, april 28 the house committee investigating food shortages found out this week what new englanders have //...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">House committee investigating food shortages in New England</td>
+        </tr>
+
+        <tr>
+            <td>97</td>
+            <td>1945</td>
+            <td class="snippet-text">ne a long way toward solving our succession of manpower shortages. the difficulty is that our total war product//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions succession of manpower shortages</td>
+        </tr>
+
+        <tr>
+            <td>98</td>
+            <td>1945</td>
+            <td class="snippet-text">s production has not severely suffered from an over all scarcity of labor, though that might well have been the//...</td>
+            <td style="text-align: center;"><span class="classification-no">No</span></td>
+            <td style="font-size: 12px;">Says production has not suffered from overall labor scarcity</td>
+        </tr>
+
+        <tr>
+            <td>99</td>
+            <td>1945</td>
+            <td class="snippet-text">area war plants is one of the major causes of the labor shortage here, federal officials believe. if the absent//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Says absenteeism at war plants is a major cause of labor shortage</td>
+        </tr>
+
+        <tr>
+            <td>100</td>
+            <td>1945</td>
+            <td class="snippet-text">hortly afterward has somewhat eased telephone equipment shortages.//...</td>
+            <td style="text-align: center;"><span class="classification-yes">Yes</span></td>
+            <td style="font-size: 12px;">Mentions telephone equipment shortages have eased somewhat</td>
+        </tr>
+
+    </table>
+
+    <div class="note">
+        <strong>Note:</strong> This table shows 100 of the 872 abstracts that were audited. The complete list
+        of all 872 abstracts with classifications is available upon request.
+    </div>
+</div>
+
+<div class="section">
+    <h2>Implications for Index Validity</h2>
+
+    <p>The audit results validate that our shortage index accurately captures articles mentioning
+    economically relevant shortages. The low false positive rate (6.30%) demonstrates that our search
+    methodology—requiring shortage words to appear near topic words (energy, food, industry, labor)—effectively
+    filters out irrelevant uses of shortage terminology.</p>
+
+    <h3>What the False Positives Reveal</h3>
+    <p>The 55 articles classified as false positives (6.30%) primarily fall into three categories:</p>
+    <ul>
+        <li><strong>Negations:</strong> Articles explicitly stating there is "no shortage" or shortages have ended</li>
+        <li><strong>Non-economic shortages:</strong> Figurative uses (e.g., "shortage of sunshine") or non-goods/services
+        contexts (e.g., "shortage of political campaign funds")</li>
+        <li><strong>Context-dependent edge cases:</strong> Mentions of shortages that, upon closer reading, refer to
+        hypothetical or counterfactual scenarios rather than actual conditions</li>
+    </ul>
+
+    <p>These false positives represent measurement noise that is both minimal and random, unlikely to introduce
+    systematic bias into our index.</p>
+</div>
+
+<div style="text-align: center; padding: 30px; color: #7f8c8d; border-top: 1px solid #ddd; margin-top: 30px;">
+    <p><strong>Claude Audit Report</strong></p>
+    <p>Generated: March 19, 2026</p>
+    <p>Sample: 872 news article abstracts (1900-2024)</p>
+    <p>Classification Model: Claude 3.7 Sonnet</p>
+</div>
+
+</body>
+</html>
