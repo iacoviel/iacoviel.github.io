@@ -356,23 +356,23 @@
 
         /* --- COUNTRY SECTIONS: bilateral pair matrix --- */
         .pair-matrix-wrap { overflow-x: auto; margin-top: 6px; }
-        .pair-matrix { border-collapse: collapse; font-size: 0.72em; table-layout: fixed; }
-        .pair-matrix th.corner { min-width: 110px; }
+        .pair-matrix { border-collapse: collapse; font-size: 0.67em; table-layout: fixed; }
+        .pair-matrix th.corner { min-width: 102px; }
         .pair-matrix th.col-hdr {
             writing-mode: vertical-rl; transform: rotate(180deg);
             white-space: nowrap; padding: 4px 0; font-weight: 500;
-            width: 14px; max-width: 14px; overflow: hidden;
+            width: 13px; max-width: 13px; overflow: hidden;
             color: var(--text-light); text-align: left; vertical-align: bottom;
         }
         .pair-matrix th.col-hdr.active { color: #c0392b; font-weight: 700; }
         .pair-matrix th.row-hdr {
-            white-space: nowrap; padding: 0 6px 0 0; line-height: 14px;
+            white-space: nowrap; padding: 0 6px 0 0; line-height: 13px;
             font-weight: 400; color: var(--text-light); text-align: right;
         }
         .pair-matrix th.row-hdr.active { color: #c0392b; font-weight: 700; }
         .pair-matrix td {
-            width: 14px; max-width: 14px; height: 14px; max-height: 14px;
-            line-height: 14px; padding: 0; border: 1px solid #e8ecf0; overflow: hidden;
+            width: 13px; max-width: 13px; height: 13px; max-height: 13px;
+            line-height: 13px; padding: 0; border: 1px solid #e8ecf0; overflow: hidden;
         }
         .pair-matrix td.diag  { background: #e8e8e8; }
         .pair-matrix td.empty { background: #f7f8fa; }
@@ -533,7 +533,7 @@
             <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
             <a href="#downloads" class="btn btn-outline">Download Data</a>
         </div>
-        <p class="updated">Last updated: March 14, 2026 with data through March 14, 2026.</p>
+        <p class="updated">Last updated: March 27, 2026 with data through March 27, 2026.</p>
     </div>
 </section>
 
@@ -626,8 +626,8 @@
                     <option value="1">Raw (daily)</option>
                     <option value="0">One-day change</option>
                     <option value="7">7-day MA</option>
-                    <option value="30">30-day MA</option>
-                    <option value="90" selected>90-day MA</option>
+                    <option value="30" selected>30-day MA</option>
+                    <option value="90">90-day MA</option>
                     <option value="365">1-year MA</option>
                 </select>
             </div>
@@ -739,7 +739,7 @@
 <!-- BILATERAL GPR INDEX -->
 <section id="section-bilateral" style="background: var(--bg);">
     <div class="container">
-        <div class="section-title">Bilateral GPR Index (top 120 country-pairs)</div>
+        <div class="section-title">Bilateral GPR Index (top 200 country-pairs)</div>
 
         <div class="chart-controls">
             <div class="control-group" style="flex:1;min-width:100%">
@@ -926,18 +926,18 @@ function parseWindow(selectId) {
 
 function baseLayout(title, yLabel) {
     return {
-        title: { text: title, font: { size: 15, color: '#1a3a5c' }, x: 0.02 },
+        title: { text: title, font: { size: 17, color: '#1a3a5c' }, x: 0.02 },
         margin: { l: 60, r: 20, t: 44, b: 60 },
         xaxis: {
-            type: 'date', tickfont: { size: 11 }, gridcolor: '#eef1f5',
+            type: 'date', tickfont: { size: 13 }, gridcolor: '#eef1f5',
             rangeslider: { visible: true, thickness: 0.07 },
         },
         yaxis: {
-            title: { text: yLabel, font: { size: 12 } },
-            tickfont: { size: 11 }, gridcolor: '#eef1f5',
+            title: { text: yLabel, font: { size: 14 } },
+            tickfont: { size: 13 }, gridcolor: '#eef1f5',
             rangemode: 'tozero', autorange: true,
         },
-        legend: { orientation: 'h', x: 0, y: 1.08, yanchor: 'bottom', font: { size: 11 } },
+        legend: { orientation: 'h', x: 0, y: 1.08, yanchor: 'bottom', font: { size: 13 } },
         hovermode: 'x unified',
     };
 }
@@ -1045,7 +1045,7 @@ function updateChart() {
             gridcolor: '#eee'
         },
         yaxis: {
-            title: { text: window === 0 ? 'One-day change' : 'Index (1985-2019 = 100)', font: { size: 13 } },
+            title: { text: window === 0 ? 'One-day change' : 'Index (1985-2019 = 100)', font: { size: 15 } },
             gridcolor: '#eee',
             zeroline: true,
             rangemode: window === 0 ? 'normal' : 'tozero'
@@ -1055,12 +1055,12 @@ function updateChart() {
             y: 1.06,
             x: 0.5,
             xanchor: 'center',
-            font: { size: 13 }
+            font: { size: 15 }
         },
         hovermode: 'x unified',
         plot_bgcolor: '#fff',
         paper_bgcolor: '#fff',
-        font: { family: 'Roboto, Arial, sans-serif', size: 12 }
+        font: { family: 'Roboto, Arial, sans-serif', size: 14 }
     };
 
     const config = {
@@ -1080,11 +1080,12 @@ async function init() {
             loadCSV('ai_gpr_files/ai_gpr_data_monthly.csv?v=' + v),
             loadCSV('ai_gpr_files/ai_gpr_data_daily.csv?v=' + v)
         ]);
-        updateChart();
     } catch (e) {
         document.getElementById('chart').innerHTML =
-            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Run <code>run_web.py</code> to generate the data.</p>';
+            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Open via <code>serve.bat</code> (not by double-clicking the HTML file), or run <code>run_web.py</code> to regenerate the data.</p>';
+        return;
     }
+    updateChart();
 }
 
 ['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil'].forEach(id =>
@@ -1309,7 +1310,7 @@ function plotEventtype() {
 
     const etLayout = Object.assign({}, baseLayout('AI-GPR by Event Type', 'Index'), {
         margin: { l: 60, r: 150, t: 44, b: 60 },
-        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 10.5 } },
+        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 12 } },
     });
     Plotly.react('chartEventtype', traces, etLayout, { responsive: true });
 }
@@ -1345,7 +1346,7 @@ function buildBilateralButtons(rows) {
     const allPairs = Object.keys(rows[0]).filter(h => h !== 'Date' && h !== 'GPR_AI');
     const pairSet  = new Set(allPairs);
 
-    allPairs.forEach((pair, i) => { pairColorMap[pair] = BILATERAL_COLORS[i % BILATERAL_COLORS.length]; });
+    // colors assigned dynamically at plot time; pairColorMap unused for bilateral
 
     const initSet = new Set(), respSet = new Set();
     allPairs.forEach(p => { const [a, b] = p.split('|'); initSet.add(a); respSet.add(b); });
@@ -1460,18 +1461,18 @@ function plotBilateral() {
             line: { color: '#c8d6e5', width: 1.5, dash: 'dot' },
         });
     }
-    selectedPairs.forEach(pair => {
+    [...selectedPairs].forEach((pair, idx) => {
         const [a, b] = pair.split('|');
         traces.push({
             x: dates, y: movingAvg(getCol(bilateralData, pair), w),
             name: `${a} → ${b}`, type: 'scatter', mode: 'lines',
-            line: { color: pairColorMap[pair], width: 2 },
+            line: { color: BILATERAL_COLORS[idx % BILATERAL_COLORS.length], width: 2 },
         });
     });
 
     const blLayout = Object.assign({}, baseLayout('AI-GPR Bilateral Index', 'Index'), {
         margin: { l: 60, r: 150, t: 44, b: 60 },
-        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 10.5 } },
+        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 12 } },
     });
     Plotly.react('chartBilateral', traces, blLayout, { responsive: true });
 }
