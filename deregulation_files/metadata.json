@@ -4,7 +4,7 @@
   "source": "Cascaldi-Garcia and Iacoviello (2026)",
   "coverage": {
     "start_date": "1960-01-01",
-    "end_date": "2025-12-31",
+    "end_date": "2026-04-30",
     "frequency": "daily",
     "newspapers": [
       "New York Times",
@@ -71,9 +71,14 @@
     "text": "Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). \"Quantifying Deregulation and its Economic Effects: A Large Language Model Approach.\" Federal Reserve Board.",
     "bibtex": "@article{cascaldi2026deregulation,\n  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},\n  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},\n  journal={Federal Reserve Board},\n  year={2026}\n}"
   },
-  "last_updated": "2026-02-24",
-  "version": "1.0",
-  "data_points": 24107,
+  "last_updated": "2026-05-03",
+  "version": {
+    "version_number": "v26.04.30",
+    "data_through": "2026-04-30",
+    "generated_on": "2026-05-03",
+    "generated_time": "2026-05-03 17:33:56"
+  },
+  "data_points": 24227,
   "sectors": {
     "finance": {
       "label": "Finance",

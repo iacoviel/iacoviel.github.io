@@ -104,7 +104,7 @@ For questions or issues, please contact:
 - Matteo Iacoviello: matteo.iacoviello@frb.gov
 
 ## Version
-Last updated: 2026-02-24
+Last updated: 2026-05-03
 Version: 1.0
 
 ## Notes
