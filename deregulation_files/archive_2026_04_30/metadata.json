@@ -1,0 +1,130 @@
+{
+  "dataset_name": "U.S. Deregulation Index",
+  "description": "News-based index of deregulation activity constructed using large language models to classify newspaper articles",
+  "source": "Cascaldi-Garcia and Iacoviello (2026)",
+  "coverage": {
+    "start_date": "1960-01-01",
+    "end_date": "2026-04-30",
+    "frequency": "daily",
+    "newspapers": [
+      "New York Times",
+      "Washington Post",
+      "Chicago Tribune"
+    ]
+  },
+  "construction": {
+    "articles_analyzed": "Auto-counted",
+    "llm_model": "GPT-4o-mini",
+    "prompt_version": "v2",
+    "moving_average": "Computed client-side (30-day, 90-day, 365-day options)",
+    "normalization": "Mean = 100 over 1960-2019"
+  },
+  "version": {
+    "version_number": "v26.04.30",
+    "data_through": "2026-04-30",
+    "generated_on": "2026-05-03",
+    "generated_time": "2026-05-03 16:48:05"
+  },
+  "variables": {
+    "deregulation_index": {
+      "label": "U.S. Deregulation Index",
+      "description": "Main index measuring deregulation activity in the United States (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More deregulation activity"
+    },
+    "regulation_index": {
+      "label": "U.S. Regulation Index",
+      "description": "Index measuring new regulation activity in the United States (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More regulation activity"
+    },
+    "foreign_deregulation_index": {
+      "label": "Foreign Deregulation Index",
+      "description": "Index measuring deregulation activity in foreign countries (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More foreign deregulation activity"
+    },
+    "deregulation_proposed": {
+      "label": "Proposed Deregulation",
+      "description": "Deregulation measures that are proposed but not yet enacted (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More proposed deregulation"
+    },
+    "deregulation_enacted": {
+      "label": "Enacted Deregulation",
+      "description": "Deregulation measures that have been enacted into law (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More enacted deregulation"
+    },
+    "federal_register_index": {
+      "label": "Federal Register Deregulation Index",
+      "description": "Deregulation activity measured from Federal Register documents (rules and executive orders) using LLM classification (raw daily values)",
+      "unit": "Index (rebased to match news index mean over 1995-2019)",
+      "moving_average": "Not pre-computed - apply client-side",
+      "higher_means": "More Federal Register deregulation activity",
+      "coverage": "1994-2026",
+      "source": "Federal Register documents classified with Amazon Nova Micro LLM"
+    }
+  },
+  "citation": {
+    "text": "Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). \"Quantifying Deregulation and its Economic Effects: A Large Language Model Approach.\" Federal Reserve Board.",
+    "bibtex": "@article{cascaldi2026deregulation,\n  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},\n  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},\n  journal={Federal Reserve Board},\n  year={2026}\n}"
+  },
+  "last_updated": "2026-05-03",
+  "data_points": 24227,
+  "sectors": {
+    "finance": {
+      "label": "Finance",
+      "description": "Deregulation activity in the finance sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "energy": {
+      "label": "Energy",
+      "description": "Deregulation activity in the energy sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "telecom": {
+      "label": "Telecom",
+      "description": "Deregulation activity in the telecom sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "transport": {
+      "label": "Transport",
+      "description": "Deregulation activity in the transport sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "trade": {
+      "label": "Trade",
+      "description": "Deregulation activity in the trade sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "health": {
+      "label": "Health",
+      "description": "Deregulation activity in the health sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "housing": {
+      "label": "Housing",
+      "description": "Deregulation activity in the housing sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "agriculture": {
+      "label": "Agriculture",
+      "description": "Deregulation activity in the agriculture sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    }
+  }
+}
