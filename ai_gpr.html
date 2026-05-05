@@ -26,8 +26,8 @@
             font-family: 'Roboto', Arial, sans-serif;
             color: var(--text);
             background: var(--bg);
-            line-height: 1.7;
-            font-size: 16px;
+            line-height: 1.5;
+            font-size: 15px;
         }
 
         /* --- NAV --- */
@@ -78,7 +78,7 @@
         .hero {
             background: var(--bg-alt);
             color: var(--text);
-            padding: 52px 24px 46px;
+            padding: 28px 24px 22px;
             text-align: center;
             border-bottom: 1px solid var(--border);
             position: relative;
@@ -99,24 +99,24 @@
             margin: 0 auto;
         }
         .hero h1 {
-            font-size: 2.9em;
+            font-size: 2.2em;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 6px;
             letter-spacing: -0.5px;
             color: var(--primary);
         }
         .hero h1 span { color: var(--accent); }
         .hero .subtitle {
-            font-size: 1.12em;
+            font-size: 1.02em;
             font-weight: 300;
             color: var(--text-light);
             max-width: 680px;
-            margin: 0 auto 18px;
+            margin: 0 auto 10px;
         }
         .hero .authors {
-            font-size: 1em;
+            font-size: 0.95em;
             color: var(--text-light);
-            margin-bottom: 28px;
+            margin-bottom: 14px;
         }
         .hero .authors a {
             color: var(--accent);
@@ -154,14 +154,14 @@
             margin: 0 auto;
             padding: 0 36px;
         }
-        section { padding: 56px 0; }
+        section { padding: 30px 0; }
         section:nth-child(even) { background: var(--bg-alt); }
         .section-title {
-            font-size: 1.6em;
+            font-size: 1.35em;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
             border-bottom: 3px solid var(--accent);
             display: inline-block;
         }
@@ -170,14 +170,14 @@
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            margin-top: 24px;
+            gap: 16px;
+            margin-top: 14px;
         }
         .about-card {
             background: #fff;
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 28px;
+            padding: 16px 20px;
             box-shadow: var(--shadow);
         }
         .about-card h3 {
@@ -197,12 +197,12 @@
             background: #fff;
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
             box-shadow: var(--shadow);
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 14px;
             align-items: end;
         }
         .control-group {
@@ -314,9 +314,9 @@
             margin-bottom: 6px;
         }
         .updated {
-            font-size: 0.88em;
+            font-size: 0.85em;
             color: var(--text-light);
-            margin-top: 16px;
+            margin-top: 6px;
         }
         .note {
             font-size: 0.85em;
@@ -330,7 +330,7 @@
             background: var(--primary);
             color: rgba(255,255,255,0.6);
             text-align: center;
-            padding: 28px 24px;
+            padding: 14px 24px;
             font-size: 0.85em;
         }
         footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
@@ -429,7 +429,7 @@
             background: #fff; border: 1px solid var(--border);
             border-radius: 8px; box-shadow: var(--shadow); overflow: hidden;
         }
-        .plotly-chart { width: 100%; height: 480px; }
+        .plotly-chart { width: 100%; height: 420px; }
         .chart-footnote {
             margin-top: 10px; font-size: 0.82em; color: var(--text-light);
             line-height: 1.5; padding: 0 4px;
@@ -442,12 +442,12 @@
 
         /* --- EXPLORE CARDS --- */
         .explore-cards {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
-            margin-top: 28px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+            margin-top: 16px;
         }
         .explore-card {
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding: 24px 20px 20px; border-radius: 10px;
+            padding: 14px 16px 12px; border-radius: 10px;
             border: 1.5px solid var(--border); background: #fff;
             box-shadow: var(--shadow); text-decoration: none;
             transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
@@ -458,17 +458,17 @@
             box-shadow: 0 6px 20px rgba(41,128,185,0.15);
         }
         .explore-card .card-icon {
-            width: 52px; height: 52px; margin-bottom: 14px;
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; margin-bottom: 8px;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
         }
         .explore-card h3 {
-            font-size: 1.0em; font-weight: 700; color: var(--primary); margin-bottom: 8px;
+            font-size: 0.95em; font-weight: 700; color: var(--primary); margin-bottom: 5px;
         }
         .explore-card p {
-            font-size: 0.85em; color: var(--text-light); line-height: 1.55; flex: 1;
+            font-size: 0.82em; color: var(--text-light); line-height: 1.45; flex: 1;
         }
         .explore-card .card-cta {
-            margin-top: 14px; font-size: 0.82em; font-weight: 600;
+            margin-top: 8px; font-size: 0.80em; font-weight: 600;
             color: var(--accent);
         }
         @media (max-width: 700px) { .explore-cards { grid-template-columns: 1fr; } }
@@ -520,8 +520,8 @@
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#chart-section">Interactive Chart</a></li>
-            <li><a href="#section-country">Country</a></li>
             <li><a href="#section-eventtype">Event Type</a></li>
+            <li><a href="#section-country">Country</a></li>
             <li><a href="#section-bilateral">Bilateral</a></li>
             <li><a href="#downloads">Downloads</a></li>
             <li><a href="#citation">Citation</a></li>
@@ -582,8 +582,9 @@
             <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
             <a href="#downloads" class="btn btn-outline">Download Data</a>
         </div>
-        <p class="updated">Last updated: March 31, 2026 with data through March 31, 2026.</p>
+        <p class="updated">Last updated: April 30, 2026 with data through April 30, 2026.</p>
         <p class="updated">April 24, 2026 minor update: country and event-type data revised; bilateral index expanded to 1,000 country pairs; bilateral charts redesigned.</p>
+        <p class="updated">April 30, 2026 minor update: add country indexes by event type.</p>
     </div>
 </section>
 
@@ -614,18 +615,6 @@
         </div>
 
         <div class="explore-cards">
-            <a href="#section-country" class="explore-card">
-                <div class="card-icon" style="background:#eaf4fb;">
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2980b9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                </div>
-                <h3>Country GPR</h3>
-                <p>Geopolitical risk decomposed by country — track the risk footprint of individual nations as initiator, respondent, or spillover across the full 1960–2026 sample.</p>
-                <span class="card-cta">Explore Country Index →</span>
-            </a>
             <a href="#section-eventtype" class="explore-card">
                 <div class="card-icon" style="background:#fef6ea;">
                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -638,6 +627,18 @@
                 <p>Breaks down geopolitical risk by category — military conflict, terrorism, sanctions, coups, nuclear threats, and more — revealing which types of events drive aggregate risk at each moment in history.</p>
                 <span class="card-cta">Explore Event Types →</span>
             </a>
+            <a href="#section-country" class="explore-card">
+                <div class="card-icon" style="background:#eaf4fb;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2980b9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </div>
+                <h3>Country GPR</h3>
+                <p>Geopolitical risk decomposed by country — track the risk footprint of individual nations as initiator, respondent, or spillover across the full 1960–2026 sample.</p>
+                <span class="card-cta">Explore Country Index →</span>
+            </a>
             <a href="#section-bilateral" class="explore-card">
                 <div class="card-icon" style="background:#edfaf1;">
                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -648,7 +649,7 @@
                     </svg>
                 </div>
                 <h3>Bilateral GPR</h3>
-                <p>Directed country-pair indices capturing which nation initiates and which responds — browse the top 20 pairs or pick any initiator–respondent combination from cascading dropdowns.</p>
+                <p>Directed country-pair indices capturing which nation initiates and which responds — browse the top 25 pairs or pick any initiator–respondent combination from cascading dropdowns.</p>
                 <span class="card-cta">Explore Bilateral Pairs →</span>
             </a>
         </div>
@@ -705,58 +706,8 @@
     </div>
 </section>
 
-<!-- COUNTRY GPR INDEX -->
-<section id="section-country" style="background: var(--bg);">
-    <div class="container">
-        <div class="section-title">Country GPR Index (top 120 countries)</div>
-
-        <div class="chart-controls">
-            <div class="control-group">
-                <label>Country</label>
-                <div class="country-add-row">
-                    <select id="countrySelect"></select>
-                    <button class="btn-add-country" id="countryAddBtn">Add</button>
-                </div>
-                <div class="country-pills" id="countryPills"></div>
-            </div>
-            <div class="control-group" id="roleGroup">
-                <label>Role</label>
-                <div class="role-tabs">
-                    <div class="role-tab active" data-role="all">All</div>
-                    <div class="role-tab" data-role="initiator">Initiator</div>
-                    <div class="role-tab" data-role="respondent">Respondent</div>
-                    <div class="role-tab" data-role="spillover">Spillover</div>
-                </div>
-            </div>
-            <div class="control-group">
-                <label>Smoothing</label>
-                <select id="maSelect1">
-                    <option value="1">None (raw monthly)</option>
-                    <option value="3">3-month MA</option>
-                    <option value="12" selected>1-year MA</option>
-                </select>
-            </div>
-            <div class="control-group" style="justify-content:flex-end;gap:10px">
-                <label class="toggle-label">
-                    <input type="checkbox" id="showOverall1"> Show overall GPR_AI
-                </label>
-            </div>
-        </div>
-
-        <div class="chart-wrap">
-            <div id="chartCountry" class="plotly-chart"></div>
-        </div>
-        <p class="chart-footnote">
-            <strong>Note:</strong> The AI-GPR Country Index uses machine learning to identify specific countries and roles
-            (Initiator, Respondent, Spillover) within news text associated with geopolitical risk.
-            Smoothing reflects a trailing moving average.
-            Country-level data are available through March 2026. Scaling uses the same monthly factors as the overall AI-GPR index (mean=100, 1985-2019), so that values are comparable to the aggregate index.
-        </p>
-    </div>
-</section>
-
 <!-- GPR BY EVENT TYPE -->
-<section id="section-eventtype" style="background: var(--bg-alt);">
+<section id="section-eventtype" style="background: var(--bg);">
     <div class="container">
         <div class="section-title">GPR by Event Type</div>
 
@@ -786,6 +737,68 @@
         <p class="chart-footnote">
             <strong>Note:</strong> Each series shows the monthly AI-GPR index for articles classified under the given event type.
             Smoothing reflects a trailing moving average. Scaling uses the same monthly factors as the overall AI-GPR index (mean&nbsp;=&nbsp;100, 1985&ndash;2019).
+        </p>
+    </div>
+</section>
+
+<!-- COUNTRY GPR INDEX -->
+<section id="section-country" style="background: var(--bg-alt);">
+    <div class="container">
+        <div class="section-title">Country GPR Index (top 150 countries)</div>
+
+        <div class="chart-controls">
+            <div class="control-group">
+                <label>Country</label>
+                <div class="country-add-row">
+                    <select id="countrySelect"></select>
+                    <button class="btn-add-country" id="countryAddBtn">Add</button>
+                </div>
+                <div class="country-pills" id="countryPills"></div>
+            </div>
+            <div class="control-group">
+                <label>Smoothing</label>
+                <select id="maSelect1">
+                    <option value="1">None (raw monthly)</option>
+                    <option value="3">3-month MA</option>
+                    <option value="12" selected>1-year MA</option>
+                </select>
+            </div>
+            <div class="control-group" style="justify-content:flex-end;gap:10px">
+                <label class="toggle-label">
+                    <input type="checkbox" id="showOverall1"> Show overall GPR_AI
+                </label>
+            </div>
+            <div id="viewModeGroup" style="display:none;min-width:100%;gap:16px;align-items:flex-end;flex-wrap:wrap;">
+                <div class="control-group" style="flex-shrink:0">
+                    <label>View by</label>
+                    <div class="role-tabs">
+                        <div class="role-tab view-mode-tab active" data-mode="role">Role</div>
+                        <div class="role-tab view-mode-tab" data-mode="eventtype">Event Type</div>
+                    </div>
+                </div>
+                <div class="control-group" id="roleGroup">
+                    <div class="role-tabs">
+                        <div class="role-tab active" data-role="all">All</div>
+                        <div class="role-tab" data-role="initiator">Initiator</div>
+                        <div class="role-tab" data-role="respondent">Respondent</div>
+                        <div class="role-tab" data-role="spillover">Spillover</div>
+                    </div>
+                </div>
+                <div class="control-group" id="countryEventtypeGroup" style="display:none">
+                    <div class="role-tabs" id="countryEventtypeButtons"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div id="chartCountry" class="plotly-chart"></div>
+        </div>
+        <p class="chart-footnote">
+            <strong>Note:</strong> The AI-GPR Country Index uses machine learning to identify specific countries and roles
+            (Initiator, Respondent, Spillover) within news text associated with geopolitical risk.
+            Select &ldquo;View by Event Type&rdquo; to see the breakdown by event category for the selected country.
+            Smoothing reflects a trailing moving average.
+            Country-level data are available through April 2026. Scaling uses the same monthly factors as the overall AI-GPR index (mean=100, 1985-2019), so that values are comparable to the aggregate index.
         </p>
     </div>
 </section>
@@ -846,7 +859,7 @@
             <strong>Note:</strong> The bilateral index measures geopolitical risk in articles where both countries
             appear together as initiator and respondent (in either direction). Top pairs are ranked by total
             cumulative sentiment across the full sample. Scaled using the same monthly factors of the overall AI-GPR index (mean&nbsp;=&nbsp;100, 1985&ndash;2019), so that values are comparable across pairs and to the aggregate index.
-            Bilateral data are available through March 2026.
+            Bilateral data are available through April 2026.
         </p>
     </div>
 </section>
@@ -895,18 +908,23 @@
             </thead>
             <tbody>
                 <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_eventtype_monthly.csv</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by event type (8 event categories)</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_eventtype_monthly.csv" class="btn-download">&#8595; CSV</a></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_country_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly GPR by country (initiator / respondent / all roles)</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by country and role (150 countries &times; 4 roles: all / initiator / respondent / spillover)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_country_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_eventtype_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly GPR by event type</td>
-                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_eventtype_monthly.csv" class="btn-download">&#8595; CSV</a></td>
+                    <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_country_eventtype_monthly.csv</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by country and event type (150 countries &times; 8 event categories)</td>
+                    <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_country_eventtype_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_bilateral_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly bilateral GPR for top 1,000 country pairs (directed: initiator → respondent); all pairs accessible in interactive chart</td>
+                    <td style="padding: 8px 12px;">Monthly bilateral GPR for top 1,000 country pairs; all pairs accessible in interactive chart</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_bilateral_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
             </tbody>
@@ -1219,8 +1237,12 @@ function attachRescaleListener(divId) {
 
 const _cbv = Date.now();
 const COUNTRY_CSV = 'ai_gpr_files/ai_gpr_country_monthly.csv?v=' + _cbv;
+const COUNTRY_EVENTTYPE_CSV = 'ai_gpr_files/ai_gpr_country_eventtype_monthly.csv?v=' + _cbv;
 let countryData = null;
+let countryEventData = null;
 let activeRole  = 'all';
+let countryViewMode = 'role';
+let activeEventTypesCountry = new Set();
 
 const COUNTRY_PALETTE = [
     '#2980b9','#c0392b','#27ae60','#8e44ad',
@@ -1270,7 +1292,9 @@ function renderPills() {
             renderPills(); plotCountry();
         });
     });
-    document.getElementById('roleGroup').style.display = selectedCountries.length ? '' : 'none';
+    document.getElementById('viewModeGroup').style.display = selectedCountries.length ? 'flex' : 'none';
+    document.getElementById('roleGroup').style.display = countryViewMode === 'role' ? '' : 'none';
+    document.getElementById('countryEventtypeGroup').style.display = countryViewMode === 'eventtype' ? '' : 'none';
 }
 
 function addCountry() {
@@ -1283,29 +1307,76 @@ function addCountry() {
     plotCountry();
 }
 
+function buildCountryEventtypeButtons() {
+    const container = document.getElementById('countryEventtypeButtons');
+    container.innerHTML = '';
+    Object.keys(EVENT_COLORS).forEach((et, i) => {
+        const color = EVENT_COLORS[et];
+        const isActive = i === 0;
+        if (isActive) activeEventTypesCountry.add(et);
+        const btn = document.createElement('div');
+        btn.className = 'pair-tab';
+        btn.textContent = EVENT_LABELS[et] || et;
+        btn.style.borderColor = color;
+        btn.style.background  = isActive ? color : '#fff';
+        btn.style.color       = isActive ? '#fff' : color;
+        btn.addEventListener('click', () => {
+            if (activeEventTypesCountry.has(et)) {
+                activeEventTypesCountry.delete(et);
+                btn.style.background = '#fff';
+                btn.style.color      = color;
+            } else {
+                activeEventTypesCountry.add(et);
+                btn.style.background = color;
+                btn.style.color      = '#fff';
+            }
+            plotCountry();
+        });
+        container.appendChild(btn);
+    });
+}
+
 function plotCountry() {
     if (!countryData) return;
     const w = parseWindow('maSelect1');
     const showOverall = document.getElementById('showOverall1').checked;
-    const dates = countryData.map(r => r['Date']);
+
+    const dataSource = (countryViewMode === 'eventtype' && countryEventData) ? countryEventData : countryData;
+    const dates = dataSource.map(r => r['Date']);
     const traces = [];
 
     if (showOverall) {
         traces.push({
-            x: dates, y: movingAvg(getCol(countryData, 'GPR_AI'), w),
+            x: dates, y: movingAvg(getCol(dataSource, 'GPR_AI'), w),
             name: 'Overall GPR_AI', type: 'scatter', mode: 'lines',
             line: { color: '#c8d6e5', width: 1.5, dash: 'dot' },
         });
     }
 
-    selectedCountries.forEach(({name, color}) => {
-        const col = `${name}_${activeRole}`;
-        traces.push({
-            x: dates, y: movingAvg(getCol(countryData, col), w),
-            name: `${name} (${activeRole})`, type: 'scatter', mode: 'lines',
-            line: { color, width: 2.5 },
+    if (countryViewMode === 'role') {
+        selectedCountries.forEach(({name, color}) => {
+            const col = `${name}_${activeRole}`;
+            traces.push({
+                x: dates, y: movingAvg(getCol(countryData, col), w),
+                name: `${name} (${activeRole})`, type: 'scatter', mode: 'lines',
+                line: { color, width: 2.5 },
+            });
         });
-    });
+    } else if (countryViewMode === 'eventtype' && countryEventData) {
+        selectedCountries.forEach(({name}) => {
+            activeEventTypesCountry.forEach(et => {
+                const col = `${name}_${et}`;
+                const label = selectedCountries.length > 1
+                    ? `${name} – ${EVENT_LABELS[et] || et}`
+                    : (EVENT_LABELS[et] || et);
+                traces.push({
+                    x: dates, y: movingAvg(getCol(countryEventData, col), w),
+                    name: label, type: 'scatter', mode: 'lines',
+                    line: { color: EVENT_COLORS[et], width: 2 },
+                });
+            });
+        });
+    }
 
     const title = selectedCountries.length === 1
         ? `AI-GPR Country Index — ${selectedCountries[0].name}`
@@ -1318,7 +1389,6 @@ Papa.parse(COUNTRY_CSV, {
     complete: result => {
         countryData = result.data.filter(r => r['Date']);
         buildCountryDropdown(countryData);
-        // default: add first country in the list
         const firstCountry = document.getElementById('countrySelect').value;
         if (firstCountry) { selectedCountries = [{name: firstCountry, color: countryColor(0)}]; }
         renderPills();
@@ -1327,15 +1397,33 @@ Papa.parse(COUNTRY_CSV, {
     }
 });
 
+Papa.parse(COUNTRY_EVENTTYPE_CSV, {
+    download: true, header: true,
+    complete: result => {
+        countryEventData = result.data.filter(r => r['Date']);
+        buildCountryEventtypeButtons();
+    }
+});
+
 document.getElementById('countryAddBtn').addEventListener('click', addCountry);
 document.getElementById('countrySelect').addEventListener('dblclick', addCountry);
 document.getElementById('maSelect1').addEventListener('change', plotCountry);
 document.getElementById('showOverall1').addEventListener('change', plotCountry);
-document.querySelectorAll('.role-tab').forEach(tab => {
+document.querySelectorAll('.role-tab:not(.view-mode-tab)').forEach(tab => {
     tab.addEventListener('click', () => {
-        document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.role-tab:not(.view-mode-tab)').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         activeRole = tab.dataset.role;
+        plotCountry();
+    });
+});
+document.querySelectorAll('.view-mode-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.view-mode-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        countryViewMode = tab.dataset.mode;
+        document.getElementById('roleGroup').style.display = countryViewMode === 'role' ? '' : 'none';
+        document.getElementById('countryEventtypeGroup').style.display = countryViewMode === 'eventtype' ? '' : 'none';
         plotCountry();
     });
 });
