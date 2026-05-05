@@ -8,6 +8,8 @@
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
+        html { scroll-padding-top: 56px; }
+
         :root {
             --primary: #1a3a5c;
             --accent: #2980b9;
@@ -521,6 +523,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#chart-section">Interactive Chart</a></li>
             <li><a href="#section-eventtype">Event Type</a></li>
+            <li><a href="#section-oil-regional">Oil by Region</a></li>
             <li><a href="#section-country">Country</a></li>
             <li><a href="#section-bilateral">Bilateral</a></li>
             <li><a href="#downloads">Downloads</a></li>
@@ -583,6 +586,7 @@
             <a href="#downloads" class="btn btn-outline">Download Data</a>
         </div>
         <p class="updated">Last updated: April 30, 2026 with data through April 30, 2026.</p>
+        <p class="updated">May 5, 2026 minor update: added regional Oil GPR data and interactive chart.</p>
         <p class="updated">April 24, 2026 minor update: country and event-type data revised; bilateral index expanded to 1,000 country pairs; bilateral charts redesigned.</p>
         <p class="updated">April 30, 2026 minor update: add country indexes by event type.</p>
     </div>
@@ -741,6 +745,40 @@
     </div>
 </section>
 
+<!-- OIL GPR BY REGION -->
+<section id="section-oil-regional" style="background: var(--bg);">
+    <div class="container">
+        <div class="section-title">Oil GPR by Region</div>
+
+        <div class="chart-controls">
+            <div class="control-group" style="flex:1;min-width:100%">
+                <label>Regions (click to toggle)</label>
+                <div class="role-tabs" id="oilRegionButtons"></div>
+            </div>
+            <div class="control-group">
+                <label>Smoothing</label>
+                <select id="maSelectOilRegion">
+                    <option value="1">None (raw monthly)</option>
+                    <option value="3">3-month MA</option>
+                    <option value="12" selected>1-year MA</option>
+                </select>
+            </div>
+            <div class="control-group" style="justify-content:flex-end;gap:10px">
+                <label class="toggle-label">
+                    <input type="checkbox" id="showOverallOilRegion"> Show aggregate Oil GPR
+                </label>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div id="chartOilRegion" class="plotly-chart"></div>
+        </div>
+        <p class="chart-footnote">
+            <strong>Note:</strong> Each regional series uses the same 1985&ndash;2019 normalization as the aggregate Oil GPR index. A value of 30 when Oil GPR&nbsp;=&nbsp;100 means 30% of oil-disruption sentiment that month mentions that region. An article citing multiple regions contributes to each, so regional values can sum to more than the aggregate.
+        </p>
+    </div>
+</section>
+
 <!-- COUNTRY GPR INDEX -->
 <section id="section-country" style="background: var(--bg-alt);">
     <div class="container">
@@ -886,7 +924,7 @@
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present</td>
+                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present (includes regional Oil GPR series)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
@@ -1182,6 +1220,9 @@ async function init() {
         return;
     }
     updateChart();
+    buildOilRegionButtons();
+    plotOilRegion();
+    attachRescaleListener('chartOilRegion');
 }
 
 ['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil'].forEach(id =>
@@ -1190,6 +1231,93 @@ async function init() {
     document.getElementById(id).addEventListener('change', updateChart));
 
 init();
+
+// =====================================================================
+// OIL GPR BY REGION
+// =====================================================================
+
+const OIL_REGION_COLS = {
+    'GPR_OIL_MiddleEast': 'Middle East',
+    'GPR_OIL_Russia':     'Russia',
+    'GPR_OIL_USA':        'USA',
+    'GPR_OIL_Venezuela':  'Venezuela',
+    'GPR_OIL_Africa':     'Africa',
+    'GPR_OIL_Americas':   'Americas',
+    'GPR_OIL_Asia':       'Asia',
+    'GPR_OIL_NorthSea':   'North Sea',
+};
+
+const OIL_REGION_COLORS = {
+    'GPR_OIL_MiddleEast': '#c0392b',
+    'GPR_OIL_Russia':     '#2980b9',
+    'GPR_OIL_USA':        '#27ae60',
+    'GPR_OIL_Venezuela':  '#e67e22',
+    'GPR_OIL_Africa':     '#8e44ad',
+    'GPR_OIL_Americas':   '#f39c12',
+    'GPR_OIL_Asia':       '#16a085',
+    'GPR_OIL_NorthSea':   '#95a5a6',
+};
+
+let selectedOilRegions = new Set(['GPR_OIL_MiddleEast', 'GPR_OIL_Russia']);
+
+function buildOilRegionButtons() {
+    const container = document.getElementById('oilRegionButtons');
+    if (!container) return;
+    container.innerHTML = '';
+    Object.entries(OIL_REGION_COLS).forEach(([col, label]) => {
+        const color = OIL_REGION_COLORS[col];
+        const isActive = selectedOilRegions.has(col);
+        const btn = document.createElement('div');
+        btn.className = 'pair-tab';
+        btn.textContent = label;
+        btn.style.borderColor = color;
+        btn.style.background  = isActive ? color : '#fff';
+        btn.style.color       = isActive ? '#fff' : color;
+        btn.addEventListener('click', () => {
+            if (selectedOilRegions.has(col)) {
+                selectedOilRegions.delete(col);
+                btn.style.background = '#fff';
+                btn.style.color      = color;
+            } else {
+                selectedOilRegions.add(col);
+                btn.style.background = color;
+                btn.style.color      = '#fff';
+            }
+            plotOilRegion();
+        });
+        container.appendChild(btn);
+    });
+}
+
+function plotOilRegion() {
+    if (!monthlyData || !document.getElementById('chartOilRegion')) return;
+    const w = parseWindow('maSelectOilRegion');
+    const showOverall = document.getElementById('showOverallOilRegion').checked;
+    const dates = monthlyData.map(r => r['Date']);
+    const traces = [];
+    if (showOverall) {
+        traces.push({
+            x: dates, y: movingAvg(getCol(monthlyData, 'GPR_OIL'), w),
+            name: 'Oil GPR (aggregate)', type: 'scatter', mode: 'lines',
+            line: { color: '#c8d6e5', width: 1.5, dash: 'dot' },
+        });
+    }
+    selectedOilRegions.forEach(col => {
+        traces.push({
+            x: dates, y: movingAvg(getCol(monthlyData, col), w),
+            name: OIL_REGION_COLS[col], type: 'scatter', mode: 'lines',
+            line: { color: OIL_REGION_COLORS[col], width: 2 },
+        });
+    });
+    const orLayout = Object.assign({}, baseLayout('Oil GPR by Region', 'Index (Oil GPR mean 1985–2019 = 100)'), {
+        margin: { l: 60, r: 150, t: 44, b: 60 },
+        legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1, yanchor: 'top', font: { size: 12 } },
+    });
+    Plotly.react('chartOilRegion', traces, orLayout, { responsive: true });
+}
+
+document.getElementById('maSelectOilRegion').addEventListener('change', plotOilRegion);
+document.getElementById('showOverallOilRegion').addEventListener('change', plotOilRegion);
 
 // =====================================================================
 // Y-AXIS AUTO-RESCALE ON SLIDER DRAG (country sections)
