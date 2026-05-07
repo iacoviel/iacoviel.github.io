@@ -388,8 +388,8 @@ classifications.</p>
 transportation and telecommunications liberalization in the 1970s-1980s,
  financial deregulation in the 1980s-1990s, and recent deregulatory
 activity. We provide decompositions by sector (finance, energy, telecom,
- transportation, etc.) and regulation type (price controls, entry
-barriers, etc.).</p>
+ transportation, etc.), geography (USA, Canada, Europe, Asia, etc.),
+and regulation type (price controls, entry barriers, etc.).</p>
             </div>
             <div class="about-card">
                 <h3>Validation</h3>
@@ -419,6 +419,7 @@ variation.</p>
                     <option value="timing">Proposed vs Enacted</option>
                     <option value="fedreg">News vs Federal Register</option>
                     <option value="sectoral">Sectoral Breakdown</option>
+                    <option value="geography">Regional/Geography Breakdown</option>
                 </select>
             </div>
 
@@ -454,6 +455,25 @@ variation.</p>
                 <label><input type="checkbox" id="cb-health" checked="checked"> Health</label>
                 <label><input type="checkbox" id="cb-agriculture" checked="checked"> Agriculture</label>
                 <label><input type="checkbox" id="cb-housing" checked="checked"> Housing</label>
+            </div>
+        </div>
+
+        <!-- Geography checkboxes (hidden by default) -->
+        <div class="chart-controls" id="geography-controls" style="display: none;">
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="cb-usa" checked="checked"> USA</label>
+                <label><input type="checkbox" id="cb-canada" checked="checked"> Canada</label>
+                <label><input type="checkbox" id="cb-uk" checked="checked"> UK</label>
+                <label><input type="checkbox" id="cb-western_europe" checked="checked"> Western Europe</label>
+                <label><input type="checkbox" id="cb-eastern_europe" checked="checked"> Eastern Europe</label>
+                <label><input type="checkbox" id="cb-japan" checked="checked"> Japan</label>
+                <label><input type="checkbox" id="cb-china" checked="checked"> China</label>
+                <label><input type="checkbox" id="cb-asia" checked="checked"> Asia</label>
+                <label><input type="checkbox" id="cb-australia" checked="checked"> Australia</label>
+                <label><input type="checkbox" id="cb-latin_america" checked="checked"> Latin America</label>
+                <label><input type="checkbox" id="cb-middle_east" checked="checked"> Middle East</label>
+                <label><input type="checkbox" id="cb-russia" checked="checked"> Russia</label>
+                <label><input type="checkbox" id="cb-africa" checked="checked"> Africa</label>
             </div>
         </div>
 
@@ -783,6 +803,8 @@ function updateChart() {
     // Show/hide sectoral controls
     document.getElementById('sectoral-controls').style.display =
         chartType === 'sectoral' ? 'block' : 'none';
+    document.getElementById('geography-controls').style.display =
+        chartType === 'geography' ? 'block' : 'none';
 
     // Filter by year
     const filtered = dailyData.filter(row => {
@@ -889,7 +911,7 @@ function updateChart() {
             line: { color: '#c0392b', width: 2.5 },
             hovertemplate: '%{x}<br>Fed Reg: %{y:.1f}<extra></extra>'
         });
-    } else {
+    } else if (chartType === 'sectoral') {
         // Sectoral indexes
         const sectors = [
             { id: 'finance', name: 'Finance', checked: 'cb-finance' },
@@ -914,6 +936,39 @@ function updateChart() {
                     name: sector.name,
                     line: { color: SECTOR_COLORS[sector.id], width: 2 },
                     hovertemplate: `%{x}<br>${sector.name}: %{y:.1f}<extra></extra>`
+                });
+            }
+        });
+    } else if (chartType === 'geography') {
+        // Geography/Regional indexes
+        const regions = [
+            { id: 'usa', name: 'USA', checked: 'cb-usa', color: '#1f5a8a' },
+            { id: 'canada', name: 'Canada', checked: 'cb-canada', color: '#e74c3c' },
+            { id: 'uk', name: 'UK', checked: 'cb-uk', color: '#9b59b6' },
+            { id: 'western_europe', name: 'Western Europe', checked: 'cb-western_europe', color: '#3498db' },
+            { id: 'eastern_europe', name: 'Eastern Europe', checked: 'cb-eastern_europe', color: '#2ecc71' },
+            { id: 'japan', name: 'Japan', checked: 'cb-japan', color: '#f39c12' },
+            { id: 'china', name: 'China', checked: 'cb-china', color: '#e67e22' },
+            { id: 'asia', name: 'Asia', checked: 'cb-asia', color: '#1abc9c' },
+            { id: 'australia', name: 'Australia', checked: 'cb-australia', color: '#34495e' },
+            { id: 'latin_america', name: 'Latin America', checked: 'cb-latin_america', color: '#16a085' },
+            { id: 'middle_east', name: 'Middle East', checked: 'cb-middle_east', color: '#8e44ad' },
+            { id: 'russia', name: 'Russia', checked: 'cb-russia', color: '#c0392b' },
+            { id: 'africa', name: 'Africa', checked: 'cb-africa', color: '#d35400' }
+        ];
+
+        regions.forEach(region => {
+            const checkbox = document.getElementById(region.checked);
+            if (checkbox && checkbox.checked) {
+                const raw = filtered.map(r => r[region.id] || 0);
+                const smoothed = movingAverage(raw, smoothing);
+
+                traces.push({
+                    x: dates,
+                    y: smoothed,
+                    name: region.name,
+                    line: { color: region.color, width: 2 },
+                    hovertemplate: `%{x}<br>${region.name}: %{y:.1f}<extra></extra>`
                 });
             }
         });
@@ -1087,6 +1142,12 @@ document.getElementById('end-year').addEventListener('change', updateChart);
     if (checkbox) checkbox.addEventListener('change', updateChart);
 });
 
+// Geography checkboxes
+['usa', 'canada', 'uk', 'western_europe', 'eastern_europe', 'japan', 'china', 'asia', 'australia', 'latin_america', 'middle_east', 'russia', 'africa'].forEach(region => {
+    const checkbox = document.getElementById(`cb-${region}`);
+    if (checkbox) checkbox.addEventListener('change', updateChart);
+});
+
 // Initialize - Load placeholder data or from actual file
 async function initialize() {
     try {
@@ -1123,10 +1184,18 @@ async function initialize() {
         // Load sectoral data
         const sectoralData = await loadCSV('deregulation_files/deregulation_index_sectors.csv');
 
-        // Merge headline and sectoral data by date
+        // Load geography data
+        const geographyData = await loadCSV('deregulation_files/deregulation_index_geography.csv');
+
+        // Merge headline, sectoral, and geography data by date
         const sectoralMap = {};
         sectoralData.forEach(row => {
             sectoralMap[row.date] = row;
+        });
+
+        const geographyMap = {};
+        geographyData.forEach(row => {
+            geographyMap[row.date] = row;
         });
 
         // Transform and merge
@@ -1150,7 +1219,21 @@ async function initialize() {
             trade: sectoralMap[row.date]?.trade || 0,
             health: sectoralMap[row.date]?.health || 0,
             housing: sectoralMap[row.date]?.housing || 0,
-            agriculture: sectoralMap[row.date]?.agriculture || 0
+            agriculture: sectoralMap[row.date]?.agriculture || 0,
+            // Add geography data (also raw)
+            usa: geographyMap[row.date]?.usa || 0,
+            canada: geographyMap[row.date]?.canada || 0,
+            uk: geographyMap[row.date]?.uk || 0,
+            western_europe: geographyMap[row.date]?.western_europe || 0,
+            eastern_europe: geographyMap[row.date]?.eastern_europe || 0,
+            japan: geographyMap[row.date]?.japan || 0,
+            china: geographyMap[row.date]?.china || 0,
+            asia: geographyMap[row.date]?.asia || 0,
+            australia: geographyMap[row.date]?.australia || 0,
+            latin_america: geographyMap[row.date]?.latin_america || 0,
+            middle_east: geographyMap[row.date]?.middle_east || 0,
+            russia: geographyMap[row.date]?.russia || 0,
+            africa: geographyMap[row.date]?.africa || 0
         }));
 
         console.log('Loaded headline data:', headlineData.length, 'rows');
