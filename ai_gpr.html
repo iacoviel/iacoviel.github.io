@@ -585,7 +585,7 @@
             <a href="#chart-section" class="btn btn-outline">Explore the Data</a>
             <a href="#downloads" class="btn btn-outline">Download Data</a>
         </div>
-        <p class="updated">Last updated: April 30, 2026 with data through April 30, 2026.</p>
+        <p class="updated">Last updated: May 31, 2026 with data through May 31, 2026.</p>
         <p class="updated">May 5, 2026 minor update: added regional Oil GPR data and interactive chart.</p>
         <p class="updated">April 24, 2026 minor update: country and event-type data revised; bilateral index expanded to 1,000 country pairs; bilateral charts redesigned.</p>
         <p class="updated">April 30, 2026 minor update: add country indexes by event type.</p>
@@ -782,7 +782,7 @@
 <!-- COUNTRY GPR INDEX -->
 <section id="section-country" style="background: var(--bg-alt);">
     <div class="container">
-        <div class="section-title">Country GPR Index (top 150 countries)</div>
+        <div class="section-title">Country GPR Index (200 countries)</div>
 
         <div class="chart-controls">
             <div class="control-group">
@@ -836,7 +836,7 @@
             (Initiator, Respondent, Spillover) within news text associated with geopolitical risk.
             Select &ldquo;View by Event Type&rdquo; to see the breakdown by event category for the selected country.
             Smoothing reflects a trailing moving average.
-            Country-level data are available through April 2026. Scaling uses the same monthly factors as the overall AI-GPR index (mean=100, 1985-2019), so that values are comparable to the aggregate index.
+            Country-level data are available through May 2026. Scaling uses the same monthly factors as the overall AI-GPR index (mean=100, 1985-2019), so that values are comparable to the aggregate index.
         </p>
     </div>
 </section>
@@ -897,7 +897,7 @@
             <strong>Note:</strong> The bilateral index measures geopolitical risk in articles where both countries
             appear together as initiator and respondent (in either direction). Top pairs are ranked by total
             cumulative sentiment across the full sample. Scaled using the same monthly factors of the overall AI-GPR index (mean&nbsp;=&nbsp;100, 1985&ndash;2019), so that values are comparable across pairs and to the aggregate index.
-            Bilateral data are available through April 2026.
+            Bilateral data are available through May 2026.
         </p>
     </div>
 </section>
@@ -952,17 +952,17 @@
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_country_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly GPR by country and role (150 countries &times; 4 roles: all / initiator / respondent / spillover)</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by country and role (200 countries &times; 4 roles: all / initiator / respondent / spillover)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_country_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_country_eventtype_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly GPR by country and event type (150 countries &times; 8 event categories)</td>
+                    <td style="padding: 8px 12px;">Monthly GPR by country and event type (200 countries &times; 8 event categories)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_country_eventtype_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_bilateral_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly bilateral GPR for top 1,000 country pairs; all pairs accessible in interactive chart</td>
+                    <td style="padding: 8px 12px;">Monthly bilateral GPR for top 1,200 country pairs; all pairs accessible in interactive chart</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_bilateral_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
             </tbody>
@@ -1391,7 +1391,11 @@ function buildCountryDropdown(rows) {
 
     const sel = document.getElementById('countrySelect');
     sel.innerHTML = '';
-    [...countries].sort().forEach(c => {
+    [...countries].sort((a, b) => {
+        if (a === 'USA') return -1;
+        if (b === 'USA') return 1;
+        return a.localeCompare(b);
+    }).forEach(c => {
         const opt = document.createElement('option');
         opt.value = c; opt.textContent = c; sel.appendChild(opt);
     });
