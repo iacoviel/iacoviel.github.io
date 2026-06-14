@@ -228,7 +228,7 @@
             font-size: 0.9em;
             color: var(--text);
             background: #fff;
-            min-width: 130px;
+            min-width: 110px;
         }
         .control-group select:focus,
         .control-group input:focus {
@@ -238,7 +238,7 @@
         }
         .checkbox-group {
             display: flex;
-            gap: 18px;
+            gap: 12px;
             align-items: center;
             padding-bottom: 2px;
         }
@@ -609,7 +609,7 @@
                 <p>A keyword-based GPR index constructed using the Caldara and Iacoviello (2022) proximity search methodology on the same three newspapers. Counts articles matching specific combinations of geopolitical and risk-related terms. Extended back to 1960.</p>
             </div>
             <div class="about-card">
-                <h3>Oil Disruptions GPR</h3>
+                <h3>Oil GPR</h3>
                 <p>A sub-index identifying articles that discuss oil or energy supply disruptions driven by geopolitical events. Constructed using a second LLM classification layer applied to high-GPR articles containing oil-related keywords.</p>
             </div>
             <div class="about-card">
@@ -671,8 +671,10 @@
                 <div class="checkbox-group">
                     <label><input type="checkbox" id="cb-ai" checked> AI-GPR</label>
                     <label><input type="checkbox" id="cb-aer"> GPR Original</label>
-                    <label><input type="checkbox" id="cb-oil"> Oil Disruptions GPR</label>
+                    <label><input type="checkbox" id="cb-oil"> Oil GPR</label>
                     <label><input type="checkbox" id="cb-nonoil"> Non-Oil GPR</label>
+                    <label><input type="checkbox" id="cb-threats"> Threats GPR</label>
+                    <label><input type="checkbox" id="cb-acts"> Acts GPR</label>
                 </div>
             </div>
             <div class="control-group">
@@ -694,11 +696,11 @@
                 </select>
             </div>
             <div class="control-group">
-                <label>Start Year</label>
+                <label>Start</label>
                 <input type="number" id="start-year" value="1960" min="1960" max="2026" step="1">
             </div>
             <div class="control-group">
-                <label>End Year</label>
+                <label>End</label>
                 <input type="number" id="end-year" value="2026" min="1960" max="2026" step="1">
             </div>
         </div>
@@ -919,12 +921,12 @@
             <tbody>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_daily.csv</td>
-                    <td style="padding: 8px 12px;">Daily AI-GPR index, 1960–present</td>
+                    <td style="padding: 8px 12px;">Daily AI-GPR index and components, 1960–present (includes Threats GPR and Acts GPR)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present (includes regional Oil GPR series)</td>
+                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present (includes Threats GPR, Acts GPR, and regional Oil GPR series)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
@@ -1084,10 +1086,12 @@ let dailyData   = null;
 let monthlyData = null;
 
 const COLORS = {
-    ai:     '#2980b9',
-    aer:    '#e74c3c',
-    oil:    '#27ae60',
-    nonoil: '#8e44ad'
+    ai:      '#000000',
+    aer:     '#e74c3c',
+    oil:     '#27ae60',
+    nonoil:  '#8e44ad',
+    threats: '#e67e22',
+    acts:    '#2980b9'
 };
 
 function oneDayChange(values) {
@@ -1104,10 +1108,12 @@ function oneDayChange(values) {
 }
 
 function updateChart() {
-    const showAI     = document.getElementById('cb-ai').checked;
-    const showAER    = document.getElementById('cb-aer').checked;
-    const showOIL    = document.getElementById('cb-oil').checked;
-    const showNONOIL = document.getElementById('cb-nonoil').checked;
+    const showAI      = document.getElementById('cb-ai').checked;
+    const showAER     = document.getElementById('cb-aer').checked;
+    const showOIL     = document.getElementById('cb-oil').checked;
+    const showNONOIL  = document.getElementById('cb-nonoil').checked;
+    const showTHREATS = document.getElementById('cb-threats').checked;
+    const showACTS    = document.getElementById('cb-acts').checked;
     const window  = parseInt(document.getElementById('smoothing').value);
     const freq    = document.getElementById('freq').value;
     const startY  = parseInt(document.getElementById('start-year').value);
@@ -1136,7 +1142,7 @@ function updateChart() {
         traces.push({
             x: dates, y: smoothed,
             name: 'AI-GPR',
-            line: { color: COLORS.ai, width: 2 },
+            line: { color: COLORS.ai, width: 3 },
             hovertemplate: '%{x}<br>AI-GPR: %{y:.1f}<extra></extra>'
         });
     }
@@ -1155,9 +1161,9 @@ function updateChart() {
         const smoothed = applySmoothing(filtered.map(r => r.GPR_OIL));
         traces.push({
             x: dates, y: smoothed,
-            name: 'Oil Disruptions GPR',
+            name: 'Oil GPR',
             line: { color: COLORS.oil, width: 1.5 },
-            hovertemplate: '%{x}<br>Oil Disruptions GPR: %{y:.1f}<extra></extra>'
+            hovertemplate: '%{x}<br>Oil GPR: %{y:.1f}<extra></extra>'
         });
     }
 
@@ -1168,6 +1174,26 @@ function updateChart() {
             name: 'Non-Oil GPR',
             line: { color: COLORS.nonoil, width: 1.5 },
             hovertemplate: '%{x}<br>Non-Oil GPR: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    if (showTHREATS) {
+        const smoothed = applySmoothing(filtered.map(r => r.THREATS_GPR_AI));
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'Threats GPR',
+            line: { color: COLORS.threats, width: 1.5 },
+            hovertemplate: '%{x}<br>Threats GPR: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    if (showACTS) {
+        const smoothed = applySmoothing(filtered.map(r => r.ACTS_GPR_AI));
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'Acts GPR',
+            line: { color: COLORS.acts, width: 1.5 },
+            hovertemplate: '%{x}<br>Acts GPR: %{y:.1f}<extra></extra>'
         });
     }
 
@@ -1225,7 +1251,7 @@ async function init() {
     attachRescaleListener('chartOilRegion');
 }
 
-['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil'].forEach(id =>
+['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil', 'cb-threats', 'cb-acts'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
 ['smoothing', 'freq', 'start-year', 'end-year'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
