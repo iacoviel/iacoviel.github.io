@@ -1243,7 +1243,7 @@ async function init() {
         ]);
     } catch (e) {
         document.getElementById('chart').innerHTML =
-            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Open via <code>serve.bat</code> (not by double-clicking the HTML file), or run <code>run_web.py</code> to regenerate the data.</p>';
+            '<p style="text-align:center;padding:60px 20px;color:#999;">Data files not found. Open via <code>serve.bat</code> (not by double-clicking the HTML file), or run <code>run_webupdate.py</code> to regenerate the data.</p>';
         return;
     }
     updateChart();
