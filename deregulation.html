@@ -446,6 +446,11 @@ variation.</p>
 
         <!-- Sectoral checkboxes (hidden by default) -->
         <div class="chart-controls" id="sectoral-controls" style="display: none;">
+            <div class="checkbox-group" style="margin-bottom: 10px;">
+                <label style="font-weight: 600;"><input type="checkbox" id="cb-show-sector-regulation"> Also show Regulation (dashed)</label>
+                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(SECTOR_IDS, true)">Select All</button>
+                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(SECTOR_IDS, false)">Deselect All</button>
+            </div>
             <div class="checkbox-group">
                 <label><input type="checkbox" id="cb-finance" checked="checked"> Finance</label>
                 <label><input type="checkbox" id="cb-energy" checked="checked"> Energy</label>
@@ -460,6 +465,10 @@ variation.</p>
 
         <!-- Geography checkboxes (hidden by default) -->
         <div class="chart-controls" id="geography-controls" style="display: none;">
+            <div class="checkbox-group" style="margin-bottom: 10px;">
+                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(REGION_IDS, true)">Select All</button>
+                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(REGION_IDS, false)">Deselect All</button>
+            </div>
             <div class="checkbox-group">
                 <label><input type="checkbox" id="cb-usa" checked="checked"> USA</label>
                 <label><input type="checkbox" id="cb-canada" checked="checked"> Canada</label>
@@ -482,9 +491,14 @@ variation.</p>
         </div>
 
         <p class="note">
-            Note: The deregulation index is normalized to mean = 100 
-over 1995-2019. Higher values indicate more intense deregulation 
-activity.
+            Note: The deregulation index is normalized to mean = 100
+over 1960-2019. Higher values indicate more intense deregulation
+activity. 
+</p>
+        <p class="note">
+Each sector and country/regional series is normalized independently
+to its own 1960-2019 average. The Federal Register Deregulation Index is normalized to mean =
+100 over 1995-2019.
         </p>
     </div>
 </section>
@@ -600,16 +614,17 @@ Model Approach</a>." <em>Working Paper</em>, Federal Reserve Board.
 let dailyData = null;
 let quarterlyData = null;
 
-// Color scheme for sectors (dark green theme)
+// Color scheme for sectors - 8 hues chosen for maximum pairwise contrast
+// (CVD-safe categorical order; no two sectors share a color family)
 const SECTOR_COLORS = {
-    finance: '#2d6930',      // Primary dark green
-    energy: '#27ae60',       // Medium green
-    telecom: '#9b59b6',      // Purple
-    transport: '#3498db',    // Blue
-    trade: '#d4af37',        // Gold
-    health: '#16a085',       // Teal
-    agriculture: '#2ecc71',  // Light green
-    housing: '#c0392b'       // Dark red
+    finance: '#2a78d6',      // Blue
+    energy: '#1baf7a',       // Aqua
+    telecom: '#eda100',      // Yellow
+    transport: '#008300',    // Green
+    trade: '#4a3aa7',        // Violet
+    health: '#e34948',       // Red
+    agriculture: '#e87ba4',  // Magenta
+    housing: '#eb6834'       // Orange
 };
 
 // Load CSV data
@@ -678,6 +693,23 @@ function movingAverage(values, window) {
     return result;
 }
 
+// Sector ids + their regulation counterparts, used by the monthly/quarterly
+// aggregators below so sector regulation columns survive those downloads too.
+const SECTOR_IDS = ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'];
+const SECTOR_AGG_COLUMNS = SECTOR_IDS.concat(SECTOR_IDS.map(s => `${s}_regulation`));
+const REGION_IDS = ['usa', 'canada', 'uk', 'western_europe', 'eastern_europe', 'japan', 'china',
+    'asia', 'australia', 'latin_america', 'middle_east', 'russia', 'africa'];
+
+// Check/uncheck every checkbox in `names` (sector or region ids, matching
+// the `cb-<name>` element ids) and refresh the chart.
+function setAllCheckboxes(names, checked) {
+    names.forEach(name => {
+        const cb = document.getElementById(`cb-${name}`);
+        if (cb) cb.checked = checked;
+    });
+    updateChart();
+}
+
 // Convert daily to quarterly
 function toQuarterly(data) {
     const quarterly = {};
@@ -698,7 +730,7 @@ function toQuarterly(data) {
             quarterly[qKey].enacted = 0;
             quarterly[qKey].federal_register = 0;
             // Initialize sectoral columns
-            ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+            SECTOR_AGG_COLUMNS.forEach(s => {
                 quarterly[qKey][s] = 0;
             });
         }
@@ -715,7 +747,7 @@ function toQuarterly(data) {
         }
 
         // Sum sectoral values
-        ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+        SECTOR_AGG_COLUMNS.forEach(s => {
             quarterly[qKey][s] += row[s] || 0;
         });
 
@@ -724,23 +756,17 @@ function toQuarterly(data) {
 
     // Average values
     return Object.values(quarterly).map(q => {
-        return {
+        const out = {
             Date: q.Date,
             deregulation: q.deregulation / q.count,
             regulation: q.regulation / q.count,
             foreign: q.foreign / q.count,
             proposed: q.proposed / q.count,
             enacted: q.enacted / q.count,
-            federal_register: q.fedreg_count > 0 ? q.federal_register / q.fedreg_count : null,
-            finance: q.finance / q.count,
-            energy: q.energy / q.count,
-            telecom: q.telecom / q.count,
-            transport: q.transport / q.count,
-            trade: q.trade / q.count,
-            health: q.health / q.count,
-            housing: q.housing / q.count,
-            agriculture: q.agriculture / q.count
+            federal_register: q.fedreg_count > 0 ? q.federal_register / q.fedreg_count : null
         };
+        SECTOR_AGG_COLUMNS.forEach(s => { out[s] = q[s] / q.count; });
+        return out;
     });
 }
 
@@ -763,7 +789,7 @@ function toMonthly(data) {
             monthly[mKey].enacted = 0;
             monthly[mKey].federal_register = 0;
             // Initialize sectoral columns
-            ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+            SECTOR_AGG_COLUMNS.forEach(s => {
                 monthly[mKey][s] = 0;
             });
         }
@@ -780,7 +806,7 @@ function toMonthly(data) {
         }
 
         // Sum sectoral values
-        ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'].forEach(s => {
+        SECTOR_AGG_COLUMNS.forEach(s => {
             monthly[mKey][s] += row[s] || 0;
         });
 
@@ -789,23 +815,17 @@ function toMonthly(data) {
 
     // Average values
     return Object.values(monthly).map(m => {
-        return {
+        const out = {
             Date: m.Date,
             deregulation: m.deregulation / m.count,
             regulation: m.regulation / m.count,
             foreign: m.foreign / m.count,
             proposed: m.proposed / m.count,
             enacted: m.enacted / m.count,
-            federal_register: m.fedreg_count > 0 ? m.federal_register / m.fedreg_count : null,
-            finance: m.finance / m.count,
-            energy: m.energy / m.count,
-            telecom: m.telecom / m.count,
-            transport: m.transport / m.count,
-            trade: m.trade / m.count,
-            health: m.health / m.count,
-            housing: m.housing / m.count,
-            agriculture: m.agriculture / m.count
+            federal_register: m.fedreg_count > 0 ? m.federal_register / m.fedreg_count : null
         };
+        SECTOR_AGG_COLUMNS.forEach(s => { out[s] = m[s] / m.count; });
+        return out;
     });
 }
 
@@ -824,19 +844,33 @@ function updateChart() {
     document.getElementById('geography-controls').style.display =
         chartType === 'geography' ? 'block' : 'none';
 
-    // Filter by year
-    const filtered = dailyData.filter(row => {
-        const year = parseInt(row.Date.substring(0, 4));
-        return year >= startYear && year <= endYear;
-    });
+    // Filter by year. Track indices into the FULL series (not just the
+    // filtered slice) so moving averages below can look back at calendar
+    // days before startYear instead of restarting from a blank window.
+    let startIdx = dailyData.findIndex(row => parseInt(row.Date.substring(0, 4)) >= startYear);
+    if (startIdx === -1) startIdx = 0;
+    let endIdx = dailyData.length - 1;
+    for (let i = dailyData.length - 1; i >= 0; i--) {
+        if (parseInt(dailyData[i].Date.substring(0, 4)) <= endYear) {
+            endIdx = i;
+            break;
+        }
+    }
 
+    const filtered = dailyData.slice(startIdx, endIdx + 1);
     const dates = filtered.map(r => r.Date);
     const traces = [];
 
+    // Compute the moving average on the FULL series, then slice to the
+    // display range, so the window can extend before startYear.
+    function smoothedSlice(accessor) {
+        const rawFull = dailyData.map(accessor);
+        return movingAverage(rawFull, smoothing).slice(startIdx, endIdx + 1);
+    }
+
     if (chartType === 'headline') {
         // Headline index - apply MA to raw data
-        const raw = filtered.map(r => r.deregulation);
-        const smoothed = movingAverage(raw, smoothing);
+        const smoothed = smoothedSlice(r => r.deregulation);
 
         traces.push({
             x: dates,
@@ -847,10 +881,8 @@ function updateChart() {
         });
     } else if (chartType === 'comparison') {
         // Deregulation vs Regulation - apply MA to raw data
-        const deregRaw = filtered.map(r => r.deregulation);
-        const deregSmoothed = movingAverage(deregRaw, smoothing);
-        const regRaw = filtered.map(r => r.regulation);
-        const regSmoothed = movingAverage(regRaw, smoothing);
+        const deregSmoothed = smoothedSlice(r => r.deregulation);
+        const regSmoothed = smoothedSlice(r => r.regulation);
 
         traces.push({
             x: dates,
@@ -868,10 +900,8 @@ function updateChart() {
         });
     } else if (chartType === 'foreign') {
         // U.S. vs Foreign - apply MA to raw data
-        const usRaw = filtered.map(r => r.deregulation);
-        const usSmoothed = movingAverage(usRaw, smoothing);
-        const foreignRaw = filtered.map(r => r.foreign);
-        const foreignSmoothed = movingAverage(foreignRaw, smoothing);
+        const usSmoothed = smoothedSlice(r => r.deregulation);
+        const foreignSmoothed = smoothedSlice(r => r.foreign);
 
         traces.push({
             x: dates,
@@ -889,10 +919,8 @@ function updateChart() {
         });
     } else if (chartType === 'timing') {
         // Proposed vs Enacted - apply MA to raw data
-        const proposedRaw = filtered.map(r => r.proposed);
-        const proposedSmoothed = movingAverage(proposedRaw, smoothing);
-        const enactedRaw = filtered.map(r => r.enacted);
-        const enactedSmoothed = movingAverage(enactedRaw, smoothing);
+        const proposedSmoothed = smoothedSlice(r => r.proposed);
+        const enactedSmoothed = smoothedSlice(r => r.enacted);
 
         traces.push({
             x: dates,
@@ -910,10 +938,8 @@ function updateChart() {
         });
     } else if (chartType === 'fedreg') {
         // News vs Federal Register - apply MA to raw data
-        const newsRaw = filtered.map(r => r.deregulation);
-        const newsSmoothed = movingAverage(newsRaw, smoothing);
-        const fedregRaw = filtered.map(r => r.federal_register);
-        const fedregSmoothed = movingAverage(fedregRaw, smoothing);
+        const newsSmoothed = smoothedSlice(r => r.deregulation);
+        const fedregSmoothed = smoothedSlice(r => r.federal_register);
 
         traces.push({
             x: dates,
@@ -942,11 +968,23 @@ function updateChart() {
             { id: 'housing', name: 'Housing', checked: 'cb-housing' }
         ];
 
+        const showSectorRegulation = document.getElementById('cb-show-sector-regulation').checked;
+
+        // Order sectors by their average deregulation value over the currently
+        // displayed date range (highest first). Colors stay tied to each
+        // sector (SECTOR_COLORS) regardless of this order - only the
+        // plotting/legend order changes.
+        const sectorAvg = {};
         sectors.forEach(sector => {
+            const vals = filtered.map(r => r[sector.id] || 0);
+            sectorAvg[sector.id] = vals.reduce((a, b) => a + b, 0) / (vals.length || 1);
+        });
+        const sectorsSorted = sectors.slice().sort((a, b) => sectorAvg[b.id] - sectorAvg[a.id]);
+
+        sectorsSorted.forEach(sector => {
             const checkbox = document.getElementById(sector.checked);
             if (checkbox && checkbox.checked) {
-                const raw = filtered.map(r => r[sector.id] || 0);
-                const smoothed = movingAverage(raw, smoothing);
+                const smoothed = smoothedSlice(r => r[sector.id] || 0);
 
                 traces.push({
                     x: dates,
@@ -955,6 +993,18 @@ function updateChart() {
                     line: { color: SECTOR_COLORS[sector.id], width: 2 },
                     hovertemplate: `%{x}<br>${sector.name}: %{y:.1f}<extra></extra>`
                 });
+
+                if (showSectorRegulation) {
+                    const regSmoothed = smoothedSlice(r => r[sector.id + '_regulation'] || 0);
+
+                    traces.push({
+                        x: dates,
+                        y: regSmoothed,
+                        name: `${sector.name} (Regulation)`,
+                        line: { color: SECTOR_COLORS[sector.id], width: 2, dash: 'dash' },
+                        hovertemplate: `%{x}<br>${sector.name} Regulation: %{y:.1f}<extra></extra>`
+                    });
+                }
             }
         });
     } else if (chartType === 'geography') {
@@ -978,8 +1028,7 @@ function updateChart() {
         regions.forEach(region => {
             const checkbox = document.getElementById(region.checked);
             if (checkbox && checkbox.checked) {
-                const raw = filtered.map(r => r[region.id] || 0);
-                const smoothed = movingAverage(raw, smoothing);
+                const smoothed = smoothedSlice(r => r[region.id] || 0);
 
                 traces.push({
                     x: dates,
@@ -1002,7 +1051,8 @@ function updateChart() {
         yaxis: {
             title: 'Index (mean = 100)',
             showgrid: true,
-            gridcolor: '#e0e0e0'
+            gridcolor: '#e0e0e0',
+            rangemode: 'tozero'
         },
         hovermode: 'x unified',
         legend: {
@@ -1205,13 +1255,14 @@ document.getElementById('start-year').addEventListener('change', updateChart);
 document.getElementById('end-year').addEventListener('change', updateChart);
 
 // Sectoral checkboxes
-['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'agriculture', 'housing'].forEach(sector => {
+SECTOR_IDS.forEach(sector => {
     const checkbox = document.getElementById(`cb-${sector}`);
     if (checkbox) checkbox.addEventListener('change', updateChart);
 });
+document.getElementById('cb-show-sector-regulation').addEventListener('change', updateChart);
 
 // Geography checkboxes
-['usa', 'canada', 'uk', 'western_europe', 'eastern_europe', 'japan', 'china', 'asia', 'australia', 'latin_america', 'middle_east', 'russia', 'africa'].forEach(region => {
+REGION_IDS.forEach(region => {
     const checkbox = document.getElementById(`cb-${region}`);
     if (checkbox) checkbox.addEventListener('change', updateChart);
 });
@@ -1288,6 +1339,15 @@ async function initialize() {
             health: sectoralMap[row.date]?.health || 0,
             housing: sectoralMap[row.date]?.housing || 0,
             agriculture: sectoralMap[row.date]?.agriculture || 0,
+            // Add sectoral regulation data (raw)
+            finance_regulation: sectoralMap[row.date]?.finance_regulation || 0,
+            energy_regulation: sectoralMap[row.date]?.energy_regulation || 0,
+            telecom_regulation: sectoralMap[row.date]?.telecom_regulation || 0,
+            transport_regulation: sectoralMap[row.date]?.transport_regulation || 0,
+            trade_regulation: sectoralMap[row.date]?.trade_regulation || 0,
+            health_regulation: sectoralMap[row.date]?.health_regulation || 0,
+            housing_regulation: sectoralMap[row.date]?.housing_regulation || 0,
+            agriculture_regulation: sectoralMap[row.date]?.agriculture_regulation || 0,
             // Add geography data (also raw)
             usa: geographyMap[row.date]?.usa || 0,
             canada: geographyMap[row.date]?.canada || 0,
