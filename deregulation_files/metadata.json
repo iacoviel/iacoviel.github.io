@@ -4,7 +4,7 @@
   "source": "Cascaldi-Garcia and Iacoviello (2026)",
   "coverage": {
     "start_date": "1960-01-01",
-    "end_date": "2026-04-30",
+    "end_date": "2026-06-30",
     "frequency": "daily",
     "newspapers": [
       "New York Times",
@@ -60,7 +60,7 @@
     "federal_register_index": {
       "label": "Federal Register Deregulation Index",
       "description": "Deregulation activity measured from Federal Register documents (rules and executive orders) using LLM classification (raw daily values)",
-      "unit": "Index (rebased to match news index mean over 1995-2019)",
+      "unit": "Index (mean=100 in 1995-2019)",
       "moving_average": "Not pre-computed - apply client-side",
       "higher_means": "More Federal Register deregulation activity",
       "coverage": "1994-2026",
@@ -71,14 +71,14 @@
     "text": "Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). \"Quantifying Deregulation and its Economic Effects: A Large Language Model Approach.\" Federal Reserve Board.",
     "bibtex": "@article{cascaldi2026deregulation,\n  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},\n  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},\n  journal={Federal Reserve Board},\n  year={2026}\n}"
   },
-  "last_updated": "2026-05-03",
+  "last_updated": "2026-07-09",
   "version": {
-    "version_number": "v26.04.30",
-    "data_through": "2026-04-30",
-    "generated_on": "2026-05-03",
-    "generated_time": "2026-05-03 17:33:56"
+    "version_number": "v26.06.30",
+    "data_through": "2026-06-30",
+    "generated_on": "2026-07-09",
+    "generated_time": "2026-07-09 08:44:27"
   },
-  "data_points": 24227,
+  "data_points": 24288,
   "sectors": {
     "finance": {
       "label": "Finance",
@@ -125,6 +125,134 @@
     "agriculture": {
       "label": "Agriculture",
       "description": "Deregulation activity in the agriculture sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "finance_regulation": {
+      "label": "Finance Regulation",
+      "description": "Deregulation activity in the finance_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "energy_regulation": {
+      "label": "Energy Regulation",
+      "description": "Deregulation activity in the energy_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "telecom_regulation": {
+      "label": "Telecom Regulation",
+      "description": "Deregulation activity in the telecom_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "transport_regulation": {
+      "label": "Transport Regulation",
+      "description": "Deregulation activity in the transport_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "trade_regulation": {
+      "label": "Trade Regulation",
+      "description": "Deregulation activity in the trade_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "health_regulation": {
+      "label": "Health Regulation",
+      "description": "Deregulation activity in the health_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "housing_regulation": {
+      "label": "Housing Regulation",
+      "description": "Deregulation activity in the housing_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "agriculture_regulation": {
+      "label": "Agriculture Regulation",
+      "description": "Deregulation activity in the agriculture_regulation sector (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    }
+  },
+  "geography": {
+    "usa": {
+      "label": "United States",
+      "description": "Deregulation activity in United States (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "canada": {
+      "label": "Canada",
+      "description": "Deregulation activity in Canada (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "uk": {
+      "label": "United Kingdom",
+      "description": "Deregulation activity in United Kingdom (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "western_europe": {
+      "label": "Western Europe",
+      "description": "Deregulation activity in Western Europe (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "eastern_europe": {
+      "label": "Eastern Europe",
+      "description": "Deregulation activity in Eastern Europe (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "japan": {
+      "label": "Japan",
+      "description": "Deregulation activity in Japan (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "china": {
+      "label": "China",
+      "description": "Deregulation activity in China (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "asia": {
+      "label": "Asia (excl. China & Japan)",
+      "description": "Deregulation activity in Asia (excl. China & Japan) (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "australia": {
+      "label": "Australia",
+      "description": "Deregulation activity in Australia (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "latin_america": {
+      "label": "Latin America",
+      "description": "Deregulation activity in Latin America (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "middle_east": {
+      "label": "Middle East",
+      "description": "Deregulation activity in Middle East (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "russia": {
+      "label": "Russia",
+      "description": "Deregulation activity in Russia (raw daily values)",
+      "unit": "Index (mean=100 in 1960-2019)",
+      "moving_average": "Not pre-computed - apply client-side"
+    },
+    "africa": {
+      "label": "Africa",
+      "description": "Deregulation activity in Africa (raw daily values)",
       "unit": "Index (mean=100 in 1960-2019)",
       "moving_average": "Not pre-computed - apply client-side"
     }
