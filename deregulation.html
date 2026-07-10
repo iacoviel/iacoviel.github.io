@@ -447,7 +447,7 @@ variation.</p>
         <!-- Sectoral checkboxes (hidden by default) -->
         <div class="chart-controls" id="sectoral-controls" style="display: none;">
             <div class="checkbox-group" style="margin-bottom: 10px;">
-                <label style="font-weight: 600;"><input type="checkbox" id="cb-show-sector-regulation"> Also show Regulation (dashed)</label>
+                <label style="font-weight: 600;"><input type="checkbox" id="cb-show-sector-regulation"> Also show Regulation (thin, lighter shade)</label>
                 <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(SECTOR_IDS, true)">Select All</button>
                 <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(SECTOR_IDS, false)">Deselect All</button>
             </div>
@@ -626,6 +626,18 @@ const SECTOR_COLORS = {
     agriculture: '#e87ba4',  // Magenta
     housing: '#eb6834'       // Orange
 };
+
+// Lighten a hex color toward white by `amount` (0..1). Used so a sector's
+// regulation series can be drawn as a lighter tint of its (dark) deregulation
+// color - thick+dark = deregulation, thin+light = regulation.
+function lightenColor(hex, amount) {
+    const n = parseInt(hex.slice(1), 16);
+    let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    r = Math.round(r + (255 - r) * amount);
+    g = Math.round(g + (255 - g) * amount);
+    b = Math.round(b + (255 - b) * amount);
+    return `rgb(${r}, ${g}, ${b})`;
+}
 
 // Load CSV data
 function loadCSV(url) {
@@ -876,7 +888,7 @@ function updateChart() {
             x: dates,
             y: smoothed,
             name: 'Deregulation Index',
-            line: { color: '#1f5a8a', width: 2.5 },
+            line: { color: '#1f5a8a', width: 3 },
             hovertemplate: '%{x}<br>Index: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'comparison') {
@@ -888,14 +900,14 @@ function updateChart() {
             x: dates,
             y: deregSmoothed,
             name: 'Deregulation',
-            line: { color: '#1f5a8a', width: 2.5 },
+            line: { color: '#1f5a8a', width: 3 },
             hovertemplate: '%{x}<br>Deregulation: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: regSmoothed,
             name: 'Regulation',
-            line: { color: '#C41E3A', width: 2.5 },
+            line: { color: '#C41E3A', width: 3 },
             hovertemplate: '%{x}<br>Regulation: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'foreign') {
@@ -907,14 +919,14 @@ function updateChart() {
             x: dates,
             y: usSmoothed,
             name: 'U.S. Deregulation',
-            line: { color: '#1f5a8a', width: 2.5 },
+            line: { color: '#1f5a8a', width: 3 },
             hovertemplate: '%{x}<br>U.S.: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: foreignSmoothed,
             name: 'Foreign Deregulation',
-            line: { color: '#C41E3A', width: 2.5 },
+            line: { color: '#C41E3A', width: 3 },
             hovertemplate: '%{x}<br>Foreign: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'timing') {
@@ -926,14 +938,14 @@ function updateChart() {
             x: dates,
             y: proposedSmoothed,
             name: 'Proposed',
-            line: { color: '#E07A5F', width: 2.5 },
+            line: { color: '#E07A5F', width: 3 },
             hovertemplate: '%{x}<br>Proposed: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: enactedSmoothed,
             name: 'Enacted',
-            line: { color: '#1f5a8a', width: 2.5 },
+            line: { color: '#1f5a8a', width: 3 },
             hovertemplate: '%{x}<br>Enacted: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'fedreg') {
@@ -945,14 +957,14 @@ function updateChart() {
             x: dates,
             y: newsSmoothed,
             name: 'News Index',
-            line: { color: '#1f5a8a', width: 2.5 },
+            line: { color: '#1f5a8a', width: 3 },
             hovertemplate: '%{x}<br>News: %{y:.1f}<extra></extra>'
         });
         traces.push({
             x: dates,
             y: fedregSmoothed,
             name: 'Federal Register',
-            line: { color: '#c0392b', width: 2.5 },
+            line: { color: '#c0392b', width: 3 },
             hovertemplate: '%{x}<br>Fed Reg: %{y:.1f}<extra></extra>'
         });
     } else if (chartType === 'sectoral') {
@@ -990,7 +1002,7 @@ function updateChart() {
                     x: dates,
                     y: smoothed,
                     name: sector.name,
-                    line: { color: SECTOR_COLORS[sector.id], width: 2 },
+                    line: { color: SECTOR_COLORS[sector.id], width: 2.5 },
                     hovertemplate: `%{x}<br>${sector.name}: %{y:.1f}<extra></extra>`
                 });
 
@@ -1001,7 +1013,7 @@ function updateChart() {
                         x: dates,
                         y: regSmoothed,
                         name: `${sector.name} (Regulation)`,
-                        line: { color: SECTOR_COLORS[sector.id], width: 2, dash: 'dash' },
+                        line: { color: lightenColor(SECTOR_COLORS[sector.id], 0.55), width: 1.25 },
                         hovertemplate: `%{x}<br>${sector.name} Regulation: %{y:.1f}<extra></extra>`
                     });
                 }
@@ -1034,25 +1046,55 @@ function updateChart() {
                     x: dates,
                     y: smoothed,
                     name: region.name,
-                    line: { color: region.color, width: 2 },
+                    line: { color: region.color, width: 2.5 },
                     hovertemplate: `%{x}<br>${region.name}: %{y:.1f}<extra></extra>`
                 });
             }
         });
     }
 
+    // Pad both ends of the x-axis so the first/last data points don't sit flush
+    // against the frame (breathing room on the left and right).
+    let xRange;
+    if (dates.length > 1) {
+        const firstD = new Date(dates[0]);
+        const lastD = new Date(dates[dates.length - 1]);
+        const spanMs = lastD - firstD;
+        xRange = [new Date(firstD.getTime() - spanMs * 0.0125), new Date(lastD.getTime() + spanMs * 0.0125)];
+    }
+
+    // Give the y-axis a tiny margin below 0 so lines near the baseline don't sit
+    // flush on the x-axis, plus headroom on top so the tallest line clears the frame.
+    let yMax = 0;
+    traces.forEach(t => t.y.forEach(v => { if (v != null && !isNaN(v) && v > yMax) yMax = v; }));
+    const yRange = yMax > 0 ? [-yMax * 0.03, yMax * 1.08] : undefined;
+
     const layout = {
         margin: { l: 60, r: 40, t: 40, b: 60 },
         xaxis: {
             title: '',
             showgrid: true,
-            gridcolor: '#e0e0e0'
+            gridcolor: '#f5f5f5',
+            showline: true,
+            linecolor: '#b0b0b0',
+            mirror: true,
+            zeroline: false,
+            tickfont: { size: 15 },
+            range: xRange
         },
         yaxis: {
-            title: 'Index (mean = 100)',
+            title: { text: 'Index (mean = 100)', font: { size: 15 } },
             showgrid: true,
-            gridcolor: '#e0e0e0',
-            rangemode: 'tozero'
+            gridcolor: '#f5f5f5',
+            showline: true,
+            linecolor: '#b0b0b0',
+            mirror: true,
+            zeroline: true,
+            zerolinecolor: '#b0b0b0',
+            zerolinewidth: 1,
+            tickfont: { size: 15 },
+            rangemode: 'tozero',
+            range: yRange
         },
         hovermode: 'x unified',
         legend: {

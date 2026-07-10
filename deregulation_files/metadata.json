@@ -71,12 +71,12 @@
     "text": "Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). \"Quantifying Deregulation and its Economic Effects: A Large Language Model Approach.\" Federal Reserve Board.",
     "bibtex": "@article{cascaldi2026deregulation,\n  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},\n  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},\n  journal={Federal Reserve Board},\n  year={2026}\n}"
   },
-  "last_updated": "2026-07-09",
+  "last_updated": "2026-07-10",
   "version": {
     "version_number": "v26.06.30",
     "data_through": "2026-06-30",
-    "generated_on": "2026-07-09",
-    "generated_time": "2026-07-09 08:44:27"
+    "generated_on": "2026-07-10",
+    "generated_time": "2026-07-10 14:52:34"
   },
   "data_points": 24288,
   "sectors": {
