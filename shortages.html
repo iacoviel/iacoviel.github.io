@@ -233,14 +233,14 @@
                                             major: {
                                                 enabled: true
                                             },
-                                            stepSize: 12 * 2,
+                                            stepSize: 12 * 10,
                                             callback: function(value, index, values) {
                                                 if (startYear >= 2020) {
                                                     // For the 2020-2024 chart, show every January
                                                     return index % (12 * 1) === 0 ? this.getLabelForValue(value) : '';
                                                 } else {
-                                                    // For the 1900-2024 chart, show every other year
-                                                    return index % (12 * 2) === 0 ? this.getLabelForValue(value) : '';
+                                                    // For the 1900-2024 chart, show every ten years
+                                                    return index % (12 * 10) === 0 ? this.getLabelForValue(value) : '';
                                                 }
                                             }
                                         }
