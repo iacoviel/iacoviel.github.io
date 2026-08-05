@@ -228,20 +228,30 @@
                                             display: false
                                         },
                                         ticks: {
-                                            autoSkip: true,
+                                            autoSkip: false,
                                             maxRotation: 0,
                                             major: {
                                                 enabled: true
                                             },
-                                            stepSize: 12 * 10,
-                                            callback: function(value, index, values) {
+                                        callback: function(value, index, values) {
+                                                const label = this.getLabelForValue(value);
+                                                const dateMatch = label.match(/(\w+)\s(\d{4})/);
+                                                
                                                 if (startYear >= 2020) {
-                                                    // For the 2020-2024 chart, show every January
-                                                    return index % (12 * 1) === 0 ? this.getLabelForValue(value) : '';
+                                                    // For the 2020+ chart, show every January
+                                                    if (dateMatch && dateMatch[1] === 'Jan') {
+                                                        return label;
+                                                    }
                                                 } else {
-                                                    // For the 1900-2024 chart, show every ten years
-                                                    return index % (12 * 10) === 0 ? this.getLabelForValue(value) : '';
+                                                    // For the 1900+ charts, show every ten years (1900, 1910, 1920, etc.)
+                                                    if (dateMatch && dateMatch[1] === 'Jan') {
+                                                        const year = parseInt(dateMatch[2]);
+                                                        if (year % 10 === 0) {
+                                                            return label;
+                                                        }
+                                                    }
                                                 }
+                                                return '';
                                             }
                                         }
                                     },
