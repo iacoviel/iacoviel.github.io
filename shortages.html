@@ -189,126 +189,143 @@
             </div>
         </div>
     </div>
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function createChart(csvFile, canvasId, startYear, columnNames, colorMap) {
+            Papa.parse(csvFile, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    const shortageData = results.data;
+                    
+                    // Generate dates starting from January of the specified year
+                    const startDate = moment(`${startYear}-01-01`);
+                    const labels = Array.from({ length: shortageData.length }, (_, index) =>
+                        startDate.clone().add(index, 'months').format('MMM YYYY')
+                    );
+                    
+                    const datasets = columnNames.map((columnName, index) => ({
+                        label: columnName.replace('_', ' '),
+                        data: shortageData.map(row => parseFloat(row[columnName])),
+                        borderColor: colorMap[columnName] || `hsl(${(index * 60) % 360}, 100%, 50%)`,
+                        fill: false
+                    }));
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function createChart(csvFile, canvasId, startYear, columnNames, colorMap) {
-                Papa.parse(csvFile, {
-                    download: true,
-                    header: true,
-                    complete: function(results) {
-                        const shortageData = results.data;
-                        
-                        // Generate dates starting from January of the specified year
-                        const startDate = moment(`${startYear}-01-01`);
-                        const labels = Array.from({ length: shortageData.length }, (_, index) =>
-                            startDate.clone().add(index, 'months').format('MMM YYYY')
-                        );
-                        
-                        const datasets = columnNames.map((columnName, index) => ({
-                            label: columnName.replace('_', ' '),
-                            data: shortageData.map(row => parseFloat(row[columnName])),
-                            borderColor: colorMap[columnName] || `hsl(${(index * 60) % 360}, 100%, 50%)`,
-                            fill: false
-                        }));
-
-                        new Chart(document.getElementById(canvasId), {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: datasets
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    x: {
+                    new Chart(document.getElementById(canvasId), {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: false
+                                    },
+                                    grid: {
                                         display: true,
-                                        title: {
-                                            display: false
+                                        drawOnChartArea: true,
+                                        drawTicks: true,
+                                        color: 'rgba(0, 0, 0, 0.05)',
+                                        lineWidth: 1
+                                    },
+                                    ticks: {
+                                        autoSkip: false,
+                                        maxRotation: 0,
+                                        major: {
+                                            enabled: true
                                         },
-                                        ticks: {
-                                            autoSkip: false,
-                                            maxRotation: 0,
-                                            major: {
-                                                enabled: true
-                                            },
                                         callback: function(value, index, values) {
-                                                const label = this.getLabelForValue(value);
-                                                const dateMatch = label.match(/(\w+)\s(\d{4})/);
-                                                
-                                                if (startYear >= 2020) {
-                                                    // For the 2020+ chart, show every January
-                                                    if (dateMatch && dateMatch[1] === 'Jan') {
+                                            const label = this.getLabelForValue(value);
+                                            const dateMatch = label.match(/(\w+)\s(\d{4})/);
+                                            
+                                            if (startYear >= 2020) {
+                                                // For the 2020+ chart, show every January
+                                                if (dateMatch && dateMatch[1] === 'Jan') {
+                                                    return label;
+                                                }
+                                            } else {
+                                                // For the 1900+ charts, show every ten years (1900, 1910, 1920, etc.)
+                                                if (dateMatch && dateMatch[1] === 'Jan') {
+                                                    const year = parseInt(dateMatch[2]);
+                                                    if (year % 10 === 0) {
                                                         return label;
                                                     }
-                                                } else {
-                                                    // For the 1900+ charts, show every ten years (1900, 1910, 1920, etc.)
-                                                    if (dateMatch && dateMatch[1] === 'Jan') {
-                                                        const year = parseInt(dateMatch[2]);
-                                                        if (year % 10 === 0) {
-                                                            return label;
-                                                        }
-                                                    }
                                                 }
-                                                return '';
                                             }
-                                        }
-                                    },
-                                    y: {
-                                        display: true,
-                                        title: {
-                                            display: true,
-                                            text: 'Index Value'
+                                            return '';
                                         }
                                     }
                                 },
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Index Value'
+                                    },
+                                    grid: {
+                                        display: true,
+                                        drawOnChartArea: true,
+                                        drawTicks: true,
+                                        color: 'rgba(0, 0, 0, 0.05)',
+                                        lineWidth: 1
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 8
                                     }
                                 }
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                }
                             }
-                        });
-                    }
-                });
-            }
+                        }
+                    });
+                }
+            });
+        }
 
-            // Define column names and color maps for each chart
-            const chart1Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
-            const chart1Colors = {
-                'index_all_shortage': 'black',
-                'energy_shortage': 'red',
-                'food_shortage': 'green',
-                'industry_shortage': 'blue',
-                'labor_shortage': 'purple'
-            };
+        // Define column names and color maps for each chart
+        const chart1Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+        const chart1Colors = {
+            'index_all_shortage': 'black',
+            'energy_shortage': 'red',
+            'food_shortage': 'green',
+            'industry_shortage': 'blue',
+            'labor_shortage': 'purple'
+        };
 
-            const chart2Columns = ['index_all_shortage', 'index_can', 'index_deu', 'index_fra', 'index_gbr', 'index_jpn', 'index_usa'];
-            const chart2Colors = {
-                'index_all_shortage': 'black',
-                'index_can': 'brown' ,
-                'index_deu': 'magenta',
-                'index_fra': 'green', // Green
-                'index_gbr': 'red',  // Red
-                'index_jpn': 'gray', 
-                'index_usa': 'blue' // Blue
-            };
+        const chart2Columns = ['index_all_shortage', 'index_can', 'index_deu', 'index_fra', 'index_gbr', 'index_jpn', 'index_usa'];
+        const chart2Colors = {
+            'index_all_shortage': 'black',
+            'index_can': 'brown' ,
+            'index_deu': 'magenta',
+            'index_fra': 'green',
+            'index_gbr': 'red',
+            'index_jpn': 'gray', 
+            'index_usa': 'blue'
+        };
 
-            const chart3Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
-            const chart3Colors = {
-                'index_all_shortage': 'black',
-                'energy_shortage': 'red',
-                'food_shortage': 'green',
-                'industry_shortage': 'blue',
-                'labor_shortage': 'purple'
-            };
+        const chart3Columns = ['index_all_shortage', 'energy_shortage', 'food_shortage', 'industry_shortage', 'labor_shortage'];
+        const chart3Colors = {
+            'index_all_shortage': 'black',
+            'energy_shortage': 'red',
+            'food_shortage': 'green',
+            'industry_shortage': 'blue',
+            'labor_shortage': 'purple'
+        };
 
-            // Create three charts with different data files and configurations
-            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart1', 1900, chart1Columns, chart1Colors);
-            createChart('/shortages_files/shortage_index_web.csv', 'shortageChart2', 1900, chart2Columns, chart2Colors);
-            createChart('/shortages_files/shortage_index_web_2020.csv', 'shortageChart3', 2020, chart3Columns, chart3Colors);
-        });
-    </script>
+        // Create three charts with different data files and configurations
+        createChart('/shortages_files/shortage_index_web.csv', 'shortageChart1', 1900, chart1Columns, chart1Colors);
+        createChart('/shortages_files/shortage_index_web.csv', 'shortageChart2', 1900, chart2Columns, chart2Colors);
+        createChart('/shortages_files/shortage_index_web_2020.csv', 'shortageChart3', 2020, chart3Columns, chart3Colors);
+    });
+</script>
+ 
 </body>
 </html>
