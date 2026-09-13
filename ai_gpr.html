@@ -586,6 +586,7 @@
             <a href="#downloads" class="btn btn-outline">Download Data</a>
         </div>
         <p class="updated">Last updated: August 31, 2026 with data through August 31, 2026.</p>
+        <p class="updated">September 12, 2026 minor update: added Oil Threats GPR and Oil Acts GPR series.</p>
         <p class="updated">May 5, 2026 minor update: added regional Oil GPR data and interactive chart.</p>
         <p class="updated">April 24, 2026 minor update: country and event-type data revised; bilateral index expanded to 1,000 country pairs; bilateral charts redesigned.</p>
         <p class="updated">April 30, 2026 minor update: add country indexes by event type.</p>
@@ -611,7 +612,7 @@
             </div>
             <div class="about-card">
                 <h3>Oil GPR</h3>
-                <p>A sub-index identifying articles that discuss oil or energy supply disruptions driven by geopolitical events. Constructed using a second LLM classification layer applied to high-GPR articles containing oil-related keywords.</p>
+                <p>A sub-index identifying articles that discuss oil or energy supply disruptions driven by geopolitical events. Constructed using a second LLM classification layer applied to high-GPR articles containing oil-related keywords. Oil Threats GPR and Oil Acts GPR split the index using the threats/acts classification; articles labeled as both count toward each.</p>
             </div>
             <div class="about-card">
                 <h3>Methodology</h3>
@@ -676,6 +677,8 @@
                     <label><input type="checkbox" id="cb-nonoil"> Non-Oil GPR</label>
                     <label><input type="checkbox" id="cb-threats"> Threats GPR</label>
                     <label><input type="checkbox" id="cb-acts"> Acts GPR</label>
+                    <label><input type="checkbox" id="cb-oil-threats"> Oil Threats GPR</label>
+                    <label><input type="checkbox" id="cb-oil-acts"> Oil Acts GPR</label>
                 </div>
             </div>
             <div class="control-group">
@@ -922,12 +925,12 @@
             <tbody>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_daily.csv</td>
-                    <td style="padding: 8px 12px;">Daily AI-GPR index and components, 1960–present (includes Threats GPR and Acts GPR)</td>
+                    <td style="padding: 8px 12px;">Daily AI-GPR index and components, 1960–present (includes Threats GPR, Acts GPR, Oil Threats GPR, and Oil Acts GPR)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_daily.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 8px 12px; font-family: monospace;">ai_gpr_data_monthly.csv</td>
-                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present (includes Threats GPR, Acts GPR, and regional Oil GPR series)</td>
+                    <td style="padding: 8px 12px;">Monthly AI-GPR index and components, 1960–present (includes Threats GPR, Acts GPR, Oil Threats GPR, Oil Acts GPR, and regional Oil GPR series)</td>
                     <td style="padding: 8px 12px; text-align:center;"><a href="ai_gpr_files/ai_gpr_data_monthly.csv" class="btn-download">&#8595; CSV</a></td>
                 </tr>
                 <tr>
@@ -1092,7 +1095,9 @@ const COLORS = {
     oil:     '#27ae60',
     nonoil:  '#8e44ad',
     threats: '#e67e22',
-    acts:    '#2980b9'
+    acts:    '#2980b9',
+    oilThreats: '#1b3a6b',
+    oilActs:    '#5dade2'
 };
 
 function oneDayChange(values) {
@@ -1115,6 +1120,8 @@ function updateChart() {
     const showNONOIL  = document.getElementById('cb-nonoil').checked;
     const showTHREATS = document.getElementById('cb-threats').checked;
     const showACTS    = document.getElementById('cb-acts').checked;
+    const showOILTHR  = document.getElementById('cb-oil-threats').checked;
+    const showOILACT  = document.getElementById('cb-oil-acts').checked;
     const window  = parseInt(document.getElementById('smoothing').value);
     const freq    = document.getElementById('freq').value;
     const startY  = parseInt(document.getElementById('start-year').value);
@@ -1198,6 +1205,26 @@ function updateChart() {
         });
     }
 
+    if (showOILTHR) {
+        const smoothed = applySmoothing(filtered.map(r => r.GPR_OIL_THREATS));
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'Oil Threats GPR',
+            line: { color: COLORS.oilThreats, width: 1.5 },
+            hovertemplate: '%{x}<br>Oil Threats GPR: %{y:.1f}<extra></extra>'
+        });
+    }
+
+    if (showOILACT) {
+        const smoothed = applySmoothing(filtered.map(r => r.GPR_OIL_ACTS));
+        traces.push({
+            x: dates, y: smoothed,
+            name: 'Oil Acts GPR',
+            line: { color: COLORS.oilActs, width: 1.5 },
+            hovertemplate: '%{x}<br>Oil Acts GPR: %{y:.1f}<extra></extra>'
+        });
+    }
+
     const layout = {
         margin: { t: 20, r: 40, b: 50, l: 60 },
         xaxis: {
@@ -1252,7 +1279,7 @@ async function init() {
     attachRescaleListener('chartOilRegion');
 }
 
-['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil', 'cb-threats', 'cb-acts'].forEach(id =>
+['cb-ai', 'cb-aer', 'cb-oil', 'cb-nonoil', 'cb-threats', 'cb-acts', 'cb-oil-threats', 'cb-oil-acts'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
 ['smoothing', 'freq', 'start-year', 'end-year'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateChart));
