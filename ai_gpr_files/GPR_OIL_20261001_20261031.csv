@@ -1,0 +1,459 @@
+GOID,Date,Title,Publisher,sentiment,oil_disruption,affected_regions,input_tokens,output_tokens
+3401333334,2026-10-17,Israeli settlers attack Post photographer,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3403312489,2026-10-23,Putin nears prized goal of restoring ties with US Russian leader keeps Ukraine war separate from business deals,"Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1270.0,82.0
+3400983376,2026-10-16,Why the Saudi Military (or Militaries) Can't Shut Down the Houthis' Attacks,New York Times Company,0.6,yes,Middle_East,1278.0,86.0
+3395782284,2026-10-05,"Germany gives Ukraine $1.5B in aid Weapons, energy funds in package as Russia ups attacks","Tribune Publishing Company, LLC",0.8,yes,Russia,1286.0,73.0
+3396041688,2026-10-06,Drone and Missile Strikes in Persian Gulf Heighten Fears for Fragile Energy Trade,New York Times Company,0.6,yes,Middle_East,1292.0,75.0
+3399708758,2026-10-14,A Father’s Mission Is to Show the World ‘What Russia Did to My Family’,New York Times Company,0.8,no,,,
+3404987837,2026-10-27,"Saudi Arabia, Turkey and Pakistan send envoys to Iran in push to end war",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3406001218,2026-10-29,There Is No Limit to What the Houthis Will Do,New York Times Company,0.8,yes,Middle_East,1310.0,79.0
+3395659767,2026-10-04,North Korea launches strategic missile meant to evade defenses,"Tribune Publishing Company, LLC",0.6,no,,,
+3405893642,2026-10-28,The U.S. Called It Putin’s ‘Slush Fund.’ Now Trump May Drop Sanctions on It.,New York Times Company,0.6,yes,"Russia, USA",1261.0,74.0
+3399046427,2026-10-13,NATO commander says alliance does not want war but ‘ready to fight’,"Tribune Publishing Company, LLC",0.6,no,,,
+3407082692,2026-10-31,Israeli Settlers Turn a Palestinian Rite Into a Gantlet of Violence,New York Times Company,0.6,yes,Middle_East,1316.0,72.0
+3398330062,2026-10-10,How China Slid Moscow Wall St. Keys,New York Times Company,0.6,no,,,
+3391755046,2026-10-01,"Hegseth unveils drone effort, 20% cut in generals, admirals","Tribune Publishing Company, LLC",0.6,no,,,
+3397893619,2026-10-09,Home Is a Memory For These Reporters,New York Times Company,0.6,no,,,
+3404439109,2026-10-25,Israel's Momentous Election Might Change Nothing,New York Times Company,0.6,yes,Middle_East,1240.0,74.0
+3401881505,2026-10-19,Egypt Pledges to Support Saudis After Houthi Raids,New York Times Company,0.6,yes,"Middle_East, North_Africa",1258.0,87.0
+3391755225,2026-10-01,"Iran considers official US response to peace process Trump rejected bid recently, but Tehran mum about wording","Tribune Publishing Company, LLC",0.6,yes,"Middle_East, USA",1311.0,104.0
+3395627338,2026-10-04,Iraq Gains U.S. Permission to Resume Iran Flights,New York Times Company,0.6,no,,,
+3399770855,2026-10-15,Sharp Escalation in Attacks On Ships in Strait of Hormuz,New York Times Company,0.6,yes,Middle_East,1302.0,84.0
+3393331657,2026-10-02,‘Might makes right’ imperils UN’s mission as AI threatens our existence,"Tribune Publishing Company, LLC",0.6,yes,"Venezuela, Middle_East",1263.0,78.0
+3400983443,2026-10-16,Ukraine Sprints for Interceptors That Can Catch Jet-Powered Drones,New York Times Company,0.6,yes,"Middle_East, Russia",1285.0,93.0
+3394767377,2026-10-03,Rich Nations To Release Diesel Stocks,New York Times Company,0.6,yes,"Middle_East, Russia, USA",1286.0,79.0
+3402325057,2026-10-21,"Russia, sensing victory, cheers latest Trump pivot",WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, USA",1285.0,87.0
+3402905528,2026-10-22,Britain sends fighter jets to defend Saudi Arabia amid Houthi attacks,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1278.0,72.0
+3404858259,2026-10-26,Soldier clings to hope of seeing kids US surgeons come to aid of Ukrainian who lost eyesight in battle,"Tribune Publishing Company, LLC",0.6,no,,,
+3399635943,2026-10-15,Ukraine says limits placed on its Starlink,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3402044475,2026-10-20,Tehran is seeking to punish Trump at the midterms with oil price pain,WP Company LLC d/b/a The Washington Post,0.6,yes,"Middle_East, USA",1281.0,88.0
+3406697235,2026-10-30,Unrelenting violence prompts Haiti to move elections to July,"Tribune Publishing Company, LLC",0.6,no,,,
+3394767351,2026-10-03,Military Leaders Will Examine Ways to Limit Civilian Deaths in War,New York Times Company,0.8,no,,,
+3396510475,2026-10-07,There's One More Cockpit That Israelis Need to Rush,New York Times Company,0.6,no,,,
+3395723788,2026-10-04,American High School Students Are Selling Guns Bound for Cartels,New York Times Company,0.6,no,,,
+3397862482,2026-10-08,War Is Forcing the World to Reckon With Geography’s Power,New York Times Company,0.6,yes,"Middle_East, Latin_America",1272.0,89.0
+3404533664,2026-10-25,Krishnamoorthi urges FBI to investigate Aurora Hindu temple plot as hate crime,"Tribune Publishing Company, LLC",0.6,no,,,
+3398220206,2026-10-10,Trump team prepares for long economic war with Iran,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1261.0,75.0
+3404036147,2026-10-24,"Shooting at church in Jordan leaves at least seven people dead, 34 injured",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3404336797,2026-10-24,Netanyahu Has Reinvented Himself. Will Voters Think It’s Enough?,New York Times Company,0.6,no,,,
+3405004412,2026-10-26,"Netanyahu Pushed for Attack on Iran Ahead of Israeli Election, Officials Say",New York Times Company,0.6,no,,,
+3399375312,2026-10-14,"After Trump's 'Gift' to Putin, European Leaders Seek Cautious Diplomatic Message",New York Times Company,0.6,yes,"Russia, USA",1271.0,81.0
+3396164738,2026-10-06,Major oil exporters plan to maintain production levels,"Tribune Publishing Company, LLC",0.6,yes,"Middle_East, Russia",842.0,79.0
+3401806061,2026-10-19,A new level of chaos in Trump’s Ukraine policy,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1236.0,78.0
+3404795673,2026-10-25,Israel’s Destruction of Southern Lebanon Intensified After the Ceasefire,New York Times Company,0.6,no,,,
+3401854318,2026-10-19,Trump endorses Netanyahu in tense Israeli elections,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3401613583,2026-10-18,"Israeli settlers attack olive farmers US decries vigilante beatings of journalist, West Bank villagers","Tribune Publishing Company, LLC",0.6,no,,,
+3398615676,2026-10-11,Trump says it’s time for a new leader in Ukraine President blames Zelenskyy for high diesel prices in US,"Tribune Publishing Company, LLC",0.6,yes,"Middle_East, Russia, USA",1301.0,86.0
+3401346732,2026-10-16,Israeli Settlers Attack Palestinians and Washington Post Journalist in West Bank,New York Times Company,0.6,no,,,
+3407047552,2026-10-30,Israeli Settlers Turn a Palestinian Rite Into a Gantlet of Violence and Fear,New York Times Company,0.8,yes,Middle_East,1311.0,77.0
+3398676275,2026-10-12,Saudis Have Few Options to Halt Houthi Attacks,New York Times Company,0.6,yes,Middle_East,1277.0,82.0
+3395659666,2026-10-04,Jet drones outpace Ukraine defenses Engineers racing to build interceptors that can match them,"Tribune Publishing Company, LLC",0.6,no,,,
+3401613569,2026-10-18,Zelenskyy trying to rally support for paused limits Russia keeping up its attacks; Kyiv disrupts Moscow plane traffic,"Tribune Publishing Company, LLC",0.6,yes,Russia,1274.0,79.0
+3401087035,2026-10-16,How possible mass shooting was prevented A jammed gun and Taco Bell workers stopped potential devastation at a Hindu temple,"Tribune Publishing Company, LLC",0.6,no,,,
+3397820908,2026-10-09,Iran scales up Hormuz attacks as vote nears,WP Company LLC d/b/a The Washington Post,0.6,yes,"Middle_East, USA",1318.0,95.0
+3396800096,2026-10-08,"In Gaza, violence grinds on",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3398676269,2026-10-12,"Boat Capsizes Off Djibouti, Killing Over 100",New York Times Company,0.6,no,,,
+3404083961,2026-10-23,"Palestinian Gunmen Open Fire on Israelis in the West Bank, Officials Say",New York Times Company,0.6,no,,,
+3399375280,2026-10-14,Zelensky's Comment Raises Fears Over U.S. Not Sharing Intelligence,New York Times Company,0.6,no,,,
+3399046562,2026-10-13,"Saudis search for answers in defense systems’ failure Drones cleared path for missiles to strike airport, officials say","Tribune Publishing Company, LLC",0.6,yes,Middle_East,1262.0,89.0
+3403214360,2026-10-23,Russia agrees to restart trilateral talks to end war,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3406201738,2026-10-29,"Pentagon: Price tag for Iran war reaches $47.1B Expense, US military spending contentious issues on Capitol Hill","Tribune Publishing Company, LLC",0.6,no,,,
+3398664116,2026-10-11,What Russians Who Lost Sons in Ukraine Think About the War Now,New York Times Company,0.6,no,,,
+3398867369,2026-10-13,"U.S. and NATO commander vows to thwart Moscow, but also warns Kyiv",WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, Middle_East, USA",1282.0,79.0
+3391624877,2026-10-01,"Britain Believes Iran Was Involved in Episode at Air Base, Burnham Says",New York Times Company,0.6,no,,,
+3398910073,2026-10-12,"After Russian Diesel Deal, Trump Faces New Crisis Over Ukraine",New York Times Company,0.6,yes,"Russia, USA",1273.0,84.0
+3404720750,2026-10-26,The U.S. left Afghanistan. China’s still there.,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3400983414,2026-10-16,A Reporter Explains Israel's 'Fateful' Election,New York Times Company,0.8,no,,,
+3399375325,2026-10-14,Foreign Workers End Up in War's Cross Hairs,New York Times Company,0.6,yes,Russia,1294.0,73.0
+3398979582,2026-10-13,Inquiry of FlyDubai Attacker Puts Mosque Under Scrutiny,New York Times Company,0.6,no,,,
+3398716399,2026-10-12,"‘Energy ceasefire’ for Russia, Ukraine? Trump announces deal but not details; diesel sale targeted","Tribune Publishing Company, LLC",0.6,no,,,
+3392664887,2026-10-01,Trump’s Threat to Ban Diesel Exports Sets Off Global Alarms,New York Times Company,0.6,yes,"Middle_East, Russia, USA, Canada",1283.0,92.0
+3405032774,2026-10-27,"Russia's Intent to Make Civilians Suffer Amounted to War Crime, U.N. Panel Says",New York Times Company,0.8,no,,,
+3394767110,2026-10-03,Russian Firm Again Faces Sanctions By the U.S.,New York Times Company,0.6,no,,,
+3402188415,2026-10-20,Supreme Court rejects bid to revive plea deal for accused 9/11 mastermind,"Tribune Publishing Company, LLC",0.6,no,,,
+3395627369,2026-10-04,Co-Pilot in Midair Attack Is Said to Have Extremist Views,New York Times Company,0.6,no,,,
+3401383598,2026-10-17,Trump's Deal With Russia Inflames War He Vowed to End,New York Times Company,0.6,yes,"Russia, USA",1310.0,72.0
+3395627320,2026-10-04,U.K. Charges Iranian Pair In Terror Plot Against Jews,New York Times Company,0.6,yes,Middle_East,1276.0,91.0
+3398187063,2026-10-10,The U.S. can’t win in Iran until Trump makes a decision,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1284.0,80.0
+3395981126,2026-10-06,FBI says California woman spied for China on Taiwanese president’s son,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3404121430,2026-10-24,First Lady Says She Brokered Cease-Fire in Ukrainian City Under Siege,New York Times Company,0.6,no,,,
+3398268830,2026-10-09,"Attacker in FlyDubai Flight Meant to Crash Into Israeli Airport, Emiratis Say",New York Times Company,0.8,no,,,
+3397893609,2026-10-09,"Ukraine Claws Back Land in the Donbas, Thwarting a Russian Push",New York Times Company,0.6,no,,,
+3401443517,2026-10-17,"Russia bets aerial attacks will win war But history suggests plan will fall short in Ukraine, experts say","Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1256.0,80.0
+3405634410,2026-10-28,Jordan Says It Targeted Islamic State in Syria,New York Times Company,0.6,no,,,
+3398533211,2026-10-11,Ukrainian town weeps for 3 families killed in strikes,WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3406471917,2026-10-30,These data centers hold Vladimir Putin’s AI aspirations,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3401501875,2026-10-17,Trump Signs Order Exempting Russia From Sanctions Law,New York Times Company,0.6,yes,"Russia, Middle_East, USA",1246.0,94.0
+3406559612,2026-10-29,Nvidia Chief Seen as Target of Chinese Spy Plot,New York Times Company,0.6,no,,,
+3399708752,2026-10-14,Ukraine’s Exposure Grows as Satellite Use Is Restricted and Russia Escalates,New York Times Company,0.6,yes,"Russia, USA",1262.0,77.0
+3406596512,2026-10-30,Racism Linked To Shootings On Long Route Near Paris,New York Times Company,0.6,no,,,
+3396885055,2026-10-08,Rubio Dodges Diplomatic Flap in Iceland After Trump Posts Provocative Map,New York Times Company,0.6,no,,,
+3398858003,2026-10-13,Trump is pressuring the wrong side in Ukraine,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1237.0,72.0
+3403053254,2026-10-22,Kyiv Says Drones Fell From Sky As U.S.-Backed Service Cut Out,New York Times Company,0.6,yes,Russia,1253.0,77.0
+3391755286,2026-10-01,"After 12 years, final US troops leave Iraq","Tribune Publishing Company, LLC",0.6,no,,,
+3399474650,2026-10-14,Trump throws a lifeline to Putin,"Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1238.0,77.0
+3404533330,2026-10-25,Krishnamoorthi urges FBI to investigate Aurora Hindu temple plot as hate crime,"Tribune Publishing Company, LLC",0.6,no,,,
+3398659902,2026-10-12,"Trump’s attack against Zelensky, Russia diesel deal draw criticism",WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, USA",1289.0,87.0
+3402981132,2026-10-22,The cascading absurdities of a spiraling presidency,WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, USA, Middle_East",1302.0,85.0
+3399046394,2026-10-13,Wringing hope from rubble of Gaza Palestinians work to resume lives in year since ceasefire signed,"Tribune Publishing Company, LLC",0.6,no,,,
+3399905713,2026-10-15,"Attacks on ships in Strait of Hormuz escalate, but source unclear","Tribune Publishing Company, LLC",0.6,no,,,
+3401383631,2026-10-17,Hindu Temple Is Threatened; Teen Arrested,New York Times Company,0.6,no,,,
+3398979631,2026-10-13,Houthis Keep Up Drone and Missile Attacks on Saudis,New York Times Company,0.6,yes,Middle_East,1275.0,85.0
+3398889469,2026-10-13,Trump’s diesel import deal with Russia faces stiff bipartisan pushback,WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, USA",1266.0,87.0
+3403229376,2026-10-22,Putin Nears a Prize: Restoring Ties With the U.S. While Giving Up Nothing,New York Times Company,0.6,yes,"Russia, USA",1267.0,79.0
+3401854304,2026-10-19,Ukraine low on Patriot interceptors as strikes increase,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3400977975,2026-10-15,"Attacks on Tankers in Mideast Surge, but Oil Exports Remain Steady",New York Times Company,0.6,yes,Middle_East,1297.0,80.0
+3394767382,2026-10-03,"Fighting Intensifies in Yemen, Raising Fears of All-Out War",New York Times Company,0.6,yes,Middle_East,1276.0,80.0
+3403312685,2026-10-23,Iran says tankers attacked in Strait of Hormuz Concerns of return to war increasing as key elections loom,"Tribune Publishing Company, LLC",0.6,yes,"Middle_East, USA",1285.0,89.0
+3404807306,2026-10-26,U.N.-Backed Anti-Gang Force in Haiti Has Itself Become a Victim,New York Times Company,0.6,no,,,
+3391624879,2026-10-01,Drone Strike Deals Blow To Sciences In Ukraine,New York Times Company,0.6,no,,,
+3401881541,2026-10-19,Waiving Sanctions In Hopes Of a Favor,New York Times Company,0.6,yes,"Middle_East, Russia, USA",1257.0,84.0
+3397809830,2026-10-09,"At least 30 are killed in bus strike in Ukraine, as Russia ramps up pressure",WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3396406536,2026-10-07,Russian troops may have lost this holy relic. Is it a sign?,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3395741662,2026-10-05,"Deal Meshes Russian Oil, Ukraine and Trump Allies",New York Times Company,0.6,yes,"Russia, USA, Middle_East, West_Africa",1304.0,96.0
+3405032779,2026-10-27,What Machado's Return May Mean for Venezuela,New York Times Company,0.6,no,,,
+3398187065,2026-10-10,"In ‘NAZA,’ filmmakers train a lens on Israel’s war machine",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3399905633,2026-10-15,FBI uncovers NKorean tech job network in US,"Tribune Publishing Company, LLC",0.6,no,,,
+3403243094,2026-10-23,Putin Nearing Revived Links With the U.S.,New York Times Company,0.6,yes,"Russia, USA",1277.0,77.0
+3405494285,2026-10-28,2 men charged with national security offenses in suspected U.K. base plot,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3399375315,2026-10-14,Saudis Try To Project Resilience Under Fire,New York Times Company,0.6,yes,Middle_East,1270.0,75.0
+3404341926,2026-10-25,The battlespace has changed in Iran,WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3398979612,2026-10-13,World's Energy Order Is Challenged Again as Iran War's Reach Extends Further,New York Times Company,0.8,yes,Middle_East,1261.0,88.0
+3392817065,2026-10-02,Questions on Co-Pilot's Motive After Midair Attack in Cockpit,New York Times Company,0.6,no,,,
+3401941252,2026-10-19,Egypt agrees to help Saudi Arabia defend itself against Houthis,"Tribune Publishing Company, LLC",0.6,yes,Middle_East,1263.0,75.0
+3407082683,2026-10-31,Using Underground Gas Pipes to Protect Themselves While Fighting Russia,New York Times Company,0.6,no,,,
+3399770879,2026-10-15,From Allies to Enemies: Ethiopia and Eritrea Edge Toward War,New York Times Company,0.8,no,,,
+3399374526,2026-10-14,"Ships Struck Off Bulgaria, A NATO Ally",New York Times Company,0.6,no,,,
+3392817016,2026-10-02,Hackers Could Overwhelm Our Power Grid,New York Times Company,0.6,no,,,
+3396042328,2026-10-06,"After Threats, U.S. Bombers Evacuate U.K.",New York Times Company,0.6,no,,,
+3403109031,2026-10-22,US tells some diplomats to leave Saudi Arabia in wake of Houthi attacks,"Tribune Publishing Company, LLC",0.6,no,,,
+3405634411,2026-10-28,Cease-Fire Brokered by U.S. First Lady Begins in a Besieged Ukrainian City,New York Times Company,0.6,no,,,
+3392817072,2026-10-02,Worries Keep Oil Prices High Even as Flow In Gulf Is Back,New York Times Company,0.6,yes,"Middle_East, USA, China",1290.0,84.0
+3403229385,2026-10-22,U.S. and Israel Draw Up Plans for Renewed Strikes on Iran After Elections,New York Times Company,0.6,no,,,
+3396041704,2026-10-06,"Cut Off From Rest of Ukraine, And on the Brink of Starvation",New York Times Company,0.8,no,,,
+3404807300,2026-10-26,Uncertainty and Fear On the Streets of Iran,New York Times Company,0.8,no,,,
+3394767393,2026-10-03,Russia Wields Human Tool Against West,New York Times Company,0.6,no,,,
+3404336794,2026-10-24,Israel Launches Crackdown in West Bank City After Deadly Attack,New York Times Company,0.6,no,,,
+3402449097,2026-10-21,EU unveils new Arctic strategy as outside forces reshape region,"Tribune Publishing Company, LLC",0.6,yes,"Russia, North_Sea, Other",1250.0,79.0
+3396511586,2026-10-07,"One Year In, Adjusting To Freedom",New York Times Company,0.8,no,,,
+3395627335,2026-10-04,Mamdami Is Showing the World How It's Done,New York Times Company,0.6,no,,,
+3395608943,2026-10-04,Fighting in Ethiopia threatens to spill into other conflicts,WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3395627329,2026-10-04,Moscow Plans Biggest Blow Yet to Sink Ukraine Into Cold and Darkness,New York Times Company,0.8,yes,Russia,1248.0,67.0
+3402449114,2026-10-21,Hegseth meets with Netanyahu in Israel Trip comes amid US frustration over diplomatic efforts,"Tribune Publishing Company, LLC",0.6,no,,,
+3402088378,2026-10-20,"Blaze at Starlink Center in Lithuania Was an Attempt at Sabotage, Officials Say",New York Times Company,0.6,no,,,
+3406596541,2026-10-30,"'Finally It's Quiet' in Frontline City, for a Moment",New York Times Company,0.6,no,,,
+3397049630,2026-10-08,Authorities: FBI foils ‘radicalized’ man’s plot to attack Mall of America,"Tribune Publishing Company, LLC",0.6,no,,,
+3398664118,2026-10-11,Saudi Arabia Has Few Options as Houthis Aim at Heart of Its Ambitions,New York Times Company,0.6,yes,Middle_East,1275.0,79.0
+3395742065,2026-10-05,Yemen's Saudi-Supported Government to Widen Fight Against Houthis,New York Times Company,0.6,no,,,
+3396041710,2026-10-06,Why Last Saudi War In Yemen Went Awry,New York Times Company,0.6,no,,,
+3397947481,2026-10-09,President declares a pause on Iran strikes Trump ties hiatus to election; USS Lincoln returns to San Diego,"Tribune Publishing Company, LLC",0.6,yes,Middle_East,1289.0,72.0
+3402044484,2026-10-20,Russia proposes a Trump-Xi-Putin meeting in China next month,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3406001216,2026-10-29,"Rivals Face Off Over a Border, but Nobody Knows Where It Is",New York Times Company,0.6,no,,,
+3404121464,2026-10-24,Kyiv Satellite Link at Root Of Standoff in the Senate,New York Times Company,0.6,no,,,
+3401383640,2026-10-17,A New Kind of Battlefield: Life in Kyiv,New York Times Company,0.8,no,,,
+3395605321,2026-10-03,"An Iranian Threat, 3 Vans and a Phone Call: Behind the Mystery at a U.K. Air Base",New York Times Company,0.6,no,,,
+3403206068,2026-10-23,Oil’s great escape from the Middle East,WP Company LLC d/b/a The Washington Post,0.6,yes,"Middle_East, USA, North_Sea, Latin_America",1262.0,103.0
+3404970286,2026-10-27,Why these Uyghurs joined a war thousands of miles from China,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3396581839,2026-10-07,Border scene reminder of Israel attack View of devastated Gaza puts Oct. 7 into perspective for many,"Tribune Publishing Company, LLC",0.6,no,,,
+3396041721,2026-10-06,Saudis and Yemenis Attack Houthis in Effort to Retake Red Sea Coast,New York Times Company,0.6,yes,Middle_East,1300.0,87.0
+3397820914,2026-10-09,Trump: No plans to strike Iran again before upcoming midterm elections,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1040.0,83.0
+3395741643,2026-10-05,Ethiopia Conflict Raises Fears of a Regional War,New York Times Company,0.6,no,,,
+3402375453,2026-10-21,Zelensky Saw Pushing Back As Only Move,New York Times Company,0.6,yes,"Russia, USA",1281.0,85.0
+3401383626,2026-10-17,Russia and Ukraine Hit Data Centers to Inflict Economic Pain,New York Times Company,0.6,yes,"Russia, USA",1248.0,74.0
+3401501874,2026-10-17,Families of Sailors Killed in Gulf Struggle for Compensation and Closure,New York Times Company,0.8,yes,Middle_East,1326.0,85.0
+3398979569,2026-10-13,NATO Details Plan to Shield Ukraine's European Allies from Russia,New York Times Company,0.6,no,,,
+3401863753,2026-10-18,Zelenskyy Says Trump Risks ‘Historic Mistake’ If He Backs Russia,New York Times Company,0.6,yes,"Russia, USA",1297.0,80.0
+3405032788,2026-10-27,Musk Says Ukraine Violated Starlink's Rules,New York Times Company,0.6,no,,,
+3401613624,2026-10-18,Russia hits 9 Ukraine regions as report cites toll on civilians,"Tribune Publishing Company, LLC",0.6,no,,,
+3396164767,2026-10-06,Ukraine reports more than half of Russia’s capacity to refine oil idled,"Tribune Publishing Company, LLC",0.6,yes,Russia,1270.0,65.0
+3397893584,2026-10-09,Pentagon Draws Up Plans for Heavy Strikes on Iran as Trump Hesitates,New York Times Company,0.6,yes,Middle_East,1264.0,77.0
+3397862487,2026-10-08,What Life Looks Like in the ‘Fortress Cities’ Russia Is Trying to Break,New York Times Company,0.8,no,,,
+3396849121,2026-10-07,"Trump’s Retreat: From the Gulf to Britain, U.S. Forces Pull Back",New York Times Company,0.6,no,,,
+3391574261,2026-10-01,Crude oil shipments through the Strait of Hormuz approach prewar levels,WP Company LLC d/b/a The Washington Post,0.6,yes,"Middle_East, USA",1280.0,87.0
+3404858251,2026-10-26,Hidden financing for Alaska project unveiled Startup’s real funding source comes from Russian energy giant,"Tribune Publishing Company, LLC",0.6,no,,,
+3402188396,2026-10-20,Trump’s fight with Zelenskyy reveals a deeper frustration,"Tribune Publishing Company, LLC",0.6,no,,,
+3405634465,2026-10-28,British Man Is Charged With Helping Iran in U.K. Air Base Incident,New York Times Company,0.6,no,,,
+3401086985,2026-10-16,"Ukraine resumes oil refinery attacks Zelenskyy abandons truce, feels betrayed by Trump’s actions","Tribune Publishing Company, LLC",0.6,yes,Russia,1275.0,63.0
+3403008659,2026-10-21,"Calling Putin a ‘Humanitarian,’ Witkoff Thanks Him for Releasing an American",New York Times Company,0.6,no,,,
+3395627311,2026-10-04,"A Threat, 3 Vans and a Shadow War in a Corner of England",New York Times Company,0.6,no,,,
+3395741645,2026-10-05,Please Spare Me Your Talk of Bravery,New York Times Company,0.6,no,,,
+3402088390,2026-10-20,Zelensky Says U.S. Wants Ukraine to 'Capitulate',New York Times Company,0.6,yes,"Russia, USA",1314.0,84.0
+3399770853,2026-10-15,A Russian Bomb Shattered His Family. This Grieving Father Wants You to Know.,New York Times Company,0.8,no,,,
+3392275954,2026-10-02,‘Strong indications’ of Iranian role in air base incident,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3401383606,2026-10-17,Ukraine Needs SpaceX's Satellite Internet Service. What Does It Do?,New York Times Company,0.6,yes,"Russia, USA",1253.0,91.0
+3398979578,2026-10-13,Ukraine Shrugs Off Call By Trump to Oust Zelensky,New York Times Company,0.6,yes,"Russia, USA",1310.0,82.0
+3401550828,2026-10-18,Diplomats Caught Up In Attack In West Bank,New York Times Company,0.6,no,,,
+3395627310,2026-10-04,Israel Rebuts Accusations It Targeted Journalists,New York Times Company,0.6,no,,,
+3406001229,2026-10-29,U.S. Outlines Plans for More Military Force Against Cartels,New York Times Company,0.6,no,,,
+3395981128,2026-10-06,Relocation of U.S. bombers in U.K. highlights new risks for military bases,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3403242960,2026-10-23,Houthi Strike Kills at Least 2 at Saudi Airport; U.S. Pulls Out Some Diplomats,New York Times Company,0.6,yes,Middle_East,1314.0,82.0
+3404083965,2026-10-23,Gadi Eisenkot Couldn’t Be More Unlike Netanyahu. Can He Beat Him?,New York Times Company,0.6,no,,1301.0,53.0
+3393331619,2026-10-02,UK-Iranian man arrested in London in connection to air base incident,"Tribune Publishing Company, LLC",0.6,no,,,
+3401443539,2026-10-17,Russia hits 9 Ukraine regions as report cites toll on civilians,"Tribune Publishing Company, LLC",0.6,no,,,
+3392817041,2026-10-02,Man Detained in U.K. Air Base Incident,New York Times Company,0.6,no,,,
+3402188414,2026-10-20,Zelenskyy: No early warning on attack Lack of intel sharing comes as Russia hits Ukraine power grid,"Tribune Publishing Company, LLC",0.6,no,,,
+3396511610,2026-10-07,"Drones Hit Ships Off Bulgaria's Black Sea Coast, Prime Minister Says",New York Times Company,0.6,no,,,
+3397049656,2026-10-08,Israelis mourn lives lost in deadly attack in 2023 Palestinians mark another day of woe as Gaza lies in ruins,"Tribune Publishing Company, LLC",0.8,no,,,
+3404857596,2026-10-26,Israel presses on with West Bank operation as key election looms,"Tribune Publishing Company, LLC",0.6,no,,,
+3398716277,2026-10-12,Houthis keep hitting Saudi airports Attacks come as US mulls joining fight; Iran nixes peace bid,"Tribune Publishing Company, LLC",0.6,no,,,
+3395742071,2026-10-05,Israeli Government Agencies Trade Blame for Failure to Flag FlyDubai Co-Pilot,New York Times Company,0.6,no,,,
+3402375535,2026-10-21,Hegseth Holds Talks During Unannounced Visit to Israel,New York Times Company,0.6,no,,,
+3394721212,2026-10-02,Russia Wields Human Weapon Against the West: Migrants,New York Times Company,0.6,no,,,
+3397893614,2026-10-09,Attacks Send Price of Oil Climbing,New York Times Company,0.6,yes,Middle_East,1289.0,92.0
+3404733330,2026-10-26,D.C. rabbi among volunteers detained by Israel in West Bank,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3397893603,2026-10-09,Houthis' Attacks On Saudi Capital Risk A Wider War,New York Times Company,0.6,yes,Middle_East,1259.0,86.0
+3404858258,2026-10-26,Israel presses on with West Bank operation as key election looms,"Tribune Publishing Company, LLC",0.6,no,,,
+3398653065,2026-10-11,Wringing Hope From the Rubble of the Gaza Strip,New York Times Company,0.6,no,,,
+3396832330,2026-10-07,"For Twin Brothers Abducted in the Oct. 7 Attacks, Adjusting to Freedom Is a New Challenge",New York Times Company,0.8,no,,,
+3398979627,2026-10-13,Dozens Killed As Bombs Hit Sudan Miners,New York Times Company,0.6,no,,,
+3392817015,2026-10-02,Trump's Diesel Threat Sets Off Alarms,New York Times Company,0.6,yes,"Middle_East, Russia, USA, Canada",1285.0,90.0
+3405099922,2026-10-27,Mideast delegations meet with Iran Region on edge over potential for renewed fighting in conflicts,"Tribune Publishing Company, LLC",0.6,yes,Middle_East,1253.0,87.0
+3402088400,2026-10-20,Glimpses Inside Russia's Plague Research Labs,New York Times Company,0.6,no,,,
+3401613729,2026-10-18,Trump’s Russia move irks Congress Curb on sanctions comes hours before Graham Act to start,"Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1303.0,77.0
+3398330030,2026-10-10,Deadly Houthi Attacks Expose Saudi Arabia Vulnerabilities,New York Times Company,0.6,yes,Middle_East,1288.0,79.0
+3401881548,2026-10-19,U.S. Urges Israel to Rein In West Bank Violence,New York Times Company,0.6,no,,,
+3399770908,2026-10-15,Mourners Still in Shock After Attack on Airport,New York Times Company,0.6,no,,,
+3401510402,2026-10-18,"As Ukraine worries about Starlink, Russia is developing its own system",WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, USA",1243.0,68.0
+3407082700,2026-10-31,Israel's Election Winner Is Unlikely to Alter Its Policies,New York Times Company,0.6,no,,,
+3397893602,2026-10-09,Putin's Dangerous Game in Europe,New York Times Company,0.6,no,,,
+3395189994,2026-10-03,Stabbed airline captain hailed as hero recalls ‘fighting for my life’,"Tribune Publishing Company, LLC",0.6,no,,,
+3403053243,2026-10-22,"As Putin Frees American, U.S. Sees 'Humanitarian'",New York Times Company,0.6,no,,,
+3396581803,2026-10-07,"Anger rises after president suggests Iran could ‘take out’ LA, San Diego","Tribune Publishing Company, LLC",0.6,no,,,
+3396511603,2026-10-07,Iranian Drone Threat Prompted U.S. Bombers' Exit From Britain,New York Times Company,0.6,no,,,
+3401550829,2026-10-18,"After Sailors Are Killed in Gulf, Families Find Payouts Elusive",New York Times Company,0.8,yes,Middle_East,1336.0,75.0
+3392341229,2026-10-02,"Jews were target in jet attack, Israel says",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3406697253,2026-10-30,Nvidia chief seen as target of spy plot US investigates if advanced AI chips delivered to China,"Tribune Publishing Company, LLC",0.6,no,,,
+3396548623,2026-10-07,How Twin Brothers Are Rebuilding Their Lives After 2 Years in Captivity in Gaza,New York Times Company,0.6,no,,,
+3396885048,2026-10-08,Trump's Push To War Turns Into a Retreat,New York Times Company,0.6,no,,,
+3393331645,2026-10-02,"Bond uncertainty drives up costs of borrowing globally Big sell-off, highest yield since 2002 pressuring governments","Tribune Publishing Company, LLC",0.6,yes,Middle_East,1248.0,68.0
+3398533209,2026-10-11,"Houthis strike Saudi Arabian airport, killing 12",WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1288.0,97.0
+3399474593,2026-10-14,"Saudi-led coalition strikes fuel facility in Yemen, Houthis say","Tribune Publishing Company, LLC",0.6,yes,Middle_East,1284.0,80.0
+3406998961,2026-10-31,Hack is likely largest theft of digital currencies in history,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3402088398,2026-10-20,"Under Siege, Ukraine Uses F-16s to Down Russia's Jet-Powered Drones",New York Times Company,0.6,no,,,
+3396776314,2026-10-08,Woman’s killing stirs a long-simmering rage over U.S. military in Okinawa,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3407164026,2026-10-31,US scraps traditional G20 photo after gripes over Russia’s Lavrov,"Tribune Publishing Company, LLC",0.6,yes,"Russia, Middle_East",1256.0,79.0
+3395190028,2026-10-03,Russian strikes target bridges in Kyiv Latest tactic made as India joins group pitching truce offer,"Tribune Publishing Company, LLC",0.6,no,,,
+3402449111,2026-10-21,Hegseth meets with Netanyahu in Israel Trip comes amid US frustration over diplomatic efforts,"Tribune Publishing Company, LLC",0.6,no,,,
+3393331698,2026-10-02,"Iran’s med prices sickening Costs soar as US blockade, sanctions squeeze country’s pharmaceuticals industry","Tribune Publishing Company, LLC",0.6,yes,"Middle_East, USA",1269.0,83.0
+3404121436,2026-10-24,'Everything Is Fine': Russians on Life During War,New York Times Company,0.6,yes,Russia,1302.0,66.0
+3395723778,2026-10-04,U.S.-Russia Talks on Ukraine Now Involve an Oil Deal Tied to Trump Allies,New York Times Company,0.6,yes,"Russia, USA, Middle_East",1279.0,80.0
+3391574272,2026-10-01,U.K. accuses Chinese institute of being espionage front,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3399279803,2026-10-14,"After Russia’s plague incident, U.S. readiness needs urgent review",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3395992788,2026-10-05,Superpowers Race to Put Nuclear Reactors on the Moon,New York Times Company,0.6,no,,,
+3399279804,2026-10-14,‘Make the problem and the solution bigger’: The plan to end the Ukraine war,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1300.0,74.0
+3403008657,2026-10-21,"When Starshield Cut Out, Ukrainian Drones Fell From the Skies",New York Times Company,0.6,yes,Russia,1256.0,72.0
+3403242905,2026-10-23,'Open War' Of Pakistan And Taliban Escalates,New York Times Company,0.6,no,,,
+3401383618,2026-10-17,Saudi Arabia's Flagship Events at Risk as Houthis Strike at Heart of Kingdom,New York Times Company,0.6,yes,Middle_East,1234.0,85.0
+3399046583,2026-10-13,Resumption of war between Houthis and Saudis is bad timing for Trump,"Tribune Publishing Company, LLC",0.6,yes,Middle_East,1280.0,87.0
+3397947482,2026-10-09,Satellites reveal scope of Gaza’s pain Photos illustrate how little of communities remain after razing,"Tribune Publishing Company, LLC",0.8,no,,,
+3404439163,2026-10-25,Iran Said to Be in 'Advanced Stages' Of Planning Attacks on Americans,New York Times Company,0.8,no,,,
+3401551009,2026-10-18,The Shame Of the Russian Diesel Deal,New York Times Company,0.6,yes,"Russia, USA",1282.0,77.0
+3398233588,2026-10-10,"9/11-style jet attack planned, UAE says",WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3395723783,2026-10-04,Saudi-Backed Yemeni Government Declares War Against Houthis,New York Times Company,0.8,no,,,
+3401613779,2026-10-18,"Russia bets aerial attacks will win war But history suggests plan will fall short in Ukraine, experts say","Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1256.0,77.0
+3402375409,2026-10-21,Trump Says He Asked Putin to Release American Jailed in Russia,New York Times Company,0.6,yes,"Russia, USA",1303.0,74.0
+3401383656,2026-10-17,Israeli Settlers Attack Palestinians and Washington Post Photographer,New York Times Company,0.6,no,,,
+3402981108,2026-10-22,Putin frees U.S. citizen in goodwill maneuver,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3392664877,2026-10-01,Investigators Seek Motive in FlyDubai Cockpit Attack,New York Times Company,0.6,no,,,
+3395985433,2026-10-06,Israeli settlers are racing to reshape West Bank,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3405854114,2026-10-29,The Korean Peninsula is an economic powder keg worth trillions,WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3405702249,2026-10-28,"Russia, Ukraine start localized ceasefire brokered by first lady","Tribune Publishing Company, LLC",0.6,no,,,
+3395627269,2026-10-04,Trump's 'March Of Folly',New York Times Company,0.8,yes,"Middle_East, USA",1289.0,83.0
+3398910072,2026-10-12,Russian Film Aims to Rewrite History of Deadly Theater Bombing in Ukraine,New York Times Company,0.6,no,,,
+3399046392,2026-10-13,"EU sanctions Russian firms, officials in arms industry","Tribune Publishing Company, LLC",0.6,no,,,
+3396581796,2026-10-07,"Three years after Oct. 7, remember how this war began","Tribune Publishing Company, LLC",0.6,no,,,
+3404439161,2026-10-25,Trump Doesn't Get to Decide Ukraine's Future,New York Times Company,0.6,no,,,
+3402088376,2026-10-20,"Israelis and Jews in the U.A.E., Once a Haven, Feel the Sense of Security Eroding",New York Times Company,0.6,no,,,
+3402044478,2026-10-20,Patriot missiles are upheld by U.S.,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1246.0,73.0
+3394721220,2026-10-02,The Mother’s Scream That Sent Passengers to the Rescue,New York Times Company,0.6,no,,,
+3407163945,2026-10-31,Oil firms net blockbuster profits in wartime boom Earnings during Iran conflict estimated at more than $130B,"Tribune Publishing Company, LLC",0.6,yes,"Middle_East, USA",1267.0,89.0
+3397809801,2026-10-09,Rebuilding in Gaza remains thwarted by Netanyahu,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3396776312,2026-10-08,"AI-powered robots are next in war tech, Ukraine’s ex-defense minister says",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3396041695,2026-10-06,Bolsonaro Win Would Help Fulfill Trump's Aims for Latin America,New York Times Company,0.6,yes,"Latin_America, Venezuela",1271.0,80.0
+3398979610,2026-10-13,Deal on Diesel Jolts U.S. Ties With Ukraine,New York Times Company,0.6,yes,"Russia, USA",1285.0,81.0
+3396375988,2026-10-07,"Putin’s Europe plan: Hybrid attacks, nuclear bluster",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3399375287,2026-10-14,Backing Down on Ukraine While Failing in Iran Is an Invitation to Our Enemies,New York Times Company,0.8,no,,,
+3401863747,2026-10-18,U.S. Floats Another Lifeline to Russia: Allowing It to Sell More Gas to Europe,New York Times Company,0.6,yes,Russia,1270.0,79.0
+3402449151,2026-10-21,Zelenskyy: Early alert system resumes Ukraine leader cites call with Rubio for intelligence change,"Tribune Publishing Company, LLC",0.6,no,,,
+3398574350,2026-10-11,Trump Attacks Ukraine Leader Over Oil Strikes,New York Times Company,0.6,yes,"Russia, USA",1288.0,85.0
+3404439134,2026-10-25,Israel Launches Crackdown in West Bank City After Deadly Attack,New York Times Company,0.6,no,,,
+3397893606,2026-10-09,"Russia's Leveraging Edge In the Sky, Zelensky Says",New York Times Company,0.8,no,,,
+3396776307,2026-10-08,Strikes in Gaza grind on 3 years later as deaths pile up,WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3395992093,2026-10-05,"Trapped in a Kill Zone, a Ukrainian City Is Beginning to Starve",New York Times Company,0.6,no,,,
+3401881543,2026-10-19,Kyiv Wonders Whether U.S. Will Strand It,New York Times Company,0.6,yes,"Russia, USA",1280.0,74.0
+3399374474,2026-10-14,"Houthis, Saying Two Oil Facilities Were Hit, Strike Back at Saudi Arabia",New York Times Company,0.6,yes,Middle_East,1324.0,80.0
+3391624899,2026-10-01,Passengers and Crew Save Plane to Israel After Attack,New York Times Company,0.6,no,,,
+3402088361,2026-10-20,Saudi Investment Event Delayed Until 2027 After Houthi Attacks,New York Times Company,0.6,yes,Middle_East,1242.0,78.0
+3403053217,2026-10-22,China Condemns American Ban on DeepSeek A.I. in Government Systems,New York Times Company,0.6,no,,,
+3403243085,2026-10-23,U.S. and Israelis Drawing Up Plan For Iran Attacks,New York Times Company,0.6,no,,,
+3402324460,2026-10-21,Palestinians see attacks in West Bank as part of siege,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3394767345,2026-10-03,Mother's Scream Alerted Passengers to a Horrific Midair Attack,New York Times Company,0.6,no,,,
+3400199598,2026-10-16,A survival guide for eastern Ukraine,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3402347000,2026-10-20,Trump’s Push for Deals With Russia Powers His Frustration With Ukraine,New York Times Company,0.6,yes,Russia,1306.0,76.0
+3403206057,2026-10-23,U.S. orders some diplomats to exit Saudi Arabia amid rising Houthi attacks,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1247.0,80.0
+3394767381,2026-10-03,"As Oil Flows, Iran Mounts More Attacks On the Strait",New York Times Company,0.6,yes,Middle_East,1285.0,71.0
+3397862483,2026-10-08,Houthi Attacks on Saudi Airports Prompt Mass Cancellations,New York Times Company,0.6,yes,Middle_East,1255.0,79.0
+3397947328,2026-10-09,President declares a pause on Iran strikes Trump ties hiatus to election; USS Lincoln returns to San Diego,"Tribune Publishing Company, LLC",0.6,yes,Middle_East,1289.0,77.0
+3401383629,2026-10-17,"Despite Cuts, Complex Ties Help Ukraine Keep U.S. Aid",New York Times Company,0.6,no,,,
+3399770897,2026-10-15,Satellite Cut Hobbles Ukraine As Russia Pounds Power Grid,New York Times Company,0.8,yes,"Russia, USA",1255.0,69.0
+3406596489,2026-10-30,Nvidia Chief Seen as Target of Chinese Spy Plot,New York Times Company,0.6,no,,,
+3404807307,2026-10-26,Saudi Airport Is Reopened Despite Vows Of Attacks,New York Times Company,0.6,no,,,
+3396511604,2026-10-07,Ex-Spy Chief Is Accused Of Espionage In Germany,New York Times Company,0.6,no,,,
+3403109055,2026-10-22,Donald Trump’s actions against Ukraine betray Ronald Reagan,"Tribune Publishing Company, LLC",0.6,yes,"Russia, USA, Middle_East",1282.0,89.0
+3404439165,2026-10-25,"Crafting Image of Mr. Security, He Asks to Keep Israel's Trust",New York Times Company,0.6,no,,,
+3399374516,2026-10-14,"War Widens Wealth Gap, I.M.F. Warns",New York Times Company,0.6,yes,Middle_East,1255.0,73.0
+3405032745,2026-10-27,"Vote Looming, Netanyahu Eyed Attack, Officials Say",New York Times Company,0.6,no,,,
+3399374522,2026-10-14,An 'Absolute Nightmare' in Russian Warehouses Struck by Ukraine,New York Times Company,0.8,no,,,
+3404807305,2026-10-26,"After Lebanon Cease-Fire, Israel Razed Villages",New York Times Company,0.6,no,,,
+3402057911,2026-10-19,"For Israelis and Jews in the UAE, an Eroding Sense of Security",New York Times Company,0.6,no,,,
+3405634463,2026-10-28,Dominant Hunter of Battlefield Is Facing a Deadly New Menace,New York Times Company,0.6,no,,,
+3398910235,2026-10-12,World’s Energy Order Tested Again as Iran War’s Reach Extends Further,New York Times Company,0.6,yes,Middle_East,1251.0,89.0
+3397893621,2026-10-09,"In Holdout Bastions, Russia Is Obliterating What It Can't Conquer",New York Times Company,0.8,no,,,
+3398716330,2026-10-12,Lack of Ukraine troops plague war efforts Shortage of forces leads to more losses and high attrition,"Tribune Publishing Company, LLC",0.6,no,,,
+3396042334,2026-10-06,Superpowers Racing to Put Nuclear Reactors on Moon,New York Times Company,0.6,no,,,
+3406697332,2026-10-30,New era of winged conflict takes flight US Army training helicopter pilots to shoot down drones,"Tribune Publishing Company, LLC",0.6,no,,,
+3392817068,2026-10-02,Finnish Lawmakers Report Break-Ins,New York Times Company,0.6,no,,,
+3395189989,2026-10-03,Jet drones outpace Ukraine defenses Engineers racing to build interceptors that can match them,"Tribune Publishing Company, LLC",0.8,no,,,
+3394767357,2026-10-03,"China Imposes Curbs on Fuel Exports, Upending Markets",New York Times Company,0.6,yes,"China, Russia, USA",1240.0,76.0
+3394767371,2026-10-03,Kyiv Reports 1st War Use Of a Missile It Produced,New York Times Company,0.6,no,,,
+3396164797,2026-10-06,"Houthis expelled from key strait areas Saudi-backed forces reclaiming territory, Yemeni officials say","Tribune Publishing Company, LLC",0.6,no,,,
+3400983397,2026-10-16,"Ukraine Resumes Refinery Strikes, Defying The U.S.",New York Times Company,0.6,yes,"Russia, USA",1283.0,73.0
+3398979586,2026-10-13,Trump Aids Russia in Economic War With Kyiv,New York Times Company,0.8,yes,"Russia, USA",1268.0,87.0
+3398615779,2026-10-11,US weighs striking Houthi rebels after Saudi airport hit again,"Tribune Publishing Company, LLC",0.8,yes,Middle_East,1107.0,78.0
+3392816991,2026-10-02,"On a Rooftop, Discussing War",New York Times Company,0.6,no,,,
+3401941279,2026-10-19,"As a thwarted mass shooting shows, we can’t ignore hate against Hindu Americans","Tribune Publishing Company, LLC",0.6,no,,,
+3402375493,2026-10-21,U.K. Sending Fighter Jets To Defend Saudi Arabia,New York Times Company,0.6,no,,,
+3404807318,2026-10-26,"Turnout Grows for Demonstrations in France, Worrying Officials",New York Times Company,0.6,no,,,
+3396511592,2026-10-07,New Arrest Linked to Air Base Incident,New York Times Company,0.6,no,,,
+3402905532,2026-10-22,"Israel detains U.S. House candidate, activists amid West Bank olive harvest",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3397893618,2026-10-09,Geography Distorts A Globalized World,New York Times Company,0.6,yes,"Middle_East, Latin_America",1262.0,80.0
+3403053248,2026-10-22,"As Israeli Election Nears, Many Palestinians Hope For Netanyahu's Ouster",New York Times Company,0.6,no,,,
+3391624854,2026-10-01,"Despite Cease-Fire, Israeli Forces Continue to Push, Images Show",New York Times Company,0.6,no,,,
+3406001179,2026-10-29,U.S. Called It Putin's 'Slush Fund.' Now Trump May Drop Sanctions on It.,New York Times Company,0.6,yes,"Russia, USA",1275.0,81.0
+3398889473,2026-10-13,Ukraine’s precise blows hobble Russian refineries,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1250.0,66.0
+3398979637,2026-10-13,Quote of the Day,New York Times Company,0.6,no,,,
+3403214370,2026-10-23,"Netanyahu: U.S., Israel must end Iranian regime once and for all",WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1287.0,75.0
+3403312723,2026-10-23,Iran says tankers attacked in Strait of Hormuz Concerns of return to war increasing as key elections loom,"Tribune Publishing Company, LLC",0.6,yes,"Middle_East, USA",1285.0,88.0
+3402088385,2026-10-20,Trump Defends Easing of Russia Sanctions and Hints at Hostage Deal,New York Times Company,0.6,no,,,
+3395774944,2026-10-05,U.S.-Russia Talks on Ukraine Now Involve an Oil Deal Tied to Trump Allies,New York Times Company,0.6,yes,"Russia, USA, Middle_East",1297.0,83.0
+3395741651,2026-10-05,Biden Nearly Cut Off Netanyahu Because of Anger Over Gaza,New York Times Company,0.6,no,,,
+3402375498,2026-10-21,Stop Appeasing Russia,New York Times Company,0.8,no,,,
+3407047547,2026-10-30,Ukrainians Are Fighting Russians Inside Underground Gas Pipes. I Went in One.,New York Times Company,0.6,no,,,
+3397049812,2026-10-08,"On Putin’s birthday, Russian strikes kill at least 25 in Ukrainian regions","Tribune Publishing Company, LLC",0.8,yes,Russia,1277.0,65.0
+3392275963,2026-10-02,Pentagon prepares for potential surge of naval forces in Middle East,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1270.0,76.0
+3399046578,2026-10-13,Zelenskyy: Russia strikes energy sites despite Trump’s ‘ceasefire’,"Tribune Publishing Company, LLC",0.6,no,,,
+3393331670,2026-10-02,Co-pilot’s motive sought in FlyDubai plane attack Trump floats idea Iran may be behind attempt to crash jet,"Tribune Publishing Company, LLC",0.6,no,,,
+3396581905,2026-10-07,Border scene reminder of Israel attack View of devastated Gaza puts Oct. 7 into perspective for many,"Tribune Publishing Company, LLC",0.6,no,,,
+3401383596,2026-10-17,Why Trump's Diesel Deal With Putin Won't Knock Down High Prices,New York Times Company,0.6,yes,"Middle_East, Russia, USA",1290.0,82.0
+3403053227,2026-10-22,Official Says Drone Strike In Sudan War Kills Over 150,New York Times Company,0.6,yes,"North_Africa, Other",1292.0,79.0
+3402325061,2026-10-21,"U.S. restores intelligence sharing with Ukraine, Zelensky says",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3399770900,2026-10-15,12 Senators Urge Trump To Abandon Diesel Move,New York Times Company,0.6,no,,,
+3399635950,2026-10-15,"Russia detains Japanese journalist, alleging espionage",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3400979815,2026-10-15,Why Does Saudi Arabia Struggle to Stop Houthi Attacks?,New York Times Company,0.6,error,,0.0,0.0
+3404795669,2026-10-25,A New Level of Threat and Fear Risks Pushing the U.S. and Iran Back to Full War,New York Times Company,0.7,yes,"Middle_East, USA",1278.0,80.0
+3401550975,2026-10-18,Trump's Order Exempts Russia From Sanctions,New York Times Company,0.6,yes,"Russia, Middle_East, USA",1246.0,97.0
+3398574349,2026-10-11,I Went to Uganda and Saw The Authoritarian Future,New York Times Company,0.6,no,,,
+3401087105,2026-10-16,Trump’s Russian diesel deal defies the law and won’t help us,"Tribune Publishing Company, LLC",0.8,yes,"Russia, USA",1259.0,88.0
+3397049803,2026-10-08,US-Russia talks on war spread to oil Deal tied to Trump allies raises conflict of interest questions,"Tribune Publishing Company, LLC",0.6,yes,"Russia, USA, Middle_East",1291.0,83.0
+3391554020,2026-10-01,Alexander Ovechkin advertises Putin’s evil on American ice,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3398676273,2026-10-12,"Remade by War in Ukraine, A Russian Region Is Pulled Between Pride and Loss",New York Times Company,0.6,no,,,
+3402325055,2026-10-21,U.K. police rearrest two men in suspected Iranian plot on air base,WP Company LLC d/b/a The Washington Post,0.6,yes,"Middle_East, USA",1240.0,85.0
+3394502310,2026-10-03,Attempted hijacking ignites firestorm in Israel,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3401514379,2026-10-18,"In West Bank, another assault follows beating",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3404121482,2026-10-24,Oil Price Hits Highest Level Since April,New York Times Company,0.8,yes,Middle_East,1222.0,76.0
+3395627280,2026-10-04,"Russia Is Striking Bridges, Vital Lifelines in Kyiv",New York Times Company,0.8,no,,,
+3399294935,2026-10-14,Saudi Arabia confronts costs of U.S. war on Iran,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3407082690,2026-10-31,Vance Offers To Restart Peace Talks With Iran,New York Times Company,0.6,no,,,
+3398330051,2026-10-10,"Co-Pilot's Aim Was to Crash Into Airport, Emiratis Say",New York Times Company,0.8,no,,,
+3396800537,2026-10-08,B-1 pullout shows wily tactics of a weaker foe,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1299.0,72.0
+3405070493,2026-10-27,"Netanyahu Pushed for Attack on Iran Ahead of Israeli Election, Officials Say",New York Times Company,0.6,no,,,
+3395721543,2026-10-05,Russian attacks on bridges aim to make Kyiv unlivable,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1275.0,70.0
+3403242912,2026-10-23,Mayor in Haiti Warned of a Massacre by Gangs. No One Listened.,New York Times Company,0.6,no,,,
+3404533312,2026-10-25,Israel cracks down on West Bank city Crowd in Tel Aviv opposes Netanyahu ahead of election,"Tribune Publishing Company, LLC",0.6,no,,,
+3404439168,2026-10-25,Feeling Betrayed by 'Russia Has Been Fine on Ukraine',New York Times Company,0.6,no,,,
+3399279800,2026-10-14,The Riyadh airport attack exposes a new flight path for terror,WP Company LLC d/b/a The Washington Post,0.8,no,,,
+3404533336,2026-10-25,"Netanyahu vows to retaliate for attack Israeli military says assailants shoot, kill soldiers in West Bank","Tribune Publishing Company, LLC",0.6,no,,,
+3404439117,2026-10-25,U.S. Pressures Mexico to Deliver a Security Win Ahead of the Midterms,New York Times Company,0.6,yes,"Mexico, Latin_America",1256.0,85.0
+3396456623,2026-10-06,How the Houthis Triumphed on the Red Sea and Sparked a New War in Yemen,New York Times Company,0.8,no,,,
+3391755272,2026-10-01,"After 12 years, final US troops leave Iraq","Tribune Publishing Company, LLC",0.6,no,,,
+3395659813,2026-10-04,"Co-pilot used ax in attack, UAE says New details in plane inquiry cite possible radical views of man","Tribune Publishing Company, LLC",0.6,no,,,
+3401881517,2026-10-19,U.S. Floats More Relief for Russia: Letting It Sell Europe Gas,New York Times Company,0.6,yes,Russia,1252.0,72.0
+3399375288,2026-10-14,MI5 Chief Warns That Iran and Russia Have Been Escalating Attacks,New York Times Company,0.6,yes,"Middle_East, USA",1285.0,83.0
+3398517499,2026-10-10,A Deadly Firefight Exposes Erik Prince’s New Shadow War in Congo,New York Times Company,0.6,no,,,
+3402374746,2026-10-21,Five Soldiers Are Missing After Ambush In Haiti Unrest,New York Times Company,0.6,no,,,
+3398412432,2026-10-10,"Trump strikes diesel deal with Putin, eases US pressure on Russia","Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1312.0,90.0
+3401500381,2026-10-18,The stealth candidacy of Abdul El-Sayed,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3401854595,2026-10-19,"As Iran war spills over, a path of conflict",WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1281.0,75.0
+3398574402,2026-10-11,China Broadens Its Military Reach With an Air Force Installation in Laos,New York Times Company,0.6,no,,,
+3402026167,2026-10-20,Zelensky has figured out why Trump loves Putin,WP Company LLC d/b/a The Washington Post,0.6,yes,"Russia, USA, Middle_East",1331.0,81.0
+3391624886,2026-10-01,"Ukraine's Versatile, Inexpensive Naval Drones Are Remaking War at Sea",New York Times Company,0.6,no,,,
+3395742069,2026-10-05,Iran's Top Security Official Warns of Dire Economic Crisis,New York Times Company,0.6,yes,Middle_East,1271.0,83.0
+3398517497,2026-10-10,How a U.S. Diplomat Suppressed and Altered Reports Critical of Israel,New York Times Company,0.6,no,,,
+3392275962,2026-10-02,Saudi Arabia wants America’s nuclear trust. Remember Jamal Khashoggi.,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1265.0,79.0
+3406559628,2026-10-29,A Ceasefire Melania Trump Announced Gives a City Brief Calm,New York Times Company,0.6,no,,,
+3397947376,2026-10-09,"Russian strike on public buses kills at least 30, Ukrainians say","Tribune Publishing Company, LLC",0.8,yes,Russia,1277.0,69.0
+3405099927,2026-10-27,"If Israel gets a new prime minister, will anything change?","Tribune Publishing Company, LLC",0.6,no,,,
+3406001235,2026-10-29,Attack Foiled In Belgrade At Embassy Of Israel,New York Times Company,0.6,no,,,
+3402188843,2026-10-20,Zelenskyy: No early warning on attack Lack of intel sharing comes as Russia hits Ukraine power grid,"Tribune Publishing Company, LLC",0.6,no,,,
+3404212185,2026-10-24,"Netanyahu vows to retaliate for attack Israeli military says assailants shoot, kill soldiers in West Bank","Tribune Publishing Company, LLC",0.6,no,,,
+3404807295,2026-10-26,Rising Fears and Threats Risk a Wider War in Iran,New York Times Company,0.8,yes,"Middle_East, USA",1276.0,90.0
+3395742081,2026-10-05,Base Would Be a High Bar in 'Gig-Economy' Warfare,New York Times Company,0.6,no,,,
+3404857591,2026-10-26,Soldier clings to hope of seeing kids US surgeons come to aid of Ukrainian who lost eyesight in battle,"Tribune Publishing Company, LLC",0.6,no,,,
+3404807303,2026-10-26,Russian Money Is Tied To an Alaska Gas Plan,New York Times Company,0.6,no,,,
+3398574361,2026-10-11,12 Killed in Houthi Attack on Saudi Airport,New York Times Company,0.8,no,,,
+3395985435,2026-10-06,Heated debates presaged Iran issues,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1257.0,85.0
+3399905638,2026-10-15,"Ukraine slams Starlink speed limit With drones slowed, officials also cite lack of intel before attacks","Tribune Publishing Company, LLC",0.6,no,,,
+3399770878,2026-10-15,"As Ukraine Worries Over U.S. Intelligence Sharing, Europeans Pledge Support",New York Times Company,0.6,yes,Russia,1264.0,71.0
+3399374500,2026-10-14,Diesel Break Brings Nothing From Putin But More Strikes,New York Times Company,0.8,yes,"Russia, USA",1280.0,72.0
+3404807302,2026-10-26,"Even If Oil Prices Come Down, Expect Airfares to Stay Costly",New York Times Company,0.6,yes,Middle_East,1296.0,70.0
+3405601733,2026-10-27,A New Era of War: A 9-Ton U.S. Helicopter Versus a Drone,New York Times Company,0.6,no,,,
+3405099887,2026-10-27,Netanyahu’s legacy on line in vote Israelis head to polls in first election since Oct. 7 Hamas attack,"Tribune Publishing Company, LLC",0.6,no,,,
+3396885061,2026-10-08,"Houthis Hit Saudi Arabia At 2 Airports, Killing Three",New York Times Company,0.6,no,,,
+3401443553,2026-10-17,"Israeli settlers attack olive farmers US decries vigilante beatings of journalist, West Bank villagers","Tribune Publishing Company, LLC",0.6,no,,,
+3404121425,2026-10-24,"To Hurt Saudi Arabia, Houthis Underline the Kingdom's Links to Epstein",New York Times Company,0.6,no,,,
+3401329389,2026-10-17,"Starving residents flee destroyed, Russian-occupied territory",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3407006510,2026-10-31,Trump administration puts new sanctions on Rwanda over war in Congo,WP Company LLC d/b/a The Washington Post,0.6,no,,1289.0,74.0
+3404121476,2026-10-24,2 Israeli Soldiers and 2 Palestinians Are Killed in West Bank Gun Battle,New York Times Company,0.6,no,,,
+3397809818,2026-10-09,China’s land grab is already visible underwater,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3398615720,2026-10-11,"Trump strikes diesel deal with Putin, eases US pressure on Russia","Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1312.0,90.0
+3402302693,2026-10-21,How to stop Putin’s missiles before they even leave Russia,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3404439111,2026-10-25,The Factory Where the Nation's Future Is Being Made,New York Times Company,0.6,no,,,
+3402347004,2026-10-20,Why Zelenskyy Took the Gloves Off This Time With Trump,New York Times Company,0.6,yes,"Russia, USA",1279.0,82.0
+3395659658,2026-10-04,Russian strikes target bridges in Kyiv Latest tactic made as India joins group pitching truce offer,"Tribune Publishing Company, LLC",0.6,no,,,
+3400983441,2026-10-16,Ship Attacks Not Curbing Oil Exports,New York Times Company,0.6,yes,Middle_East,1301.0,76.0
+3394720566,2026-10-02,"Fighting Intensifies in Yemen, Raising Fears Further of All-Out War",New York Times Company,0.6,yes,Middle_East,1264.0,86.0
+3398330022,2026-10-10,"In Gaza, Wringing Rare Hope From Rubble",New York Times Company,0.6,no,,,
+3395659713,2026-10-04,Stabbed airline captain hailed as hero recalls ‘fighting for my life’,"Tribune Publishing Company, LLC",0.6,no,,,
+3400977977,2026-10-15,"Defying Trump, Zelenskyy Says Ukraine Will Resume Russian Refinery Strikes",New York Times Company,0.6,yes,"Russia, USA",1284.0,77.0
+3392816960,2026-10-02,Russia Raising Budget For Military and Paring Money for Health Care,New York Times Company,0.8,yes,"Russia, Middle_East",1287.0,76.0
+3396042354,2026-10-06,Will Elections Bring Relief to Israeli Anxiety?,New York Times Company,0.6,yes,Middle_East,1288.0,79.0
+3398574430,2026-10-11,Deadly Clash Exposes Shadow War in Congo,New York Times Company,0.6,no,,,
+3391755253,2026-10-01,UK leans toward Iran playing part in security incident at US-run base,"Tribune Publishing Company, LLC",0.6,yes,"Middle_East, USA",1206.0,88.0
+3402088403,2026-10-20,Trump Officials Had Fed Fears Of Carnage of Bomb in Space,New York Times Company,0.6,no,,,
+3395610208,2026-10-04,UAE: Co-pilot used crash ax to attempt a terrorist act,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3396510456,2026-10-07,Houthis' Dash for the Red Sea Found Yemeni Forces in Disarray,New York Times Company,0.6,no,,,
+3404036145,2026-10-24,"First lady brokered ceasefire at besieged Ukrainian town, White House says",WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3405099929,2026-10-27,Netanyahu’s legacy on line in vote Israelis head to polls in first election since Oct. 7 Hamas attack,"Tribune Publishing Company, LLC",0.6,no,,,
+3394767392,2026-10-03,The News Quiz,New York Times Company,0.6,no,,,
+3399635946,2026-10-15,Iranian attacks sink two ships in Strait of Hormuz amid escalating violence,WP Company LLC d/b/a The Washington Post,0.6,yes,Middle_East,1126.0,77.0
+3398716392,2026-10-12,"Pentagon again quietly raises toll of US dead, injured from Iran war","Tribune Publishing Company, LLC",0.6,no,,,
+3404036144,2026-10-24,West Bank reprisals vowed for Israeli deaths,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3399340326,2026-10-13,"Trump Hands Victories to Putin, Who Offers More War in Return",New York Times Company,0.8,yes,"Russia, USA, Other",1271.0,78.0
+3395721536,2026-10-05,Israel orders security review of foreign civil flights after co-pilot attack,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3398910068,2026-10-12,‘There Are No Words’: Dozens Killed in Airstrikes Near Sudan-Egypt Border,New York Times Company,0.6,no,,,
+3405601731,2026-10-27,"In Israel’s Election, It’s Nationalism vs. Founding Ideals",New York Times Company,0.6,no,,,
+3399474688,2026-10-14,Europe allies recoil from diesel deal US plan to buy fuel from Russia stokes diplomatic dilemma,"Tribune Publishing Company, LLC",0.6,yes,"Russia, USA",1259.0,83.0
+3404795667,2026-10-25,"In U.S. Gas Talks With Kremlin, Hidden Financing for Alaska Project Emerges",New York Times Company,0.6,yes,"Russia, USA",1282.0,77.0
+3404795663,2026-10-25,Why El Salvador’s Strongman Is Directing Threats at Haitian Gangs,New York Times Company,0.6,no,,,
+3391574266,2026-10-01,Fog of war? Ukraine says attacks are changing the weather.,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3396581794,2026-10-07,UK police arrest 7th man linked to security incident at US-run air base,"Tribune Publishing Company, LLC",0.6,no,,,
+3406596502,2026-10-30,"Russian Jet-Powered Drone Hits Platform at a Train Station, Killing 14",New York Times Company,0.6,no,,,
+3397893592,2026-10-09,A Spy's Playbook for Defending Against A.I. Propaganda,New York Times Company,0.6,no,,,
+3405032723,2026-10-27,Korean Arms Race Intensifies as the North Is Emboldened by Russia,New York Times Company,0.8,no,,,
+3406998964,2026-10-31,Another Russian refinery is aflame despite Trump’s warning to Ukraine,WP Company LLC d/b/a The Washington Post,0.6,yes,Russia,1297.0,68.0
+3402375412,2026-10-21,"Houthis Encircle Major Yemeni City, Choking Supplies of Food, Water and Fuel",New York Times Company,0.6,yes,Middle_East,1306.0,99.0
+3397809812,2026-10-09,FBI says it foiled teen’s plan for mall shooting,WP Company LLC d/b/a The Washington Post,0.6,no,,1183.0,76.0
+3398659891,2026-10-12,Official U.S. death toll in Iran war raised to 21,WP Company LLC d/b/a The Washington Post,0.6,no,,,
+3401346721,2026-10-16,What Life Is Like in Kyiv as Russia Tries to Make It Unlivable,New York Times Company,0.8,yes,"Russia, USA",1345.0,81.0
+3401941315,2026-10-19,"Ukrainians braving mined roads to flee occupied city Russia, Kyiv trade blame for Oleshky’s humanitarian crisis","Tribune Publishing Company, LLC",0.6,no,,,
+3398384026,2026-10-10,"Attacker in FlyDubai Flight Meant to Crash Into Israeli Airport, Emiratis Say",New York Times Company,0.8,no,,,
