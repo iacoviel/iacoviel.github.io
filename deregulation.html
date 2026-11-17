@@ -351,7 +351,7 @@
     <p class="subtitle">A measure of U.S. deregulation constructed using large language models from 1960 to present.</p>
     <p class="authors"><a href="https://www.danilocascaldigarcia.com/" target="_blank">Danilo Cascaldi-Garcia</a> · <a href="https://www.matteoiacoviello.com/" target="_blank">Matteo Iacoviello</a></p>
     <p style="font-size: 0.9em; color: #27ae60; margin-top: 8px;">
-        <strong id="update-date">✓ Updated through June 2026
+        <strong id="update-date">✓ Updated through October 2026
     </strong></p><strong>
     <div class="btn-group">
         <a href="https://www.matteoiacoviello.com/research_files/DEREGULATION_PAPER.pdf" class="btn btn-primary">Download Paper (PDF)</a>
@@ -395,7 +395,7 @@ and regulation type (price controls, entry barriers, etc.).</p>
                 <h3>Validation</h3>
                 <p>We validate the news-based index against a parallel
 index constructed from Federal Register documents. The news index leads
-the Federal Register by nine months, consistent with media coverage
+the Federal Register by about eleven months, consistent with media coverage
 reflecting policy intentions before formal implementation. The strong
 correlation confirms both measures capture genuine regulatory policy 
 variation.</p>
@@ -418,7 +418,8 @@ variation.</p>
                     <option value="foreign">U.S. vs Foreign</option>
                     <option value="timing">Proposed vs Enacted</option>
                     <option value="fedreg">News vs Federal Register</option>
-                    <option value="sectoral">Sectoral Breakdown</option>
+                    <option value="sectoral">Sectoral Breakdown (News)</option>
+                    <option value="fedreg_sectoral">Sectoral Breakdown (Federal Register)</option>
                     <option value="geography">Regional/Geography Breakdown</option>
                 </select>
             </div>
@@ -463,6 +464,26 @@ variation.</p>
             </div>
         </div>
 
+        <!-- Federal Register sector checkboxes (hidden by default) -->
+        <div class="chart-controls" id="fedreg-sectoral-controls" style="display: none;">
+            <div class="checkbox-group" style="margin-bottom: 10px;">
+                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(FR_SECTOR_IDS.map(s => 'fr_' + s), true)">Select All</button>
+                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8em;" onclick="setAllCheckboxes(FR_SECTOR_IDS.map(s => 'fr_' + s), false)">Deselect All</button>
+            </div>
+            <div class="checkbox-group" style="gap: 14px;">
+                <label><input type="checkbox" id="cb-fr_finance" checked="checked"> Finance</label>
+                <label><input type="checkbox" id="cb-fr_energy" checked="checked"> Energy &amp; Env.</label>
+                <label><input type="checkbox" id="cb-fr_telecom" checked="checked"> Telecom &amp; Tech.</label>
+                <label><input type="checkbox" id="cb-fr_transport" checked="checked"> Transportation</label>
+                <label><input type="checkbox" id="cb-fr_trade" checked="checked"> Trade</label>
+                <label><input type="checkbox" id="cb-fr_health" checked="checked"> Health</label>
+                <label><input type="checkbox" id="cb-fr_agriculture" checked="checked"> Agriculture</label>
+                <label><input type="checkbox" id="cb-fr_housing" checked="checked"> Housing</label>
+                <label><input type="checkbox" id="cb-fr_general" checked="checked"> General</label>
+                <label><input type="checkbox" id="cb-fr_executive_orders" checked="checked"> Exec. Orders</label>
+            </div>
+        </div>
+
         <!-- Geography checkboxes (hidden by default) -->
         <div class="chart-controls" id="geography-controls" style="display: none;">
             <div class="checkbox-group" style="margin-bottom: 10px;">
@@ -498,7 +519,8 @@ activity.
         <p class="note">
 Each sector and country/regional series is normalized independently
 to its own 1960-2019 average. The Federal Register Deregulation Index is normalized to mean =
-100 over 1995-2019.
+100 over 1995-2019; its sector series are contributions to that index and add up to it
+(General: rules not specific to a sector).
         </p>
     </div>
 </section>
@@ -553,6 +575,24 @@ to its own 1960-2019 average. The Federal Register Deregulation Index is normali
                     <td>Quarterly average sectoral indexes</td>
                     <td>CSV</td>
                     <td><button class="btn btn-primary" onclick="downloadSectoralQuarterly()">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Federal Register Sectoral Indexes (Daily)</td>
+                    <td>Daily Federal Register index by sector, from 1995</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadFedregSectors('daily')">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Federal Register Sectoral Indexes (Monthly)</td>
+                    <td>Monthly average Federal Register sectoral indexes</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadFedregSectors('monthly')">Download</button></td>
+                </tr>
+                <tr>
+                    <td>Federal Register Sectoral Indexes (Quarterly)</td>
+                    <td>Quarterly average Federal Register sectoral indexes</td>
+                    <td>CSV</td>
+                    <td><button class="btn btn-primary" onclick="downloadFedregSectors('quarterly')">Download</button></td>
                 </tr>
                 <tr>
                     <td>Geography Indexes (Daily)</td>
@@ -709,6 +749,23 @@ function movingAverage(values, window) {
 // aggregators below so sector regulation columns survive those downloads too.
 const SECTOR_IDS = ['finance', 'energy', 'telecom', 'transport', 'trade', 'health', 'housing', 'agriculture'];
 const SECTOR_AGG_COLUMNS = SECTOR_IDS.concat(SECTOR_IDS.map(s => `${s}_regulation`));
+// Federal Register sectors (deregulation_index_fedreg_sectors.csv). Shared sectors keep
+// the news sector colors; fedregData is aligned row by row with dailyData.
+const FR_SECTORS = [
+    { id: 'finance', name: 'Finance', color: SECTOR_COLORS.finance },
+    { id: 'energy', name: 'Energy & Environment', color: SECTOR_COLORS.energy },
+    { id: 'telecom', name: 'Telecom & Technology', color: SECTOR_COLORS.telecom },
+    { id: 'transport', name: 'Transportation', color: SECTOR_COLORS.transport },
+    { id: 'trade', name: 'Trade', color: SECTOR_COLORS.trade },
+    { id: 'health', name: 'Health', color: SECTOR_COLORS.health },
+    { id: 'agriculture', name: 'Agriculture', color: SECTOR_COLORS.agriculture },
+    { id: 'housing', name: 'Housing', color: SECTOR_COLORS.housing },
+    { id: 'general', name: 'General', color: '#6b6b6b' },
+    { id: 'executive_orders', name: 'Executive Orders', color: '#8c564b' }
+];
+const FR_SECTOR_IDS = FR_SECTORS.map(s => s.id);
+let fedregData = null;
+
 const REGION_IDS = ['usa', 'canada', 'uk', 'western_europe', 'eastern_europe', 'japan', 'china',
     'asia', 'australia', 'latin_america', 'middle_east', 'russia', 'africa'];
 
@@ -845,7 +902,9 @@ function toMonthly(data) {
 function updateChart() {
     const chartType = document.getElementById('chart-type').value;
     const smoothing = parseInt(document.getElementById('smoothing').value);
-    const startYear = parseInt(document.getElementById('start-year').value);
+    // Federal Register sectors start in 1995: don't draw the empty years before
+    const startYear = Math.max(parseInt(document.getElementById('start-year').value),
+        chartType === 'fedreg_sectoral' ? 1995 : 0);
     const endYear = parseInt(document.getElementById('end-year').value);
 
     if (!dailyData) return;
@@ -855,6 +914,8 @@ function updateChart() {
         chartType === 'sectoral' ? 'block' : 'none';
     document.getElementById('geography-controls').style.display =
         chartType === 'geography' ? 'block' : 'none';
+    document.getElementById('fedreg-sectoral-controls').style.display =
+        chartType === 'fedreg_sectoral' ? 'block' : 'none';
 
     // Filter by year. Track indices into the FULL series (not just the
     // filtered slice) so moving averages below can look back at calendar
@@ -1019,6 +1080,28 @@ function updateChart() {
                 }
             }
         });
+    } else if (chartType === 'fedreg_sectoral') {
+        // Federal Register by sector (contributions that add up to the Federal Register index),
+        // ordered by average over the displayed range; colors stay tied to each sector.
+        if (fedregData) {
+            const frAvg = {};
+            FR_SECTORS.forEach(sec => {
+                const vals = fedregData.slice(startIdx, endIdx + 1).map(r => r[sec.id]).filter(v => v != null);
+                frAvg[sec.id] = vals.reduce((a, b) => a + b, 0) / (vals.length || 1);
+            });
+            FR_SECTORS.slice().sort((a, b) => frAvg[b.id] - frAvg[a.id]).forEach(sec => {
+                const cb = document.getElementById(`cb-fr_${sec.id}`);
+                if (cb && cb.checked) {
+                    traces.push({
+                        x: dates,
+                        y: smoothedSlice((r, i) => fedregData[i][sec.id]),
+                        name: sec.name,
+                        line: { color: sec.color, width: 2.5 },
+                        hovertemplate: `%{x}<br>${sec.name}: %{y:.1f}<extra></extra>`
+                    });
+                }
+            });
+        }
     } else if (chartType === 'geography') {
         // Geography/Regional indexes
         const regions = [
@@ -1067,11 +1150,18 @@ function updateChart() {
     // flush on the x-axis, plus headroom on top so the tallest line clears the frame.
     let yMax = 0;
     traces.forEach(t => t.y.forEach(v => { if (v != null && !isNaN(v) && v > yMax) yMax = v; }));
-    const yRange = yMax > 0 ? [-yMax * 0.03, yMax * 1.08] : undefined;
+    // No series selected: keep a sensible empty frame (dates on x, 0-100 on y) instead of
+    // Plotly's default -1..6 / 0..4 axes.
+    const yRange = yMax > 0 ? [-yMax * 0.03, yMax * 1.08] : [-3, 108];
 
     const layout = {
         margin: { l: 60, r: 40, t: 40, b: 60 },
+        annotations: traces.length ? [] : [{
+            text: 'No series selected', xref: 'paper', yref: 'paper', x: 0.5, y: 0.5,
+            showarrow: false, font: { size: 16, color: '#888' }
+        }],
         xaxis: {
+            type: 'date',
             title: '',
             showgrid: true,
             gridcolor: '#f5f5f5',
@@ -1083,7 +1173,7 @@ function updateChart() {
             range: xRange
         },
         yaxis: {
-            title: { text: 'Index (mean = 100)', font: { size: 15 } },
+            title: { text: chartType === 'fedreg_sectoral' ? 'Contribution to Federal Register index' : 'Index (mean = 100)', font: { size: 15 } },
             showgrid: true,
             gridcolor: '#f5f5f5',
             showline: true,
@@ -1232,6 +1322,31 @@ function downloadSectoralQuarterly() {
     downloadCSV(Papa.unparse(quarterly), 'deregulation_sectoral_quarterly.csv');
 }
 
+// Federal Register sectors: daily rows, or monthly/quarterly averages (from 1995)
+function downloadFedregSectors(freq) {
+    if (!fedregData) return;
+    const rows = dailyData.map((r, i) => Object.assign({ date: r.Date }, fedregData[i]))
+        .filter(r => r.date >= '1995-01-03');
+    let out = rows;
+    if (freq !== 'daily') {
+        const groups = {};
+        rows.forEach(r => {
+            const [y, m] = r.date.split('-').map(Number);
+            const key = freq === 'monthly' ? `${y}-${String(m).padStart(2, '0')}` : `${y}-Q${Math.ceil(m / 3)}`;
+            if (!groups[key]) groups[key] = { n: 0, sums: {} };
+            groups[key].n++;
+            FR_SECTOR_IDS.forEach(s => { groups[key].sums[s] = (groups[key].sums[s] || 0) + (r[s] || 0); });
+        });
+        out = Object.entries(groups).map(([key, g]) => {
+            const o = { date: key };
+            FR_SECTOR_IDS.forEach(s => { o[s] = (g.sums[s] / g.n).toFixed(2); });
+            return o;
+        });
+    }
+    downloadCSV(Papa.unparse(out, { columns: ['date'].concat(FR_SECTOR_IDS) }),
+        `federal_register_sectoral_${freq}.csv`);
+}
+
 function downloadGeographyDaily() {
     if (!dailyData) return;
     // Extract only geography columns
@@ -1302,6 +1417,12 @@ SECTOR_IDS.forEach(sector => {
     if (checkbox) checkbox.addEventListener('change', updateChart);
 });
 document.getElementById('cb-show-sector-regulation').addEventListener('change', updateChart);
+
+// Federal Register sector checkboxes
+FR_SECTOR_IDS.forEach(s => {
+    const checkbox = document.getElementById(`cb-fr_${s}`);
+    if (checkbox) checkbox.addEventListener('change', updateChart);
+});
 
 // Geography checkboxes
 REGION_IDS.forEach(region => {
@@ -1405,6 +1526,23 @@ async function initialize() {
             russia: geographyMap[row.date]?.russia || 0,
             africa: geographyMap[row.date]?.africa || 0
         }));
+
+        // Federal Register by sector (optional: the page still works without it)
+        try {
+            const frRows = await loadCSV('deregulation_files/deregulation_index_fedreg_sectors.csv');
+            const frMap = {};
+            frRows.forEach(row => { frMap[row.date] = row; });
+            fedregData = dailyData.map(r => {
+                const src = frMap[r.Date];
+                const o = {};
+                FR_SECTOR_IDS.forEach(s => {
+                    o[s] = (src && src[s] !== null && src[s] !== undefined && src[s] !== '') ? src[s] : null;
+                });
+                return o;
+            });
+        } catch (e) {
+            console.warn('Federal Register sectors not loaded:', e);
+        }
 
         console.log('Loaded headline data:', headlineData.length, 'rows');
         console.log('Loaded sectoral data:', sectoralData.length, 'rows');

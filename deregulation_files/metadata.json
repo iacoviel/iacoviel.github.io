@@ -4,7 +4,7 @@
   "source": "Cascaldi-Garcia and Iacoviello (2026)",
   "coverage": {
     "start_date": "1960-01-01",
-    "end_date": "2026-06-30",
+    "end_date": "2026-10-31",
     "frequency": "daily",
     "newspapers": [
       "New York Times",
@@ -17,7 +17,7 @@
     "articles_with_deregulation": 40010,
     "deregulation_share": "5.37%",
     "llm_model": "GPT-4o-mini",
-    "prompt_version": "v2",
+    "prompt_version": "july26",
     "moving_average": "Computed client-side (30-day, 90-day, 365-day options)",
     "normalization": "Mean = 100 over 1960-2019"
   },
@@ -67,18 +67,36 @@
       "source": "Federal Register documents classified with Amazon Nova Micro LLM"
     }
   },
+  "federal_register_sectors": {
+    "file": "deregulation_index_fedreg_sectors.csv",
+    "description": "Federal Register Deregulation Index by sector (raw daily values). Each column is the sector's contribution to the Federal Register index: the columns add up to federal_register_index.",
+    "columns": {
+      "finance": "Finance",
+      "energy": "Energy & environment",
+      "telecom": "Telecom & technology",
+      "transport": "Transportation",
+      "trade": "Trade",
+      "health": "Health",
+      "agriculture": "Agriculture",
+      "housing": "Housing",
+      "general": "General (not sector-specific)",
+      "executive_orders": "Executive orders"
+    },
+    "unit": "Points of the Federal Register index (index mean = 100 in 1995-2019)",
+    "coverage": "1995-"
+  },
   "citation": {
     "text": "Cascaldi-Garcia, Danilo, and Matteo Iacoviello (2026). \"Quantifying Deregulation and its Economic Effects: A Large Language Model Approach.\" Federal Reserve Board.",
     "bibtex": "@article{cascaldi2026deregulation,\n  title={Quantifying Deregulation and its Economic Effects: A Large Language Model Approach},\n  author={Cascaldi-Garcia, Danilo and Iacoviello, Matteo},\n  journal={Federal Reserve Board},\n  year={2026}\n}"
   },
-  "last_updated": "2026-07-10",
+  "last_updated": "2026-11-17",
   "version": {
-    "version_number": "v26.06.30",
-    "data_through": "2026-06-30",
-    "generated_on": "2026-07-10",
-    "generated_time": "2026-07-10 14:52:34"
+    "version_number": "v26.10.31",
+    "data_through": "2026-10-31",
+    "generated_on": "2026-11-17",
+    "generated_time": "2026-11-17 12:22:41"
   },
-  "data_points": 24288,
+  "data_points": 24411,
   "sectors": {
     "finance": {
       "label": "Finance",
