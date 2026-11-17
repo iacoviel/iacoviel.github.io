@@ -779,6 +779,49 @@ function setAllCheckboxes(names, checked) {
     updateChart();
 }
 
+// True if the month ('2026-10') or quarter ('2026-Q4') ends on or before the last day
+// with data, so monthly/quarterly downloads never include a partial period.
+function periodComplete(key) {
+    const last = dailyData[dailyData.length - 1].Date;
+    const y = parseInt(key.slice(0, 4));
+    const endMonth = key.includes('Q') ? parseInt(key.slice(-1)) * 3 : parseInt(key.slice(5, 7));
+    const endDay = new Date(Date.UTC(y, endMonth, 0)).getUTCDate();
+    const end = `${y}-${String(endMonth).padStart(2, '0')}-${String(endDay).padStart(2, '0')}`;
+    return end <= last;
+}
+
+// Table of `cols` at daily, monthly or quarterly frequency. valueAt(i, col) gives the value of
+// dailyData row i (null if missing). Monthly/quarterly values average the days with data and
+// keep only complete periods.
+function periodTable(freq, cols, valueAt) {
+    const fmt = v => (v === null || v === undefined || isNaN(v)) ? '' : Number(v).toFixed(2);
+    if (freq === 'daily') {
+        return dailyData.map((r, i) => {
+            const o = { date: r.Date };
+            cols.forEach(c => { o[c] = fmt(valueAt(i, c)); });
+            return o;
+        });
+    }
+    const groups = {}, order = [];
+    dailyData.forEach((r, i) => {
+        const [y, m] = r.Date.split('-').map(Number);
+        const key = freq === 'monthly' ? `${y}-${String(m).padStart(2, '0')}` : `${y}-Q${Math.ceil(m / 3)}`;
+        if (!groups[key]) { groups[key] = {}; order.push(key); }
+        cols.forEach(c => {
+            const v = valueAt(i, c);
+            if (v !== null && v !== undefined && !isNaN(v)) {
+                const g = groups[key][c] || (groups[key][c] = { s: 0, n: 0 });
+                g.s += v; g.n++;
+            }
+        });
+    });
+    return order.filter(periodComplete).map(key => {
+        const o = { date: key };
+        cols.forEach(c => { const g = groups[key][c]; o[c] = g && g.n ? (g.s / g.n).toFixed(2) : ''; });
+        return o;
+    });
+}
+
 // Convert daily to quarterly
 function toQuarterly(data) {
     const quarterly = {};
@@ -824,7 +867,7 @@ function toQuarterly(data) {
     });
 
     // Average values
-    return Object.values(quarterly).map(q => {
+    return Object.values(quarterly).filter(q => periodComplete(q.Date)).map(q => {
         const out = {
             Date: q.Date,
             deregulation: q.deregulation / q.count,
@@ -883,7 +926,7 @@ function toMonthly(data) {
     });
 
     // Average values
-    return Object.values(monthly).map(m => {
+    return Object.values(monthly).filter(m => periodComplete(m.Date)).map(m => {
         const out = {
             Date: m.Date,
             deregulation: m.deregulation / m.count,
@@ -1322,80 +1365,25 @@ function downloadSectoralQuarterly() {
     downloadCSV(Papa.unparse(quarterly), 'deregulation_sectoral_quarterly.csv');
 }
 
-// Federal Register sectors: daily rows, or monthly/quarterly averages (from 1995)
+// Federal Register sectors (from 1995): daily rows, or monthly/quarterly averages over
+// publication days, so they add up to the Federal Register index in the headline files.
 function downloadFedregSectors(freq) {
     if (!fedregData) return;
-    const rows = dailyData.map((r, i) => Object.assign({ date: r.Date }, fedregData[i]))
-        .filter(r => r.date >= '1995-01-03');
-    let out = rows;
-    if (freq !== 'daily') {
-        const groups = {};
-        rows.forEach(r => {
-            const [y, m] = r.date.split('-').map(Number);
-            const key = freq === 'monthly' ? `${y}-${String(m).padStart(2, '0')}` : `${y}-Q${Math.ceil(m / 3)}`;
-            if (!groups[key]) groups[key] = { n: 0, sums: {} };
-            groups[key].n++;
-            FR_SECTOR_IDS.forEach(s => { groups[key].sums[s] = (groups[key].sums[s] || 0) + (r[s] || 0); });
-        });
-        out = Object.entries(groups).map(([key, g]) => {
-            const o = { date: key };
-            FR_SECTOR_IDS.forEach(s => { o[s] = (g.sums[s] / g.n).toFixed(2); });
-            return o;
-        });
-    }
-    downloadCSV(Papa.unparse(out, { columns: ['date'].concat(FR_SECTOR_IDS) }),
+    const rows = periodTable(freq, FR_SECTOR_IDS, (i, c) => fedregData[i][c])
+        .filter(r => r.date >= (freq === 'daily' ? '1995-01-03' : '1995'));
+    downloadCSV(Papa.unparse(rows, { columns: ['date'].concat(FR_SECTOR_IDS) }),
         `federal_register_sectoral_${freq}.csv`);
 }
 
-function downloadGeographyDaily() {
+function downloadGeography(freq) {
     if (!dailyData) return;
-    // Extract only geography columns
-    const geographyColumns = ['date', 'usa', 'canada', 'uk', 'western_europe', 'eastern_europe',
-                               'japan', 'china', 'asia', 'australia', 'latin_america',
-                               'middle_east', 'russia', 'africa'];
-    const geographyData = dailyData.map(row => {
-        const filtered = {};
-        geographyColumns.forEach(col => {
-            if (row[col] !== undefined) filtered[col] = row[col];
-        });
-        return filtered;
-    });
-    downloadCSV(Papa.unparse(geographyData), 'deregulation_geography_daily.csv');
+    const rows = periodTable(freq, REGION_IDS, (i, c) => dailyData[i][c]);
+    downloadCSV(Papa.unparse(rows, { columns: ['date'].concat(REGION_IDS) }),
+        `deregulation_geography_${freq}.csv`);
 }
-
-function downloadGeographyMonthly() {
-    if (!dailyData) return;
-    const monthly = toMonthly(dailyData);
-    // Extract only geography columns
-    const geographyColumns = ['date', 'usa', 'canada', 'uk', 'western_europe', 'eastern_europe',
-                               'japan', 'china', 'asia', 'australia', 'latin_america',
-                               'middle_east', 'russia', 'africa'];
-    const geographyData = monthly.map(row => {
-        const filtered = {};
-        geographyColumns.forEach(col => {
-            if (row[col] !== undefined) filtered[col] = row[col];
-        });
-        return filtered;
-    });
-    downloadCSV(Papa.unparse(geographyData), 'deregulation_geography_monthly.csv');
-}
-
-function downloadGeographyQuarterly() {
-    if (!dailyData) return;
-    const quarterly = toQuarterly(dailyData);
-    // Extract only geography columns
-    const geographyColumns = ['date', 'usa', 'canada', 'uk', 'western_europe', 'eastern_europe',
-                               'japan', 'china', 'asia', 'australia', 'latin_america',
-                               'middle_east', 'russia', 'africa'];
-    const geographyData = quarterly.map(row => {
-        const filtered = {};
-        geographyColumns.forEach(col => {
-            if (row[col] !== undefined) filtered[col] = row[col];
-        });
-        return filtered;
-    });
-    downloadCSV(Papa.unparse(geographyData), 'deregulation_geography_quarterly.csv');
-}
+function downloadGeographyDaily() { downloadGeography('daily'); }
+function downloadGeographyMonthly() { downloadGeography('monthly'); }
+function downloadGeographyQuarterly() { downloadGeography('quarterly'); }
 
 function downloadCSV(content, filename) {
     const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
