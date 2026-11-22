@@ -58,7 +58,7 @@ Client-side moving average computation recommended for visualization.
 ### deregulation_index_fedreg_sectors.csv
 Federal Register Deregulation Index by sector, from 1995. Columns: `date`, `finance`, `energy`
 (energy & environment), `telecom` (telecom & technology), `transport`, `trade`, `health`,
-`agriculture`, `housing`, `general` (rules not specific to a sector), `executive_orders`.
+`agriculture`, `housing`, `general` (economy-wide rules, such as labor), `executive_orders`.
 Each column is the sector's contribution to the Federal Register index, so the columns add up
 to `federal_register_index` in the headline file (mean = 100 over 1995-2019). Raw daily values.
 
